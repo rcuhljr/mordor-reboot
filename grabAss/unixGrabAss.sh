@@ -60,6 +60,16 @@ ensure_dest_dir () #dest_dir
     fi
 }
 
+clean_cruft () #dir_to_clean
+{
+    rm ${1}/*.DLL
+    rm ${1}/*.EXE
+    rm ${1}/*.HLP
+    rm ${1}/*.INI
+    rm ${1}/*.SCR
+    rm ${1}/*.WRI
+    rm ${1}/*.VBX
+}
 
 ## main
 if [ -d $MOUNTED_CD_DIRECTORY ]
@@ -83,7 +93,13 @@ then
         echo "mv $tune ${MUSIC}/"
         mv $tune ${MUSIC}/
     done
-    
+ 
+    # clean up random crap
+    for dir in $IMAGES $MUSIC $SFX $GAME_DAT
+    do
+        clean_cruft $dir
+    done
+   
 else
     echo "$MOUNTED_CD_DIRECTORY isn't a proper directory. You need to point me at the directory where the MORDOR image is mounted!"
     exit 1
