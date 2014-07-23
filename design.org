@@ -1,0 +1,13 @@
+* Constructing Initial Set of MORDOR assets
+** Copy
+*** Use one of unixGrabAss, windowsGrabAss
+** Unpack
+*** Handled by the grabAsses
+** Convert
+*** Use transAss
+** Validate Assets
+*** checkAss
+** Cleanup
+*** Use cleanAss
+** Totally Remove
+*** handled by cleanAss
