@@ -10,6 +10,15 @@ using namespace std;
 static const string FNAME = "MDATA11.MDR";
 static const int SIZE = 339606; // size of MDATA11.MDR in bytes
 
+struct levelHeader {
+  unsigned short width;
+  unsigned short height;
+  unsigned short levelNumber;
+  unsigned short numAreas;
+  unsigned short numChutes;
+  unsigned short numTeleports;
+};
+
 static bool validPath(char* path){
   int len = strlen(path);
   if(len < 11){ // MDATA11.MDR is 11 characters -- this must be wrong.
@@ -33,9 +42,8 @@ static bool checkLength(ifstream *mdata_input){
   return (length == SIZE);
 }
 
-static bool validFile(char* path){
+static bool possiblyValidFile(char* path){
   // is the given file valid -- just a quick test.  Exists, correct name, length
-
   if(not validPath(path)){
     return false;
   }
@@ -48,9 +56,42 @@ static bool validFile(char* path){
   }else if (not checkLength(&mdata_input)){
     return false;
   }
-  //file exists, is of expected size
-
+  //file exists, is of expected size, will be closed when destroyed.
   return true;
+}
+
+static unsigned short readWord(ifstream *mdata_input){
+  static char* buff = new char[2];
+  mdata_input->read(buff, 2);
+  return (unsigned short) *buff;
+}
+
+static levelHeader readLevelHeader(ifstream *mdata_input){
+  // width       -- word
+  // height      -- word
+  // level #     -- word
+  // # areas     -- word
+  // # chutes    -- word
+  // # teleports -- word
+
+  levelHeader thisLevel;
+
+  thisLevel.width = readWord(mdata_input);
+  thisLevel.height = readWord(mdata_input);
+  thisLevel.levelNumber = readWord(mdata_input);
+  thisLevel.numAreas = readWord(mdata_input);
+  thisLevel.numChutes = readWord(mdata_input);
+  thisLevel.numTeleports = readWord(mdata_input);
+  return thisLevel;
+}
+
+static void printLevelHeader(levelHeader *lh){
+  cout << "Width:\t\t" << lh->width << endl;
+  cout << "Height:\t\t" << lh->height << endl;
+  cout << "Level:\t\t" << lh->levelNumber << endl;
+  cout << "Areas:\t\t" << lh->numAreas << endl;
+  cout << "Chutes:\t\t" << lh->numChutes << endl;
+  cout << "Teleports:\t" << lh->numTeleports << endl;
 }
 
 // testing main point -- this won't be compiled on it's own
@@ -64,7 +105,19 @@ int main(int argc, char** argv){
     datAbsolutePath = argv[1];
   }
 
-  validFile(datAbsolutePath);
+  possiblyValidFile(datAbsolutePath);
 
+  ifstream mdata_input(datAbsolutePath, ios::binary | ios::in);
+  levelHeader lh = readLevelHeader(&mdata_input);
+  unsigned short numLevels = readWord(&mdata_input);
+  unsigned short levelOffset = 20;
+
+  cout << numLevels << " levels to read" << endl;
+
+  for(int i = 1; i < numLevels; i++){
+    levelOffset = readWord(&mdata_input);
+    cout << "Level " << i << " starts at " << levelOffset << endl;
+  }
+  printLevelHeader(&lh);
   return 0;
 }
