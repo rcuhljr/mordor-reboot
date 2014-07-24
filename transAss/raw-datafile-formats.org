@@ -143,6 +143,7 @@ The first item record starts at offset 0x177 (375), each record is 0x7D (125) by
 All fields are 16 bit signed Int unless otherwise noted.
 Fields marked as 'UNUSED' always have a value of zero.
 
+VBString
 Length of name
 Name (text)
 
