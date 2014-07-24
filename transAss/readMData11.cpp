@@ -6,11 +6,12 @@
 #include <iostream>
 #include <fstream>
 #include "mordorBinaryReader.hpp" // bring in the binary ready definitions
+#include "mdataTools.hpp"         // constants, simple data file checks
 
 using namespace std;
 
-static const string FNAME = "MDATA11.MDR";
-static const int SIZE = 339606; // size of MDATA11.MDR in bytes
+
+static const int RECORD_SIZE = 20;
 
 struct levelHeader {
   unsigned short width;
@@ -20,48 +21,6 @@ struct levelHeader {
   unsigned short numChutes;
   unsigned short numTeleports;
 };
-
-static bool validPath(char* path){
-  int len = strlen(path);
-  if(len < 11){ // MDATA11.MDR is 11 characters -- this must be wrong.
-    return false;
-  }else{
-    int offset = len - 11;
-    for(int i = 0; i < 11; i++){
-      if(path[i+offset] != FNAME[i]){
-        return false;
-      }
-    }
-  }
-  return true;
-}
-
-static bool checkLength(ifstream *mdata_input){
-  streampos start = mdata_input->tellg();
-  mdata_input->seekg(0, ios::end);
-  streampos end = mdata_input->tellg();
-  int length = end - start;
-  return (length == SIZE);
-}
-
-static bool possiblyValidFile(char* path){
-  // is the given file valid -- just a quick test.  Exists, correct name, length
-  if(not validPath(path)){
-    return false;
-  }
-
-  // pathname is ok -- carry on.
-  ifstream mdata_input(path, ios::binary | ios::in);
-  if (not mdata_input.good()){
-    // file doesn't exist, quit.
-    return false;
-  }else if (not checkLength(&mdata_input)){
-    return false;
-  }
-  //file exists, is of expected size, will be closed when destroyed.
-  return true;
-}
-
 
 static levelHeader readLevelHeader(ifstream *mdata_input){
   // width       -- word
@@ -103,12 +62,12 @@ int main(int argc, char** argv){
     datAbsolutePath = argv[1];
   }
 
-  possiblyValidFile(datAbsolutePath);
+  possiblyValidFile(datAbsolutePath, MDATA11);
 
   ifstream mdata_input(datAbsolutePath, ios::binary | ios::in);
-  levelHeader lh = readLevelHeader(&mdata_input);
+
   unsigned short numLevels = readWord(&mdata_input);
-  unsigned short levelOffset = 20;
+  unsigned short levelOffset = 0;
 
   cout << numLevels << " levels to read" << endl;
 
@@ -116,6 +75,7 @@ int main(int argc, char** argv){
     levelOffset = readWord(&mdata_input);
     cout << "Level " << i << " starts at " << levelOffset << endl;
   }
+  levelHeader lh = readLevelHeader(&mdata_input);
   printLevelHeader(&lh);
   return 0;
 }

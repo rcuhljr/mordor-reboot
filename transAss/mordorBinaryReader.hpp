@@ -2,6 +2,7 @@
 #define MORDOR_BIN_READER
 
 #include <fstream>
+#include <iostream>
 using namespace std;
 
 typedef unsigned char BYTE;  // 1 byte
@@ -14,5 +15,6 @@ WORD readWord(ifstream *mdata_input);
 DWORD readDWord(ifstream *mdata_input);
 CURRENCY readCurrency(ifstream *mdata_input);
 char* readVBString(ifstream *mdata_input);
+char* seekTo(ifstream *mdata_input, int goal);
 
 #endif
