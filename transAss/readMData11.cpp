@@ -5,6 +5,8 @@
 
 #include <iostream>
 #include <fstream>
+#include "mordorBinaryReader.hpp" // bring in the binary ready definitions
+
 using namespace std;
 
 static const string FNAME = "MDATA11.MDR";
@@ -60,11 +62,6 @@ static bool possiblyValidFile(char* path){
   return true;
 }
 
-static unsigned short readWord(ifstream *mdata_input){
-  static char* buff = new char[2];
-  mdata_input->read(buff, 2);
-  return (unsigned short) *buff;
-}
 
 static levelHeader readLevelHeader(ifstream *mdata_input){
   // width       -- word
@@ -82,6 +79,7 @@ static levelHeader readLevelHeader(ifstream *mdata_input){
   thisLevel.numAreas = readWord(mdata_input);
   thisLevel.numChutes = readWord(mdata_input);
   thisLevel.numTeleports = readWord(mdata_input);
+
   return thisLevel;
 }
 
