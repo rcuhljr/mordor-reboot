@@ -80,11 +80,12 @@ int mdataFileSize(int i){
 
 bool validPath(char* path, const char* FNAME){
   int len = strlen(path);
-  if(len < 11){ // MDATA11.MDR is 11 characters -- this must be wrong.
+  int lenT = strlen(FNAME);
+  if(len < lenT){ 
     return false;
   }else{
-    int offset = len - 11;
-    for(int i = 0; i < 11; i++){
+    int offset = len - lenT;
+    for(int i = 0; i < lenT; i++){
       if(path[i+offset] != FNAME[i]){
         return false;
       }
