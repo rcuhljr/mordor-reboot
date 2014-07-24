@@ -21,11 +21,11 @@ const char* MDATA3_NAME = "MDATA3.MDR";
 const char* MDATA5_NAME = "MDATA5.MDR";
 const char* MDATA11_NAME = "MDATA11.MDR";
 
-const int MDATA1_SIZE = -1; // size of MDATA11.MDR in bytes
-const int MDATA2_SIZE = -1; // size of MDATA11.MDR in bytes
-const int MDATA3_SIZE = -1; // size of MDATA11.MDR in bytes
-const int MDATA5_SIZE = -1; // size of MDATA11.MDR in bytes
-const int MDATA11_SIZE= 339606; // size of MDATA11.MDR in bytes
+const int MDATA1_SIZE  =  30952; // size of MDATA11.MDR in bytes
+const int MDATA2_SIZE  =  10934; // size of MDATA11.MDR in bytes
+const int MDATA3_SIZE  =  46103; // size of MDATA11.MDR in bytes
+const int MDATA5_SIZE  =  64623; // size of MDATA11.MDR in bytes
+const int MDATA11_SIZE = 339606; // size of MDATA11.MDR in bytes
 
 
 
