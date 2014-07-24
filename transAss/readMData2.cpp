@@ -1,11 +1,26 @@
-/*
- * Author Seabass
- * Purpose -- Read in a particular Mordor data file, MDATA11.MDR
- */
 
 #include <iostream>
 #include <fstream>
-#include "mordorBinaryReader.hpp" // bring in the binary ready definitions
+#include "mdataTools.hpp"
+#include "readMData2.hpp"
 
-static const string FNAME = "MDATA2.MDR";
-static const int SIZE = -1; // size of MDATA11.MDR in bytes
+using namespace std;
+
+
+int main(int argc, char** argv){
+  char* datAbsolutePath;
+
+  if(argc != 2){
+    cerr << "Expected exactly one argument -- the absolute path to the MDAT12.MDR" << endl;
+    return 1;
+  }else{
+    datAbsolutePath = argv[1];
+  }
+
+  if (not possiblyValidFile(datAbsolutePath, MDATA2)){
+    cerr << datAbsolutePath << " doesn't appear to be a valid MDATA2.MDR" << endl;
+    return 1;
+  }
+
+  return 0;
+}

@@ -2,7 +2,7 @@ CPPFLAGS=-g
 CC=g++
 
 
-all: testMData11
+all: test
 
 *.o: *.hpp *.cpp
 	$(CC) $(CPPFLAGS) -c $^
@@ -29,4 +29,8 @@ test: testMData1 testMData2 testMData3 testMData5 testMData11
 clean:
 	-rm *.o
 	-rm *.gch
+	-rm testMData1
+	-rm testMData2
+	-rm testMData3
+	-rm testMData5
 	-rm testMData11
