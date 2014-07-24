@@ -3,10 +3,15 @@ CC=g++
 
 all: testMData11
 
-testMData11: readMData11.cpp
+mordorBinaryReader.o: mordorBinaryReader.hpp mordorBinaryReader.cpp
+	$(CC) $(CPPFLAGS) -c $^
+
+testMData11: mordorBinaryReader.o readMData11.cpp
 	$(CC) $^ -o testMData11
 
 .PHONY : clean
 
 clean:
-	rm testMData11
+	-rm *.o
+	-rm *.gch
+	-rm testMData11
