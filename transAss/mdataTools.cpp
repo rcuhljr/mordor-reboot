@@ -87,6 +87,7 @@ bool validPath(char* path, const char* FNAME){
     int offset = len - lenT;
     for(int i = 0; i < lenT; i++){
       if(path[i+offset] != FNAME[i]){
+        cerr << path << " doesn't have the expected filename " << FNAME << endl;
         return false;
       }
     }
