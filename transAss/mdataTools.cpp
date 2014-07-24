@@ -25,7 +25,7 @@ const int MDATA1_SIZE = -1; // size of MDATA11.MDR in bytes
 const int MDATA2_SIZE = -1; // size of MDATA11.MDR in bytes
 const int MDATA3_SIZE = -1; // size of MDATA11.MDR in bytes
 const int MDATA5_SIZE = -1; // size of MDATA11.MDR in bytes
-const int MDATA11_SIZE= -1; // size of MDATA11.MDR in bytes
+const int MDATA11_SIZE= 339606; // size of MDATA11.MDR in bytes
 
 
 
@@ -99,7 +99,10 @@ bool checkLength(ifstream *mdata_input, int SIZE){
   mdata_input->seekg(0, ios::end);
   streampos end = mdata_input->tellg();
   int length = end - start;
-  return (length == SIZE);
+  bool ret = length == SIZE;
+  if (not ret)
+    cerr << "Expected " << SIZE << " but saw " << length << endl;
+  return ret;
 }
 
 
@@ -113,8 +116,10 @@ bool possiblyValidFile(char* path, int target){
   ifstream mdata_input(path, ios::binary | ios::in);
   if (not mdata_input.good()){
     // file doesn't exist, quit.
+    cerr << path << " doesn't appear to exist." << endl;
     return false;
   }else if (not checkLength(&mdata_input, mdataFileSize(target))){
+    cerr << "File at " << path << " isn't the expected size." << endl;
     return false;
   }
   //file exists, is of expected size, will be closed when destroyed.

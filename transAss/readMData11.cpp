@@ -62,7 +62,10 @@ int main(int argc, char** argv){
     datAbsolutePath = argv[1];
   }
 
-  possiblyValidFile(datAbsolutePath, MDATA11);
+  if (not possiblyValidFile(datAbsolutePath, MDATA11)){
+    cerr << datAbsolutePath << " doesn't appear to be a valid MDATA11.MDR" << endl;
+    return 1;
+  }
 
   ifstream mdata_input(datAbsolutePath, ios::binary | ios::in);
 
