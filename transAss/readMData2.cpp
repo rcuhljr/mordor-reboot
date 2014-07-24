@@ -30,26 +30,37 @@ struct spell{
 spell readSpell(ifstream *mdata){
   spell thisSpell;
   thisSpell.name = readVBString(mdata);
-  thisSpell.id = readByte(mdata);
-  thisSpell.spellClass = readByte(mdata);
-  thisSpell.level = readByte(mdata);
-  thisSpell.u4 = readByte(mdata);
-  BYTE b = readByte(mdata);
+  thisSpell.id = readWord(mdata);
+  thisSpell.spellClass = readWord(mdata);
+  thisSpell.level = readWord(mdata);
+  thisSpell.u4 = readWord(mdata);
+  BYTE b = readWord(mdata);
   assert(b == 0);
-  thisSpell.killEffect = readByte(mdata);
-  thisSpell.affectMonster = readByte(mdata);
-  thisSpell.affectGroup = readByte(mdata);
-  thisSpell.damage1 = readByte(mdata);
-  thisSpell.damage2 = readByte(mdata);
-  thisSpell.specialEffect = readByte(mdata);
-  thisSpell.required = readByte(mdata);
-  thisSpell.resistedBy = readByte(mdata);
+  thisSpell.killEffect = readWord(mdata);
+  thisSpell.affectMonster = readWord(mdata);
+  thisSpell.affectGroup = readWord(mdata);
+  thisSpell.damage1 = readWord(mdata);
+  thisSpell.damage2 = readWord(mdata);
+  thisSpell.specialEffect = readWord(mdata);
+  thisSpell.required = readWord(mdata);
+  thisSpell.resistedBy = readWord(mdata);
   return thisSpell;
 }
 
 void printSpell(spell *s){
   cout << s->name << endl;
-  //flesh this out1
+  cout << "ID:\t\t\t" << s->id << endl;
+  cout << "Class:\t\t\t" << s->spellClass << endl;
+  cout << "Level:\t\t\t" << s->level << endl;
+  cout << "U4:\t\t\t" << s->u4 << endl;
+  cout << "KillEffect:\t\t" << s->killEffect << endl;
+  cout << "Affect Monster:\t\t" << s->affectMonster << endl;
+  cout << "Affect Group:\t\t" << s->affectGroup << endl;
+  cout << "damage1:\t\t" << s->damage1 << endl;
+  cout << "damage2:\t\t" << s->damage2 << endl;
+  cout << "SpecialEffect:\t\t" << s->specialEffect << endl;
+  cout << "Required:\t\t" << s->required << endl;
+  cout << "Resisted By:\t\t" << s->resistedBy << endl;
 }
 
 int main(int argc, char** argv){
@@ -67,11 +78,43 @@ int main(int argc, char** argv){
     return 1;
   }
 
-  // read file version, vb string
-  // read number of spells as record 2
-  // read number of spells as record 3
-  // read spell list
-  
+  ifstream mdata_input(datAbsolutePath, ios::binary | ios::in);
 
+  // read file version, vb string
+  char* version = readVBString(&mdata_input);
+  cout << "Version " << version << endl;
+
+
+  // read number of spells as record 2
+  unsigned short numSpells = readWord(&mdata_input);
+  cout << "Num spells " << numSpells << endl;
+  seekTo(&mdata_input,RECORD_SIZE);
+
+  // read number of spells as record 3
+  unsigned short numSpells2 = readWord(&mdata_input);
+  seekTo(&mdata_input,RECORD_SIZE);
+  cout << "Num spells 2" << numSpells2 << endl;
+
+  // I don't know why there are two kinds of num spells specified
+  cout << "Num spells " << numSpells2 << endl;
+
+  // read spell list
+  for(int i = 0; i < numSpells2; i++){
+    cout << "Reading spell " << dec << i << endl;
+    spell first = readSpell(&mdata_input);
+    printSpell(&first);
+    cout << endl;
+    seekTo(&mdata_input,RECORD_SIZE);
+  }
+  /*
+  mdata_input.seekg(0x00001f80);
+  for(int i = 0; i < numSpells2; i++){
+    cout << "Reading spell " << i << endl;
+    spell first = readSpell(&mdata_input);
+    printSpell(&first);
+    cout << endl;
+    seekTo(&mdata_input,RECORD_SIZE);
+  }
+  */
   return 0;
 }

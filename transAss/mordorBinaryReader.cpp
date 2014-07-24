@@ -59,13 +59,13 @@ char* readVBString(ifstream *mdata_input){
 char* seekTo(ifstream *mdata_input, int goal){
   int length = goal - point;
 
-  cout << "Seeking from " << point << " to " << goal << endl;
   if(length < 0 ){   // already too far!
     return 0;
   }
 
-  char *discard = new char[length - 1];
-  mdata_input->read(discard, length - 1);
+  char *discard = new char[length];
+  mdata_input->read(discard, length);
+  cout << "Pointer at: " << hex << mdata_input->tellg() << endl;
   //reset point
   point = 0;
   return discard;
