@@ -97,7 +97,7 @@ int main(int argc, char** argv){
 
   // I don't know why there are two kinds of num spells specified
   cout << "Num spells " << numSpells2 << endl;
-
+  cout << endl;
   // read spell list
   for(int i = 0; i < numSpells2; i++){
     cout << "Reading spell " << dec << i << endl;
