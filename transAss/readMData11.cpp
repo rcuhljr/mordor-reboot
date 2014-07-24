@@ -7,20 +7,12 @@
 #include <fstream>
 #include "mordorBinaryReader.hpp" // bring in the binary ready definitions
 #include "mdataTools.hpp"         // constants, simple data file checks
+#include "readMData11.hpp"
 
 using namespace std;
 
-
 static const int RECORD_SIZE = 20;
 
-struct levelHeader {
-  unsigned short width;
-  unsigned short height;
-  unsigned short levelNumber;
-  unsigned short numAreas;
-  unsigned short numChutes;
-  unsigned short numTeleports;
-};
 
 static levelHeader readLevelHeader(ifstream *mdata_input){
   // width       -- word
