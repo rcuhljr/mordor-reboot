@@ -1,16 +1,28 @@
 CPPFLAGS=-g
 CC=g++
 
+
 all: testMData11
 
-mdataTools.o: mdataTools.hpp mdataTools.cpp
+*.o: *.hpp *.cpp
 	$(CC) $(CPPFLAGS) -c $^
 
-mordorBinaryReader.o: mordorBinaryReader.hpp mordorBinaryReader.cpp
-	$(CC) $(CPPFLAGS) -c $^
+testMData11: mordorBinaryReader.o mdataTools.o readMData11.o
+	$(CC) $(CPPFLGAS) $^ -o $@
 
-testMData11: mordorBinaryReader.o mdataTools.o readMData11.cpp
-	$(CC) $^ -o testMData11
+testMData1: mordorBinaryReader.o mdataTools.o readMData1.o
+	$(CC) $^ -o $@
+
+testMData2: mordorBinaryReader.o mdataTools.o readMData2.o
+	$(CC) $^ -o $@
+
+testMData3: mordorBinaryReader.o mdataTools.o readMData3.o
+	$(CC) $^ -o $@
+
+testMData5: mordorBinaryReader.o mdataTools.o readMData5.o
+	$(CC) $^ -o $@
+
+test: testMData1 testMData2 testMData3 testMData5 testMData11
 
 .PHONY : clean
 
