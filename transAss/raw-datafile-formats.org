@@ -1,0 +1,296 @@
+Taken from http://dejenol.com/forum/index.php?s=0ece444aa120ba7c0c0c259c44e1fc8f&showtopic=8
+
+* MDATA11
+Each record is 20 bytes wide.
+
+Meaning of datatypes used:
+Word : unsigned integer, 2 bytes wide
+LongWord : unsigned integer, 4 bytes wide
+Currency : floating point, 8 bytes wide
+
+File Header
+Number of Levels : Word
+
+Offset Records (occurs number of levels times)
+Record Number : start of data for level x : Word
+
+Level Header Record 1
+X-dimension : Word
+Y-dimension : Word
+Level Number : Word
+Number of Areas : Word
+Number Of chutes : Word
+Number Of Teleports : Word
+
+Room Data Records Level 1 (Occurs 900 times)
+Area Number : Word
+BitMask : Currency
+
+Monster Lair Header Level 1
+Number Of Lairs : Word
+
+Monster Lairs Level 1 (Occurs 200 times)
+Monster Type : LongWord
+Laired Monster ID : Word (Reference to monster file)
+
+Teleporter Header Level 1
+Number of Teleports : Word
+
+Teleporters Level 1 (Occurs number of teleporters times)
+X : Word
+Y : Word
+Dest X : Word
+Dest Y : Word
+Dest Z : Word
+
+x,y specify location of teleport, dest x, y, z specifies where teleports to, set dest x, y, z to all 0's to have a random teleporter
+
+Chute Header Level 1
+Number Of Chutes : Word
+
+Chutes Level 1 (Occurs number of chutes times)
+X : Word
+Y : Word
+Number Of Levels To Drop : Word
+
+Level Header Record 2
+
+* MDATA1
+vbstring means 2 bytes of the string length, followed by the string. - eg:
+04wave
+05hello
+03the
+
+short is 2 bytes.
+float is 4 bytes.
+recordlength = 260;
+
+rec1: vbstring fileversion
+rec2: short NumberOfRaces;
+rec3: short NumberOfGuilds;
+rec4: short NumberOfSubItemTypes;
+rec5: short NumberOfItemTypes;
+rec6: short NumberOfMonsterSubTypes;
+rec7: short NumberOfMonsterTypes;
+rec8-recNumberOfRaces:
+vbstring racename
+short minStats[7];
+short maxStats[7];
+short m_resistences[12];
+long m_alignement;
+short m_size;
+short m_bonusPoints;
+short m_maxAge;
+float m_expFactor;
+rec ... to NumberOfGuilds
+vbstring guildname
+short m_averageHits; 
+short MaxLevel; 
+short MH; 
+float expFactor;
+short u3; 
+short reqStats[7]; 
+long alignment;
+float abilityrates[7];
+short u7; 
+float u8;
+short questPercentage; 
+float spellstuff[38];
+long RaceMask;
+short u12; 
+float levelMod;
+float u13;
+float u14;
+short u15; 
+float u16;
+short u17; 
+short u18; 
+rec: ... to NumberOfSubItemTypes
+vbstring name
+short itemtype
+rec:... to numberOfItemTypes
+vbstring name
+short IsEquipable
+rec:... to NumberOfSubMonsterTypes
+vbstring name
+short MonsterType
+rec:... to numberOfMonsterTypes
+vbstring name
+short not used.
+
+* MDATA 2
+recordlength = 75
+rec1: vbstring fileversion
+rec2: short NumSpells:
+rec3 ... num spells
+vbstring spellname
+short m_ID;
+short m_class;
+short m_spellLevel;
+short m_u4;
+short m_alwaysZero; // always 0
+short m_killEffect;
+short m_affectMonster;
+short m_affectGroup;
+short m_damage1;
+short m_damage2;
+short m_specialEffect;
+short m_required[7]
+short m_resistedBy;
+
+* MDATA 3
+The first item record starts at offset 0x177 (375), each record is 0x7D (125) bytes long.
+All fields are 16 bit signed Int unless otherwise noted.
+Fields marked as 'UNUSED' always have a value of zero.
+
+Length of name
+Name (text)
+
+After that:
+
+0x00: Item Id
+
+0x02: attack modifier
+
+0x04: defence modifier
+
+0x06: Item Value (32 bit Signed Int)
+
+0x0A: Starting Level for finding
+
+0x0C: Chance of finding
+
+0x0E: Abilitys (bitmask)
+0x01 = Levitate
+0x02 = Invisible
+0x04 = Protect
+0x08 = See Invisible
+0x10 = Critical Hit
+0x20 = Backstab
+0x10: UNUSED
+
+0x12: Swings
+
+0x14: Special items
+0x01 = Permenant Stat modifier (potions, tomes etc)
+0x0B and 0x0C = Spell point recharge items
+0x0D and 0x0E = Age reducing items
+0xC0 to 0xC9 = Guild Crests
+0x16: Spell ID by it's position in mdata2.mdr (go figure)
+
+0x18: ID number of the spell this item can cast (0 = none)
+
+0x1A: Number of 'Charges' for the spell
+
+0x1C: UNUSED
+
+0x1E: Guilds that can use this item (bitmask)
+0x001 = Nomad
+0x002 = Warrior
+0x004 = Paladin
+0x008 = Ninja
+0x010 = Villain
+0x020 = Seeker
+0x040 = Thief
+0x080 = Scavenger
+0x100 = Mage
+0x200 = Sorcerer
+0x400 = Wizard
+0x800 = Healer
+0x20: UNUSED
+
+0x22: Level Scale Factor
+
+0x24: Damage Modifier (32 bit float)
+
+0x28: Alignment (bitmask)
+0x01 = Unaligned
+0x02 = Good
+0x04 = Neutral
+0x08 = Evil
+0x2A: UNUSED
+
+0x2C: Number of hands required
+
+0x2E: Item Class
+0x00 = Hands
+0x01 = Dagger
+0x02 = Cross
+0x03 = Sword
+0x04 = Staff
+0x05 = Mace
+0x06 = Axe
+0x07 = Hammer
+0x08 = Leather Armour
+0x09 = Chain Armour
+0x0A = Plate Armour
+0x0B = Shield
+0x0C = Cap
+0x0D = Helmet
+0x0E = Gloves
+0x0F = Gauntlets
+0x10 = Cloak
+0x11 = Bracers
+0x12 = Sash
+0x13 = Girdle
+0x14 = Boots
+0x15 = Ring
+0x16 = Amulet
+0x17 = Potion
+0x18 = Scroll
+0x19 = Tome
+0x1A = Dust
+0x1B = Crystal
+0x1C = Rod
+0x1D = Stone
+0x1E = Sphere
+0x1F = Cube
+0x20 = Artifact
+0x21 = Misc Item
+0x22 = Guild Crest
+0x30: Resistances granted (bitmask)
+0x001 = Fire res
+0x002 = Cold res
+0x004 = Electrical res
+0x008 = Mind res
+0x010 = Disease res
+0x020 = Poison res
+0x040 = Magic res
+0x080 = Stone res
+0x100 = Paralysis res
+0x200 = Drain res
+0x400 = Acid res
+0x32: UNUSED
+
+0x34: STR required
+0x36: INT required
+0x38: WIS required
+0x3A: CON required
+0x3C: CHA required
+0x3E: DEX required
+
+0x40: UNUSED
+
+0x42: STR modifier
+0x44: INT modifier
+0x46: WIS modifier
+0x48: CON modifier
+0x4A: CHA modifier
+0x4C: DEX modifier
+
+0x4E: UNUSED
+
+0x50: Curse status
+0x0 = Not Cursed
+0x1 = Cursed
+0x2 = Cursed, will auto-equip
+0x52: Spell level for item
+-1 = Casters Spell Level
+0x54: Class restricted
+-1 = Yes
+0 = No
+EDIT: 
+- Corrected spell ID field(s)
+- Added 'Value' Field 
+
+* MDATA 5 -- No docs
