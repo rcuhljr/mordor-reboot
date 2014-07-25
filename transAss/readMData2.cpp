@@ -106,6 +106,7 @@ int main(int argc, char** argv){
     cout << endl;
     seekTo(&mdata_input,RECORD_SIZE);
   }
+
   /*
   mdata_input.seekg(0x00001f80);
   for(int i = 0; i < numSpells2; i++){
