@@ -1,9 +1,12 @@
 
 #include <iostream>
 #include <fstream>
+#include <assert.h>
+
 #include "mdataTools.hpp"
-#include "readMData3.hpp"
 #include "mordorBinaryReader.hpp"
+#include "readMData3.hpp"
+
 
 using namespace std;
 
@@ -68,7 +71,7 @@ struct resistanceMask{
 
 struct statSet{
   int strength;     //0x34
-  int intellegence; //0x36
+  int intelligence; //0x36
   int wisdom;       //0x38
   int constitution; //0x3A
   int charisma;     //0x3C
@@ -111,6 +114,95 @@ struct record{
   int spellLevel;         //0x52
   bool classRestricted;   //0x54 -- -1 = Yes, 0 = No
 };
+
+abilities readAbilityMask(ifstream *mdata){
+  abilities ret;
+  //fixme stub
+  return ret;
+}
+
+guildMask readGuildMask(ifstream *mdata){
+  guildMask ret;
+  //fixme stub
+  return ret;
+}
+
+alignmentMask readAlignmentMask(ifstream *mdata){
+  alignmentMask ret;
+  //fixme stub
+  return ret;
+}
+
+resistanceMask readResistances(ifstream *mdata){
+  resistanceMask ret;
+  // fixme stub
+  return ret;
+}
+
+statSet readStatSet(ifstream *mdata){
+  statSet ret;
+  // these may need to be signed words instead of unsigned words
+  ret.strength = readWord(mdata);
+  ret.intelligence = readWord(mdata);
+  ret.wisdom = readWord(mdata);
+  ret.constitution = readWord(mdata);
+  ret.charisma = readWord(mdata);
+  ret.dexterity = readWord(mdata);
+  return ret;
+}
+
+curseMask readCurseMask(ifstream *mdata){
+  curseMask ret;
+  //fixme stub
+  return ret;
+}
+
+specialItemMask readSpecialItemMask(ifstream *mdata){
+  specialItemMask ret;
+  //fixme stub
+  return ret;
+}
+
+int readItemClass(ifstream *mdata){
+  //fixme stub
+  return -1;
+}
+
+record readItem(ifstream *mdata){
+  record ret;
+
+  ret.name = readVBString(mdata);
+  ret.id = readWord(mdata);                   //0x00
+  ret.attackMod = readWord(mdata);
+  ret.defenceMod = readWord(mdata);
+  ret.itemValue = readInt(mdata);
+  ret.earliestFindLevel = readWord(mdata);
+  ret.chanceofFinding = readWord(mdata);
+  ret.abilityMask = readAbilityMask(mdata);
+  ret.swings = readWord(mdata);
+  ret.sim = readSpecialItemMask(mdata);
+  ret.spellID = readWord(mdata);
+  ret.chargePerCast= readWord(mdata);
+  assert(checkAlignment(mdata));              //0x1C
+  ret.gm = readGuildMask(mdata);
+  assert(checkAlignment(mdata));              //0x20
+  ret.levelScaleFactor = readWord(mdata);
+  ret.damageModifier = readWord(mdata);
+  ret.am = readAlignmentMask(mdata);
+  assert(checkAlignment(mdata));              //0x2A
+  ret.numHands = readWord(mdata);
+  ret.itemClass = readItemClass(mdata);
+  assert(checkAlignment(mdata));              //0x32
+  ret.statReqs = readStatSet(mdata);
+  assert(checkAlignment(mdata));              //0x40
+  ret.statMods = readStatSet(mdata);
+  ret.cm = readCurseMask(mdata);
+  ret.spellLevel = readWord(mdata);
+  ret.classRestricted = readWord(mdata) != 0;
+  //end of record, read to end of alignment
+
+  return ret;
+}
 
 int main(int argc, char** argv){
   char* datAbsolutePath;
