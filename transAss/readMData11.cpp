@@ -35,7 +35,7 @@ static levelHeader readLevelHeader(ifstream *mdata_input){
 }
 
 static void printLevelHeader(levelHeader *lh){
-  cout << "Width:\t\t" << lh->width << endl;
+  cout << dec << "Width:\t\t" << lh->width << endl;
   cout << "Height:\t\t" << lh->height << endl;
   cout << "Level:\t\t" << lh->levelNumber << endl;
   cout << "Areas:\t\t" << lh->numAreas << endl;
@@ -60,15 +60,24 @@ int main(int argc, char** argv){
   }
 
   ifstream mdata_input(datAbsolutePath, ios::binary | ios::in);
+  cout << "Pointer at " << mdata_input.tellg() << endl;
+  WORD numLevels = 0; 
+  WORD recordNumber = 0;
+  WORD levelOffset = 0;
+  
+  // documentation might be wrong, I think this is really a byte.
+  numLevels = (WORD) readByte(&mdata_input);
+  cout << dec << numLevels << " levels to read" << endl;
 
-  unsigned short numLevels = readWord(&mdata_input);
-  unsigned short levelOffset = 0;
-
-  cout << numLevels << " levels to read" << endl;
-
-  for(int i = 1; i < numLevels; i++){
+  for(int i = 0; i < numLevels; i++){
+    cout << "Pointer at " << dec << mdata_input.tellg() << endl;
+    recordNumber = (WORD) readWord(&mdata_input);
     levelOffset = readWord(&mdata_input);
-    cout << "Level " << i << " starts at " << levelOffset << endl;
+    cout << dec << "Level " << i << " record " << recordNumber << 
+      " starts at " << hex << levelOffset << endl;
+
+    seekTo(&mdata_input, RECORD_SIZE);
+  
   }
   levelHeader lh = readLevelHeader(&mdata_input);
   printLevelHeader(&lh);
