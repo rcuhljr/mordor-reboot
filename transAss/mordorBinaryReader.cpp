@@ -52,6 +52,14 @@ CURRENCY readCurrency(ifstream *mdata_input){
   return ret;
 }
 
+int readInt(ifstream *mdata_input){
+  static char* buff = new char[4]; // 4 bytes, 32 bits
+  mdata_input->read(buff, 4);
+  point += 4;
+  int ret = (int) *buff;
+  return ret;
+}
+
 char* readVBString(ifstream *mdata_input){
   // allocates and returns a string.
   int length = readWord(mdata_input);
@@ -77,4 +85,10 @@ char* seekTo(ifstream *mdata_input, int goal){
   //reset point
   point = 0;
   return discard;
+}
+
+bool checkAlignment(ifstream *mdata_input){
+  WORD isZero = 42;
+  isZero = readWord(mdata_input);
+  return isZero == 0;
 }

@@ -15,8 +15,10 @@ typedef float CURRENCY;
 BYTE readByte(ifstream *mdata_input);
 WORD readWord(ifstream *mdata_input);
 DWORD readDWord(ifstream *mdata_input);
+int readInt(ifstream *mdata_input);
 CURRENCY readCurrency(ifstream *mdata_input);
 char* readVBString(ifstream *mdata_input);
 char* seekTo(ifstream *mdata_input, int goal);
+bool checkAlignment(ifstream *mdata_input);
 
 #endif
