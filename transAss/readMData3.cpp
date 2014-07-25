@@ -16,6 +16,7 @@ const int RECORD_SIZE = 125;
 // all unused fields have values 0
 // first record starts at 0x177 (375 decimal)
 
+// LIPSCB
 struct abilities{
   bool levitate;     //0x01
   bool invisible;    //0x02
@@ -26,7 +27,7 @@ struct abilities{
 };
 
 struct specialItemMask{
-  WORD premanentStatMod;       //0x01 to 0x0A
+  WORD permanentStatMod;       //0x01 to 0x0A
   WORD spellPointRechargeItem; //0x0B to 0x0E
   WORD ageReducingItem;        //0xC0 to 0xC9
   int guildCrest;             // 0xC0 to 0xC9
@@ -42,7 +43,7 @@ struct guildMask{
   bool thief;     //0x040
   bool scavenger; //0x080
   bool mage;      //0x100
-  bool sorcere;   //0x200
+  bool sorceror;   //0x200
   bool wizard;    //0x400
   bool healer;    //0x800
 
@@ -52,7 +53,7 @@ struct alignmentMask{
   bool unaligned; //0x01
   bool good;      //0x02
   bool neutral;   //0x04
-  bool evel;      //0x08
+  bool evil;      //0x08
 };
 
 struct resistanceMask{
@@ -60,10 +61,12 @@ struct resistanceMask{
   bool cold;       //0x002
   bool electrical; //0x004
   bool mind;       //0x008
+
   bool disease;    //0x010
   bool poison;     //0x020
   bool magic;      //0x040
   bool stone;      //0x080
+
   bool paralysis;  //0x100
   bool drain;      //0x200
   bool acid;       //0x400
@@ -81,7 +84,7 @@ struct statSet{
 struct curseMask{
   bool notCursed;      //0x0
   bool cursedNoEquip;  //0x1
-  bool curseAutoEquip; //0x2
+  bool cursedAutoEquip; //0x2
 };
 
 struct record{
@@ -116,26 +119,76 @@ struct record{
 };
 
 abilities readAbilityMask(ifstream *mdata){
+  //0x0E to 0x11 -- 3 bytes
+  BYTE b1 = readByte(mdata); //SPIL
+  BYTE b2 = readByte(mdata); //XXBC
+  BYTE b3 = readByte(mdata); //XXXX
   abilities ret;
-  //fixme stub
+  ret.levitate     = b1 ^ 0x01;
+  ret.invisible    = b1 ^ 0x02;
+  ret.protect      = b1 ^ 0x04;
+  ret.seeInvisible = b1 ^ 0x08;
+  ret.criticalHit  = b2 ^ 0x10;
+  ret.backstab     = b2 ^ 0x20;
   return ret;
 }
 
 guildMask readGuildMask(ifstream *mdata){
+  BYTE b1 = readByte(mdata);
+  BYTE b2 = readByte(mdata);
+  BYTE b3 = readByte(mdata);
   guildMask ret;
-  //fixme stub
+
+  // I don't know if any of these are simultaneously set, so fill out the mask
+  ret.nomad = b1 ^ 0x01;
+  ret.warrior = b1 ^ 0x02;
+  ret.paladin = b1 ^ 0x04;
+  ret.ninja = b1 ^ 0x08;
+  
+  ret.villain = b2 ^ 0x01;
+  ret.seeker = b2 ^ 0x02;
+  ret.thief = b2 ^ 0x04;
+  ret.scavenger = b2 ^ 0x08;
+
+  ret.mage = b3 ^ 0x01;
+  ret.sorceror = b3 ^ 0x02;
+  ret.wizard = b3 ^ 0x04;
+  ret.healer = b3 ^ 0x08;
+
   return ret;
 }
 
 alignmentMask readAlignmentMask(ifstream *mdata){
+  BYTE b1 = readByte(mdata);
   alignmentMask ret;
-  //fixme stub
+  
+  ret.unaligned = b1 ^ 0x01;
+  ret.good = b1 ^ 0x02;
+  ret.neutral = b1 ^ 0x04;
+  ret.evil = b1 ^ 0x08;
   return ret;
 }
 
 resistanceMask readResistances(ifstream *mdata){
+  BYTE b1 = readWord(mdata);
+  BYTE b2 = readWord(mdata);
+  BYTE b3 = readWord(mdata);
   resistanceMask ret;
-  // fixme stub
+
+  ret.fire = b1 ^ 0x01;
+  ret.cold = b1 ^ 0x02;
+  ret.electrical = b1 ^ 0x04;
+  ret.mind = b1 ^ 0x08;
+  
+  ret.disease = b2 ^ 0x01;
+  ret.poison = b2 ^ 0x02;
+  ret.magic = b2 ^ 0x04;
+  ret.stone = b2 ^ 0x08;
+
+  ret.paralysis = b3 ^ 0x01;
+  ret.drain = b3 ^ 0x02;
+  ret.acid = b3 ^ 0x04;
+
   return ret;
 }
 
@@ -152,18 +205,80 @@ statSet readStatSet(ifstream *mdata){
 }
 
 curseMask readCurseMask(ifstream *mdata){
+  BYTE b1 = readByte(mdata);
+  BYTE b2 = readByte(mdata);
   curseMask ret;
-  //fixme stub
+
+  ret.notCursed = b1 == 0;
+  ret.cursedNoEquip = b1 == 1;
+  ret.cursedAutoEquip = b1 == 2;
+
   return ret;
 }
 
 specialItemMask readSpecialItemMask(ifstream *mdata){
-  specialItemMask ret;
+  //permanentStatMod 0x01 to 0x0A -- 10 values, discad the first byte?
+  //spellPointRechargeItem 0x0B to 0x0C -- just a word
+  //ageReducingItem 0x0D to 0x0E        -- just a word
+  //guild crest 0xC0 to 0xC9            -- 10 values -- guild mask?
+  specialItemMask ret; 
+
+  
   //fixme stub
   return ret;
 }
 
 int readItemClass(ifstream *mdata){
+  /*
+0x00 = Hands
+0x01 = Dagger
+0x02 = Cross
+0x03 = Sword
+0x04 = Staff
+0x05 = Mace
+0x06 = Axe
+0x07 = Hammer
+0x08 = Leather Armour
+0x09 = Chain Armour
+0x0A = Plate Armour
+0x0B = Shield
+0x0C = Cap
+0x0D = Helmet
+0x0E = Gloves
+0x0F = Gauntlets
+0x10 = Cloak
+0x11 = Bracers
+0x12 = Sash
+0x13 = Girdle
+0x14 = Boots
+0x15 = Ring
+0x16 = Amulet
+0x17 = Potion
+0x18 = Scroll
+0x19 = Tome
+0x1A = Dust
+0x1B = Crystal
+0x1C = Rod
+0x1D = Stone
+0x1E = Sphere
+0x1F = Cube
+0x20 = Artifact
+0x21 = Misc Item
+0x22 = Guild Crest
+0x30: Resistances granted (bitmask)
+0x001 = Fire res
+0x002 = Cold res
+0x004 = Electrical res
+0x008 = Mind res
+0x010 = Disease res
+0x020 = Poison res
+0x040 = Magic res
+0x080 = Stone res
+0x100 = Paralysis res
+0x200 = Drain res
+0x400 = Acid res
+*/
+
   //fixme stub
   return -1;
 }
