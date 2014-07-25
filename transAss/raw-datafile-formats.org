@@ -301,3 +301,18 @@ After that:
 
 
 * MDATA 5 -- No docs
+VBString Version Number
+
+Maybe this contains monsters?  Goblin, Orc, Kobold Twisted Dwarf,
+Goblin Guard Goblin Lord, etc.
+
+Yeah, this is almost certainly a file that contains the source
+material for spawning monsters.
+
+Alignment Characteristics:
+  280 to 320
+  320 to 3c0
+  ...
+  b40 to bd0
+  be0 to c70
+  c80 to d20
