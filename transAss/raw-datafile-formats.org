@@ -139,9 +139,17 @@ short m_required[7]
 short m_resistedBy;
 
 * MDATA 3
-The first item record starts at offset 0x177 (375), each record is 0x7D (125) bytes long.
-All fields are 16 bit signed Int unless otherwise noted.
-Fields marked as 'UNUSED' always have a value of zero.
+
+VBString File Version
+
+Probably a number of record count
+
+Probably an offsets block
+
+The first item record starts at offset 0x177 (375), each record is
+0x7D (125) bytes long.  All fields are 16 bit signed Int unless
+otherwise noted.  Fields marked as 'UNUSED' always have a value of
+zero.
 
 VBString
 Length of name
@@ -290,8 +298,6 @@ After that:
 0x54: Class restricted
 -1 = Yes
 0 = No
-EDIT: 
-- Corrected spell ID field(s)
-- Added 'Value' Field 
+
 
 * MDATA 5 -- No docs
