@@ -5,8 +5,10 @@
 #include <iostream>
 using namespace std;
 
+
 typedef unsigned char BYTE;  // 1 byte
 typedef unsigned short WORD; // 2 bytes wide
+typedef signed short SWORD;
 typedef unsigned long DWORD; // 4 bytes, or long word
 typedef float CURRENCY;
 

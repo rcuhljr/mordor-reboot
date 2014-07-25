@@ -22,10 +22,18 @@ BYTE readByte(ifstream *mdata_input){
 
 WORD readWord(ifstream *mdata_input){
   static char *buff = new char[2];
-  mdata_input->read(buff, 2);
+  mdata_input->read(buff, 2);  
   WORD ret = (WORD) *buff;
   point += 2;
-  return (WORD) *buff;
+  return ret;
+}
+
+SWORD readSWord(ifstream *mdata_input){
+  static char *buff = new char[2];
+  mdata_input->read(buff, 2);  
+  SWORD ret = (SWORD) *buff;
+  point += 2;
+  return ret;
 }
 
 DWORD readDWord(ifstream *mdata_input){
@@ -65,7 +73,7 @@ char* seekTo(ifstream *mdata_input, int goal){
 
   char *discard = new char[length];
   mdata_input->read(discard, length);
-  cout << "Pointer at: " << hex << mdata_input->tellg() << endl;
+
   //reset point
   point = 0;
   return discard;
