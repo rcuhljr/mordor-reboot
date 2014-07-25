@@ -11,12 +11,7 @@
 using namespace std;
 
 const int RECORD_SIZE = 125;
-// each field is a 16bit signed integer unless otherwised noted
-// so, signed word
-// all unused fields have values 0
-// first record starts at 0x177 (375 decimal)
 
-// LIPSCB
 struct abilities{
   bool levitate;     //0x01
   bool invisible;    //0x02
