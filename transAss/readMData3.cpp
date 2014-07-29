@@ -470,47 +470,30 @@ record readItem(ifstream *mdata){
   
   ret.name = readVBString(mdata);
   cout << "Reading: " << ret.name << endl;
-  int offset = 7; 
-  printLoc(mdata, offset, "ID");
   ret.id = readWord(mdata);                   //0x00
-  printLoc(mdata, offset, "Attack");  
   ret.attackMod = readWord(mdata);
-  printLoc(mdata, offset, "Defence");
   ret.defenceMod = readWord(mdata);
-  printLoc(mdata, offset, "Value");
   ret.itemValue = readInt(mdata);
   
 
   cout << "Cost: " << ret.itemValue << endl;
-  printLoc(mdata, offset, "Earliest");
   ret.earliestFindLevel = readWord(mdata);
-  printLoc(mdata, offset, "Find%");
   ret.chanceofFinding = readWord(mdata);
-  printLoc(mdata, offset, "Ability Mask");
   ret.abilityMask = readAbilityMask(mdata);
   
   assert(checkAlignment(mdata));
-  printLoc(mdata, offset, "Swings");  
   ret.swings = readWord(mdata);
-  printLoc(mdata, offset, "Special Item Mask");    
   ret.sim = readSpecialItemMask(mdata);
-  printLoc(mdata, offset, "Spell ID");      
   ret.spellID = readWord(mdata);
-  printLoc(mdata, offset, "ID Spell");      
   ret.spellID2 = readWord(mdata);
-  printLoc(mdata, offset, "Charges");      
   ret.chargePerCast= readWord(mdata);
-  printLoc(mdata, offset, "Guild Mask");      
   assert(checkAlignment(mdata));              //0x1C
   
   ret.gm = readGuildMask(mdata);
   
   assert(checkAlignment(mdata));              //0x20
-  printLoc(mdata, offset, "Level Scale");      
   ret.levelScaleFactor = readWord(mdata);
-  printLoc(mdata, offset, "Damage Mod");      
   ret.damageModifier = readInt(mdata);
-  printLoc(mdata, offset, "Alignment Mask");      
   ret.am = readAlignmentMask(mdata);
   assert(checkAlignment(mdata));              //0x2A
 
