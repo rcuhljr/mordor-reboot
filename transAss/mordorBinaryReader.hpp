@@ -12,6 +12,7 @@ typedef signed short SWORD;
 typedef unsigned long DWORD; // 4 bytes, or long word
 typedef float CURRENCY;
 
+void printLoc(ifstream *mdata, int offset, const char *prefix);
 BYTE readByte(ifstream *mdata_input);
 WORD readWord(ifstream *mdata_input);
 DWORD readDWord(ifstream *mdata_input);

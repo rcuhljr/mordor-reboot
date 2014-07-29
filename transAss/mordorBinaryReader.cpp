@@ -87,6 +87,13 @@ char* seekTo(ifstream *mdata_input, int goal){
   return discard;
 }
 
+void printLoc(ifstream *mdata_input, int offset, const char *prefix){
+  cout << prefix << "\t\t";
+  cout << hex << "Position: 0x" << point - offset << "\t\t\t";
+  cout << hex << "Memory Offset: 0x" << mdata_input->tellg()<< endl;
+}
+
+
 bool checkAlignment(ifstream *mdata_input){
   WORD isZero = 42;
   isZero = readWord(mdata_input);
