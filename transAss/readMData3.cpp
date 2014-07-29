@@ -113,18 +113,42 @@ struct record{
   bool classRestricted;   //0x54 -- -1 = Yes, 0 = No
 };
 
+void printAbilityMask(const abilities *ret){
+  cout << "abilities:\t";
+  if (ret->levitate){
+    cout << "Levitates ";
+  }
+  if (ret ->invisible){
+    cout << "Invisible ";
+  }
+  if (ret->protect){
+    cout << "Protects ";
+  }
+  if (ret->seeInvisible){
+    cout << "See Invisible ";
+  }
+  if (ret->criticalHit){
+    cout << "Critical Hit ";
+  }
+  if (ret->backstab){
+    cout << "Backstab ";
+  }
+  cout << endl;
+}
+
 abilities readAbilityMask(ifstream *mdata){
   //0x0E to 0x11 -- 3 bytes
   BYTE b1 = readByte(mdata); //SPIL
   BYTE b2 = readByte(mdata); //XXBC
-  BYTE b3 = readByte(mdata); //XXXX
   abilities ret;
-  ret.levitate     = b1 ^ 0x01;
-  ret.invisible    = b1 ^ 0x02;
-  ret.protect      = b1 ^ 0x04;
-  ret.seeInvisible = b1 ^ 0x08;
-  ret.criticalHit  = b2 ^ 0x10;
-  ret.backstab     = b2 ^ 0x20;
+
+  ret.levitate     = b1 & 0x01;
+  ret.invisible    = b1 & 0x02;
+  ret.protect      = b1 & 0x04;
+  ret.seeInvisible = b1 & 0x08;
+  ret.criticalHit  = b2 & 0x10;
+  ret.backstab     = b2 & 0x20;
+  printAbilityMask(&ret);
   return ret;
 }
 
@@ -278,14 +302,22 @@ int readItemClass(ifstream *mdata){
   return -1;
 }
 
+void printItem(ifstream *mdata){
+  assert(false);
+}
+
 record readItem(ifstream *mdata){
   record ret;
-
+  
   ret.name = readVBString(mdata);
+  cout << "Reading: " << ret.name << endl;
   ret.id = readWord(mdata);                   //0x00
   ret.attackMod = readWord(mdata);
   ret.defenceMod = readWord(mdata);
   ret.itemValue = readInt(mdata);
+
+  cout << "Cost: " << ret.itemValue << endl;
+
   ret.earliestFindLevel = readWord(mdata);
   ret.chanceofFinding = readWord(mdata);
   ret.abilityMask = readAbilityMask(mdata);
@@ -330,5 +362,18 @@ int main(int argc, char** argv){
     return 1;
   }
 
+  ifstream mdata(datAbsolutePath, ios::binary | ios::in);
+
+  //read what I think is the header out
+  char *version = readVBString(&mdata);
+  int numRecords = readWord(&mdata);
+
+  cout << version << "\tRecords: " << numRecords << endl;
+  seekTo(&mdata, 0x177);
+  for(int i = 0; i < numRecords; i++){
+    cout << "Reading item " << i << endl;
+    readItem(&mdata);
+    seekTo(&mdata, RECORD_SIZE);
+  }
   return 0;
 }
