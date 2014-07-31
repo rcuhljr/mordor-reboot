@@ -65,56 +65,56 @@ header readHeader(ifstream *mdata){
 
 void printMonster(monster *m){
   cout << m->name << endl
-       << m->attackRating << endl
-       << m->defenceRating << endl
-       << m->id << endl
-       << m->hitPoints << endl
-       << m->groupSize << endl
-       << m->portaitID << endl
-       << m->u8 << endl
-       << m->appearOnLevel << endl
-       << m->fireResistance << endl
-       << m->coldResistance << endl
-       << m->electricalResistance << endl
-       << m->mindResistance << endl
-       << m->diseaseResistance << endl
-       << m->poisonResistance << endl
-       << m->magicResistance << endl
-       << m->stoneResistance << endl
-       << m->paralysisResistance << endl
-       << m->drainResistance << endl
-       << m->acidResistance << endl
-       << m->u21 << endl
-       << m->u22 << endl
-       << m->u23 << endl
-       << m->u24 << endl
-       << m->u25 << endl
-       << m->u26 << endl
-       << m->u27 << endl
-       << m->encounterChance << endl
-       << m->nothingChance << endl
-       << m->boxChance << endl
-       << m->chestChance << endl
-       << m->u32 << endl
-       << m->u33 << endl
-       << m->u34 << endl
-       << m->u35 << endl
-       << m->u36 << endl
-       << m->u37 << endl
-       << m->u38 << endl
-       << m->strength << endl
-       << m->intelligence << endl
-       << m->wisdom << endl
-       << m->constitution << endl
-       << m->dexterity << endl
-       << m->u45 << endl
-       << m->u46 << endl
-       << m->u47 << endl
-       << m->u48 << endl
-       << m->u49 << endl
-       << m->u50 << endl
-       << m->u51 << endl
-       << m->u52 << endl;
+       << "Attack Rating: " << m->attackRating << endl
+       << "defenceRating" << m->defenceRating << endl
+       << "ID" << m->id << endl
+       << "HP" << m->hitPoints << endl
+       << "groupSize" << m->groupSize << endl
+       << "portraitID" << m->portaitID << endl
+       << "u8" << m->u8 << endl
+       << "appearOnLevel" << m->appearOnLevel << endl
+       << "fireResistance" << m->fireResistance << endl
+       << "coldResistance" << m->coldResistance << endl
+       << "electricalResistance" << m->electricalResistance << endl
+       << "mindResistance" << m->mindResistance << endl
+       << "diseaseResistance" << m->diseaseResistance << endl
+       << "poisonResistance" << m->poisonResistance << endl
+       << "magicResistance" << m->magicResistance << endl
+       << "stoneResistance" << m->stoneResistance << endl
+       << "paralyisResistance" << m->paralysisResistance << endl
+       << "drainResistance" << m->drainResistance << endl
+       << "acidResistance" << m->acidResistance << endl
+       << "u21" << m->u21 << endl
+       << "u22" << m->u22 << endl
+       << "u23" << m->u23 << endl
+       << "u24" << m->u24 << endl
+       << "u25" << m->u25 << endl
+       << "u26" << m->u26 << endl
+       << "u27" << m->u27 << endl
+       << "encounterChance" << m->encounterChance << endl
+       << "nothingChance" << m->nothingChance << endl
+       << "boxChance" << m->boxChance << endl
+       << "chestChance" << m->chestChance << endl
+       << "u32" << m->u32 << endl
+       << "u33" << m->u33 << endl
+       << "u34" << m->u34 << endl
+       << "u35" << m->u35 << endl
+       << "u36" << m->u36 << endl
+       << "u37" << m->u37 << endl
+       << "u38" << m->u38 << endl
+       << "strength" << m->strength << endl
+       << "intelligence" << m->intelligence << endl
+       << "wisdom" << m->wisdom << endl
+       << "constitution" << m->constitution << endl
+       << "dexterity" << m->dexterity << endl
+       << "u45" << m->u45 << endl
+       << "u46" << m->u46 << endl
+       << "u47" << m->u47 << endl
+       << "u48" << m->u48 << endl
+       << "u49" << m->u49 << endl
+       << "u50" << m->u50 << endl
+       << "u51" << m->u51 << endl
+       << "u52" << m->u52 << endl;
 }
 
 monster readMonster(ifstream *mdata){
