@@ -63,6 +63,8 @@ header readHeader(ifstream *mdata){
  
   printHeader(&ret);
   seekTo(mdata, RECORD_SIZE);
+  seekTo(mdata, RECORD_SIZE); // peel off cruft before first record.
+  seekTo(mdata, RECORD_SIZE);
   return ret;
 }
 
@@ -197,8 +199,7 @@ int main(int argc, char** argv){
   ifstream mdata(datAbsolutePath, ios::binary | ios::in);
 
   header h = readHeader(&mdata);
-  seekTo(&mdata, RECORD_SIZE);
-  seekTo(&mdata, RECORD_SIZE);
+
   for(int i = 0; i < h.numMonsters; i++){
     cout << "Reading " << i << "th monster" << endl; 
     readMonster(&mdata);
