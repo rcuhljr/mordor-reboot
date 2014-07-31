@@ -257,6 +257,7 @@ After that:
 0x20 = Artifact
 0x21 = Misc Item
 0x22 = Guild Crest
+
 0x30: Resistances granted (bitmask)
 0x001 = Fire res
 0x002 = Cold res
@@ -301,18 +302,60 @@ After that:
 
 
 * MDATA 5 -- No docs
-VBString Version Number
-
-Maybe this contains monsters?  Goblin, Orc, Kobold Twisted Dwarf,
-Goblin Guard Goblin Lord, etc.
-
-Yeah, this is almost certainly a file that contains the source
-material for spawning monsters.
-
-Alignment Characteristics:
-  280 to 320
-  320 to 3c0
-  ...
-  b40 to bd0
-  be0 to c70
-  c80 to d20
+Header part1:
+  prefixString : File version
+Header part2:
+  short        : Number of monsters
+Monsterrecord
+  prefixString : Name
+  short        : Attack Rating
+  short        : Defence Rating
+  short        : ID (unique, nonsequential)
+  short        : Hit Points
+  short        : group size
+  short        : portrait ID
+  short        : ??field8
+  short        : appearOnLevel
+  short        : Fire resistance
+  short        : Cold resistance
+  short        : Electrical resistance
+  short        : Mind resistance
+  short        : Disease resistance
+  short        : Poison resistance
+  short        : Magic resistance
+  short        : Stone resistance
+  short        : Paralysis resistance
+  short        : Drain resistance
+  short        : Acid resistance
+  short        : ??field21
+  short        : ??field22
+  short        : ??field23
+  short        : ??field24
+  short        : ??field25
+  short        : ??field26
+  short        : ??field27
+  short        : Encounter chance
+  short        : Nothing chance
+  short        : Box chance
+  short        : Chest chance
+  short        : ??field32
+  short        : ??field33
+  short        : ??field34
+  short        : ??field35
+  short        : ??field36
+  short        : ??field37
+  short        : ??field38
+  short        : Strength
+  short        : Intelligence
+  short        : Wisdom
+  short        : Constitution
+  short        : Charisma
+  short        : Dexterity
+  short        : ??field45
+  short        : ??field46
+  short        : ??field47
+  short        : ??field48
+  short        : ??field49
+  short        : ??field50
+  short        : ??field51
+  short        : ??field52
