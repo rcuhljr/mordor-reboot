@@ -11,6 +11,14 @@
 using namespace std;
 
 const int RECORD_SIZE = 125;
+const int NUM_RECORDS = 365;
+
+struct specialItemMask{
+  WORD permanentStatMod;       //0x01 to 0x0A
+  WORD spellPointRechargeItem; //0x0B to 0x0E
+  WORD ageReducingItem;        //0xC0 to 0xC9
+  int guildCrest;             // 0xC0 to 0xC9
+};
 
 struct abilities{
   bool levitate;     //0x01
@@ -21,12 +29,6 @@ struct abilities{
   bool backstab;     //0x20
 };
 
-struct specialItemMask{
-  WORD permanentStatMod;       //0x01 to 0x0A
-  WORD spellPointRechargeItem; //0x0B to 0x0E
-  WORD ageReducingItem;        //0xC0 to 0xC9
-  int guildCrest;             // 0xC0 to 0xC9
-};
 
 struct guildMask{
   bool nomad;     //0x001
@@ -113,6 +115,7 @@ struct record{
   int spellLevel;         //0x52
   bool classRestricted;   //0x54 -- -1 = Yes, 0 = No
 };
+
 
 void printAbilityMask(const abilities *ret){
   cout << "abilities:\t";
@@ -346,6 +349,7 @@ void printStatSet(const statSet *ret){
   cout << "CHA: " << ret->charisma << endl;
   cout << "DEX: " << ret->dexterity << endl;
 }
+
 statSet readStatSet(ifstream *mdata){
   statSet ret;
   // these may need to be signed words instead of unsigned words
@@ -396,7 +400,10 @@ specialItemMask readSpecialItemMask(ifstream *mdata){
   specialItemMask ret; 
   WORD data = readWord(mdata);
   
+  cout << hex << "Special Item mask " << data << dec << endl;
   //fixme stub
+
+  printSpecialItemMask(&ret);
   return ret;
 }
 
@@ -452,14 +459,9 @@ int readItemClass(ifstream *mdata){
 */
 
     WORD classID = readWord(mdata);
-    switch(classID){
-    case 0x00:
-      cout << "Found hands" << endl;
-      return 0x00;
-      break;
-    default: return -1;
-    }
+    return -1;
 }
+
 
 void printItem(ifstream *mdata){
   assert(false);
@@ -510,7 +512,7 @@ record readItem(ifstream *mdata){
   ret.spellLevel = readWord(mdata);
   ret.classRestricted = readWord(mdata) != 0;
   //end of record, read to end of alignment
-
+  seekTo(mdata, RECORD_SIZE);
   return ret;
 }
 
@@ -534,14 +536,13 @@ int main(int argc, char** argv){
 
   //read what I think is the header out
   char *version = readVBString(&mdata);
-  int numRecords = readWord(&mdata);
 
-  cout << version << "\tRecords: " << numRecords << endl;
   seekTo(&mdata, 0x177);
-  for(int i = 0; i < numRecords; i++){
+ 
+  for(int i = 0; i <= NUM_RECORDS; i++){
     cout << "Reading item " << i << endl;
     readItem(&mdata);
-    seekTo(&mdata, RECORD_SIZE);
   }
+ 
   return 0;
 }
