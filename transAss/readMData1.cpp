@@ -13,7 +13,7 @@ struct header{
   char* version;
   WORD numRaces;
   WORD numGuilds;
-  WORD numItemSubptypes;
+  WORD numItemSubtypes;
   WORD numItemTypes;
   WORD numMonsterSubtypes;
   WORD numMonsterTypes;
@@ -58,6 +58,37 @@ struct namedTypeID{
   WORD type;
 };
 
+void printFileHeader(header *ret){
+  cout << "Version:              " << ret->version << endl;
+  cout << "Num Races:            " << ret->numRaces << endl;
+  cout << "Num Guilds:           " << ret->numGuilds << endl;
+  cout << "Num Item Subtypes:    " << ret->numItemSubtypes << endl;
+  cout << "Num Item Types:       " << ret->numItemTypes << endl;
+  cout << "Num Monster Subtypes: " << ret->numMonsterSubtypes << endl;
+  cout << "Num Monster Types:    " << ret->numMonsterTypes << endl;
+}
+
+header readFileHeader(ifstream *mdata){
+  header ret;
+
+  ret.version = readVBString(mdata);
+  seekTo(mdata, RECORD_LENGTH);
+  ret.numRaces = readWord(mdata);
+  seekTo(mdata, RECORD_LENGTH);
+  ret.numGuilds = readWord(mdata);
+  seekTo(mdata, RECORD_LENGTH);
+  ret.numItemSubtypes = readWord(mdata);
+  seekTo(mdata, RECORD_LENGTH);
+  ret.numItemTypes = readWord(mdata);
+  seekTo(mdata, RECORD_LENGTH);
+  ret.numMonsterSubtypes = readWord(mdata);
+  seekTo(mdata, RECORD_LENGTH);
+  ret.numMonsterTypes = readWord(mdata);
+  seekTo(mdata, RECORD_LENGTH);
+  printFileHeader(&ret);
+  return ret;
+}
+
 
 int main(int argc, char** argv){
   char* datAbsolutePath;
@@ -73,6 +104,10 @@ int main(int argc, char** argv){
     cerr << datAbsolutePath << " doesn't appear to be a valid MDATA1.MDR" << endl;
     return 1;
   }
+
+  ifstream mdata(datAbsolutePath, ios::binary | ios::in);
+
+  header h = readFileHeader(&mdata);
 
   return 0;
 }
