@@ -90,32 +90,98 @@ header readFileHeader(ifstream *mdata){
 }
 
 void printRace(race *ret){
+  cout << ret->name << endl
+       << "Min Stats: " << ret->minStats << endl
+       << "Max Stats: " << ret->maxStats << endl
+       << "Resistances: " << ret->resistances << endl
+       << "Alignment: " << ret->alignment << endl
+       << "Size: " << ret->size << endl
+       << "Bonus Points: " << ret->bonusPoints << endl
+       << "Max Age: " << ret->maxAge << endl
+       << "expFactor: " << ret->expFactor << endl;
 }
 
 race readRace(ifstream *mdata){
   race ret;
+  ret.name = readVBString(mdata);
+  ret.minStats = readWord(mdata);
+  ret.maxStats = readWord(mdata);
+  ret.resistances = readWord(mdata);
+  ret.alignment = readDWord(mdata);
+  ret.size = readWord(mdata);
+  ret.bonusPoints = readWord(mdata);
+  ret.maxAge = readWord(mdata);
+  ret.expFactor = readDWord(mdata);
 
   printRace(&ret);
+  seekTo(mdata, RECORD_LENGTH);
   return ret;
 }
 
 void printGuild(guild *ret){
+  cout << ret->name << endl
+       << ret->averageHits << endl
+       << ret->maxLevel << endl
+       << ret->MH << endl
+       << ret->expFactor << endl
+       << ret->u3 << endl
+       << ret->reqStats << endl
+       << ret->alignment << endl
+       << ret->abilityRates << endl
+       << ret->u7 << endl
+       << ret->u8 << endl
+       << ret->questPercentage << endl
+       << ret->spellStuff << endl
+       << ret->raceMask << endl
+       << ret->u12 << endl
+       << ret->levelMod << endl
+       << ret->u13 << endl
+       << ret->u14 << endl
+       << ret->u15 << endl
+       << ret->u16 << endl
+       << ret->u17 << endl;
 }
 
 guild readGuild(ifstream *mdata){
   guild ret;
 
+  ret.name = readVBString(mdata);
+  ret.averageHits = readWord(mdata);
+  ret.maxLevel = readWord(mdata);
+  ret.MH = readWord(mdata);
+  ret.expFactor = readDWord(mdata);
+  ret.u3 = readWord(mdata);
+  ret.reqStats = readWord(mdata);
+  ret.alignment = readDWord(mdata);
+  ret.abilityRates = readDWord(mdata);
+  ret.u7 = readWord(mdata);
+  ret.u8 = readDWord(mdata);
+  ret.questPercentage = readWord(mdata);
+  ret.spellStuff = readDWord(mdata);
+  ret.raceMask = readWord(mdata);
+  ret.u12 = readWord(mdata);
+  ret.levelMod = readDWord(mdata);
+  ret.u13 = readDWord(mdata);
+  ret.u14 = readDWord(mdata);
+  ret.u15 = readDWord(mdata);
+  ret.u16 = readWord(mdata);
+  ret.u17 = readWord(mdata);
+
   printGuild(&ret);
+  seekTo(mdata, RECORD_LENGTH);
   return ret;
 }
 
 void printNamedType(namedTypeID *ret){
+  cout << dec << ret->name << "\tID: " << ret->type << endl;
 }
 
 namedTypeID readNamedType(ifstream *mdata){
   namedTypeID ret;
-  
+  ret.name = readVBString(mdata);
+  ret.type = readWord(mdata);
   printNamedType(&ret);
+  seekTo(mdata, RECORD_LENGTH);
   return ret;
 }
 
@@ -140,28 +206,41 @@ int main(int argc, char** argv){
   header h = readFileHeader(&mdata);
   int i = 0;
 
+  cout << endl;
   // races are first
   for(i = 0; i < h.numRaces; i++){
+    readRace(&mdata);
+    cout << endl;
   }
 
   // then guilds
   for(i = 0; i < h.numGuilds; i++){
+    readGuild(&mdata);
+    cout << endl;
   }
 
   // then item subtypes
   for(i = 0; i < h.numItemSubtypes; i++){
+    readNamedType(&mdata);
+    cout << endl;
   }
 
   // then items
   for(i = 0; i < h.numItemTypes; i++){
+    readNamedType(&mdata);
+    cout << endl;
   }
 
   // then monster subtypes
   for(i = 0; i < h.numMonsterSubtypes; i++){
+    readNamedType(&mdata);
+    cout << endl;
   }
 
   // then monsters
   for(i = 0; i < h.numMonsterTypes; i++){
+    readNamedType(&mdata);
+    cout << endl;
   }
 
   return 0;
