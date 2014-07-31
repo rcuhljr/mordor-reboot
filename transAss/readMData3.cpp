@@ -363,8 +363,8 @@ void printItem(ifstream *mdata){
   assert(false);
 }
 
-record readItem(ifstream *mdata){
-  record ret;
+item readItem(ifstream *mdata){
+  item ret;
   
   ret.name = readVBString(mdata);
   cout << "Reading: " << ret.name << endl;

@@ -75,7 +75,7 @@ struct curseMask{
   bool cursedAutoEquip; //0x2
 };
 
-struct record{
+struct item{
   char* name;             //however much
   int id;                 //0x00
   int attackMod;          //0x02
