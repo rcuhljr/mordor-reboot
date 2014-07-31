@@ -48,6 +48,26 @@ struct monster{
   WORD u45, u46, u47, u48, u49, u50, u51, u52;
 };
 
+void printHeader(const header *ret){
+}
+
+header readHeader(const ifstream *mdata){
+  header ret;
+ 
+  printHeader(&ret);
+  return ret;
+}
+
+void printMonster(monster *m){
+}
+
+monster readMonster(const ifstream *mdata){
+  monster ret;
+  
+  printMonster(&ret);
+  return ret;
+}
+
 int main(int argc, char** argv){
   char* datAbsolutePath;
 
