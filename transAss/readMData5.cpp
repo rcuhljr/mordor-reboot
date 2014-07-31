@@ -119,7 +119,58 @@ void printMonster(monster *m){
 
 monster readMonster(ifstream *mdata){
   monster ret;
-  
+  ret.name = readVBString(mdata);
+  ret.attackRating = readWord(mdata);
+  ret.defenceRating = readWord(mdata);
+  ret.id = readWord(mdata);
+  ret.hitPoints = readWord(mdata);
+  ret.groupSize = readWord(mdata);
+  ret.portaitID = readWord(mdata);
+  ret.u8 = readWord(mdata);
+  ret.appearOnLevel = readWord(mdata);
+  ret.fireResistance = readWord(mdata);
+  ret.coldResistance = readWord(mdata);
+  ret.electricalResistance = readWord(mdata);
+  ret.mindResistance = readWord(mdata);
+  ret.diseaseResistance = readWord(mdata);
+  ret.poisonResistance = readWord(mdata);
+  ret.magicResistance = readWord(mdata);
+  ret.stoneResistance = readWord(mdata);
+  ret.paralysisResistance = readWord(mdata);
+  ret.drainResistance = readWord(mdata);
+  ret.acidResistance = readWord(mdata);
+  ret.u21 = readWord(mdata);
+  ret.u22 = readWord(mdata);
+  ret.u23 = readWord(mdata);
+  ret.u24 = readWord(mdata);
+  ret.u25 = readWord(mdata);
+  ret.u26 = readWord(mdata); 
+  ret.u27 = readWord(mdata);
+  ret.encounterChance = readWord(mdata);
+  ret.nothingChance = readWord(mdata);
+  ret.boxChance = readWord(mdata);
+  ret.chestChance = readWord(mdata);
+  ret.u32 = readWord(mdata);
+  ret.u33 = readWord(mdata);
+  ret.u34 = readWord(mdata);
+  ret.u35 = readWord(mdata);
+  ret.u36 = readWord(mdata);
+  ret.u37 = readWord(mdata);
+  ret.u38 = readWord(mdata);
+  ret.strength = readWord(mdata);
+  ret.intelligence = readWord(mdata);
+  ret.wisdom = readWord(mdata);
+  ret.constitution = readWord(mdata);
+  ret.dexterity = readWord(mdata);
+  ret.u45 = readWord(mdata);
+  ret.u46 = readWord(mdata);
+  ret.u47 = readWord(mdata);
+  ret.u48 = readWord(mdata);
+  ret.u49 = readWord(mdata);
+  ret.u50 = readWord(mdata);
+  ret.u51 = readWord(mdata);
+  ret.u52 = readWord(mdata);
+
   printMonster(&ret);
   return ret;
 }
