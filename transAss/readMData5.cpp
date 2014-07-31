@@ -49,19 +49,75 @@ struct monster{
 };
 
 void printHeader(const header *ret){
+  cout << ret->version << "\tNum Monsters: "
+       << ret->numMonsters << endl;
 }
 
-header readHeader(const ifstream *mdata){
+header readHeader(ifstream *mdata){
   header ret;
+
+  ret.version = readVBString(mdata);
+  ret.numMonsters = readWord(mdata);
  
   printHeader(&ret);
   return ret;
 }
 
 void printMonster(monster *m){
+  cout << m->name << endl
+       << m->attackRating << endl
+       << m->defenceRating << endl
+       << m->id << endl
+       << m->hitPoints << endl
+       << m->groupSize << endl
+       << m->portaitID << endl
+       << m->u8 << endl
+       << m->appearOnLevel << endl
+       << m->fireResistance << endl
+       << m->coldResistance << endl
+       << m->electricalResistance << endl
+       << m->mindResistance << endl
+       << m->diseaseResistance << endl
+       << m->poisonResistance << endl
+       << m->magicResistance << endl
+       << m->stoneResistance << endl
+       << m->paralysisResistance << endl
+       << m->drainResistance << endl
+       << m->acidResistance << endl
+       << m->u21 << endl
+       << m->u22 << endl
+       << m->u23 << endl
+       << m->u24 << endl
+       << m->u25 << endl
+       << m->u26 << endl
+       << m->u27 << endl
+       << m->encounterChance << endl
+       << m->nothingChance << endl
+       << m->boxChance << endl
+       << m->chestChance << endl
+       << m->u32 << endl
+       << m->u33 << endl
+       << m->u34 << endl
+       << m->u35 << endl
+       << m->u36 << endl
+       << m->u37 << endl
+       << m->u38 << endl
+       << m->strength << endl
+       << m->intelligence << endl
+       << m->wisdom << endl
+       << m->constitution << endl
+       << m->dexterity << endl
+       << m->u45 << endl
+       << m->u46 << endl
+       << m->u47 << endl
+       << m->u48 << endl
+       << m->u49 << endl
+       << m->u50 << endl
+       << m->u51 << endl
+       << m->u52 << endl;
 }
 
-monster readMonster(const ifstream *mdata){
+monster readMonster(ifstream *mdata){
   monster ret;
   
   printMonster(&ret);
