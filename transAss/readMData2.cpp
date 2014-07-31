@@ -11,24 +11,8 @@ using namespace std;
 
 const int RECORD_SIZE = 75;
 
-struct spell{
-  char* name;
-  int id;
-  int spellClass;
-  int level;
-  int u4;
-  int killEffect;
-  int affectMonster;
-  int affectGroup;
-  int damage1;
-  int damage2;
-  int specialEffect;
-  int required;
-  int resistedBy;
-};
-
-spell readSpell(ifstream *mdata){
-  spell thisSpell;
+struct Spell readSpell(ifstream *mdata){
+  struct Spell thisSpell;
   thisSpell.name = readVBString(mdata);
   thisSpell.id = readWord(mdata);
   thisSpell.spellClass = readWord(mdata);
@@ -47,7 +31,7 @@ spell readSpell(ifstream *mdata){
   return thisSpell;
 }
 
-void printSpell(spell *s){
+void printSpell(struct Spell *s){
   cout << s->name << endl;
   cout << "ID:\t\t\t" << s->id << endl;
   cout << "Class:\t\t\t" << s->spellClass << endl;
@@ -101,7 +85,7 @@ int main(int argc, char** argv){
   // read spell list
   for(int i = 0; i < numSpells2; i++){
     cout << "Reading spell " << dec << i << endl;
-    spell first = readSpell(&mdata_input);
+    struct Spell first = readSpell(&mdata_input);
     printSpell(&first);
     cout << endl;
     seekTo(&mdata_input,RECORD_SIZE);
