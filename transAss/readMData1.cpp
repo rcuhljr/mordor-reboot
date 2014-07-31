@@ -89,6 +89,36 @@ header readFileHeader(ifstream *mdata){
   return ret;
 }
 
+void printRace(race *ret){
+}
+
+race readRace(ifstream *mdata){
+  race ret;
+
+  printRace(&ret);
+  return ret;
+}
+
+void printGuild(guild *ret){
+}
+
+guild readGuild(ifstream *mdata){
+  guild ret;
+
+  printGuild(&ret);
+  return ret;
+}
+
+void printNamedType(namedTypeID *ret){
+}
+
+namedTypeID readNamedType(ifstream *mdata){
+  namedTypeID ret;
+  
+  printNamedType(&ret);
+  return ret;
+}
+
 
 int main(int argc, char** argv){
   char* datAbsolutePath;
@@ -108,6 +138,31 @@ int main(int argc, char** argv){
   ifstream mdata(datAbsolutePath, ios::binary | ios::in);
 
   header h = readFileHeader(&mdata);
+  int i = 0;
+
+  // races are first
+  for(i = 0; i < h.numRaces; i++){
+  }
+
+  // then guilds
+  for(i = 0; i < h.numGuilds; i++){
+  }
+
+  // then item subtypes
+  for(i = 0; i < h.numItemSubtypes; i++){
+  }
+
+  // then items
+  for(i = 0; i < h.numItemTypes; i++){
+  }
+
+  // then monster subtypes
+  for(i = 0; i < h.numMonsterSubtypes; i++){
+  }
+
+  // then monsters
+  for(i = 0; i < h.numMonsterTypes; i++){
+  }
 
   return 0;
 }
