@@ -4,6 +4,7 @@
 #include "mdataTools.hpp"
 #include "mordorBinaryReader.hpp"
 #include "readMData1.hpp"
+#include "assert.h"
 
 using namespace std;
 
@@ -120,26 +121,26 @@ race readRace(ifstream *mdata){
 
 void printGuild(guild *ret){
   cout << ret->name << endl
-       << ret->averageHits << endl
-       << ret->maxLevel << endl
-       << ret->MH << endl
-       << ret->expFactor << endl
-       << ret->u3 << endl
-       << ret->reqStats << endl
-       << ret->alignment << endl
-       << ret->abilityRates << endl
-       << ret->u7 << endl
-       << ret->u8 << endl
-       << ret->questPercentage << endl
-       << ret->spellStuff << endl
-       << ret->raceMask << endl
-       << ret->u12 << endl
-       << ret->levelMod << endl
-       << ret->u13 << endl
-       << ret->u14 << endl
-       << ret->u15 << endl
-       << ret->u16 << endl
-       << ret->u17 << endl;
+       << "Avg. Hits: " << ret->averageHits << endl
+       << "Max Level: " << ret->maxLevel << endl
+       << "MH: " << ret->MH << endl
+       << "EXP Factor: " << ret->expFactor << endl
+       << "reqStats: " << ret->reqStats << endl
+       << "alignment: " << ret->alignment << endl
+       << "ability rates: " << ret->abilityRates << endl
+       << "questPercentage: " << ret->questPercentage << endl
+       << "spellStuff: " << ret->spellStuff << endl
+       << "raceMask: " << ret->raceMask << endl
+       << "levelMod: " << ret->levelMod << endl
+       << "u3: " << ret->u3 << endl
+       << "u7: " << ret->u7 << endl
+       << "u8: " << ret->u8 << endl
+       << "u12: " << ret->u12 << endl
+       << "u13: " << ret->u13 << endl
+       << "u14: " << ret->u14 << endl
+       << "u15: " << ret->u15 << endl
+       << "u16: " << ret->u16 << endl
+       << "u17: " << ret->u17 << endl;
 }
 
 guild readGuild(ifstream *mdata){
@@ -169,6 +170,18 @@ guild readGuild(ifstream *mdata){
 
   printGuild(&ret);
   seekTo(mdata, RECORD_LENGTH);
+  /* Some of the u* values are non 0.
+
+  assert(0 == ret.u3);
+  assert(0 == ret.u7);
+  assert(0 == ret.u8);
+  assert(0 == ret.u12);
+  assert(0 == ret.u13);
+  assert(0 == ret.u14);
+  assert(0 == ret.u15);
+  assert(0 == ret.u16);
+  assert(0 == ret.u17);
+  */
   return ret;
 }
 
