@@ -4,14 +4,18 @@
  */
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include "mordorBinaryReader.hpp" // bring in the binary ready definitions
 #include "mdataTools.hpp"         // constants, simple data file checks
 #include "readMData11.hpp"
+#include "assert.h"
 
 using namespace std;
 
 static const int RECORD_SIZE = 20;
+static const int MAX_WIDTH = 30;
+static const int MAX_HEIGHT = 30;
 
 
 void printFieldRecord(fieldRecord *ret){
@@ -39,6 +43,17 @@ void printCountHeader(countHeader *ret){
 countHeader readCountHeader(ifstream *mdata){
   countHeader ret;
   ret.count = readWord(mdata);
+  printCountHeader(&ret);
+  seekTo(mdata, RECORD_SIZE);
+  return ret;
+}
+
+countHeader readOffsetHeader(ifstream *mdata){
+  countHeader ret;
+  // I actually want the offset to reflect the physical location in the file.
+  WORD read = readWord(mdata);
+  cout << "Read: " << showbase << internal << setfill('0') << hex << read << dec << endl;
+  ret.count = RECORD_SIZE * (read - 1); // -1 taken from wabbits editor
   printCountHeader(&ret);
   seekTo(mdata, RECORD_SIZE);
   return ret;
@@ -144,15 +159,18 @@ int main(int argc, char** argv){
   levelHeader levelHeaders[numberOfLevels.count];
 
   cout << "Num levels: " << numberOfLevels.count << endl;
+
+  // read in the level offsets
   for(int i = 0; i < numberOfLevels.count; i++){
+    cout << "Pointer at: " << mdata_input.tellg() << endl;
     cout << "Level " << i << "\tOffset: ";
-    levelOffsets[i] = readCountHeader(&mdata_input);
-
+    levelOffsets[i] = readOffsetHeader(&mdata_input);
   }
 
-  for(int i = 0; i < numberOfLevels.count; i++){
-    levelHeaders[i] = readLevelHeader(&mdata_input);
-  }
+  // try to read the first map
+  mdata_input.seekg(levelOffsets[0].count, ios_base::beg);
+  readLevelHeader(&mdata_input);
+
 
   return 0;
 }
