@@ -15,10 +15,17 @@ static const int RECORD_SIZE = 20;
 
 
 void printFieldRecord(fieldRecord *ret){
+  cout << "Spawn Area ID: " << ret->spawnAreaID << endl
+       << "Mask: " << ret->fieldMask << endl;
 }
 
 fieldRecord readFieldRecord(ifstream *mdata){
   fieldRecord ret;
+  ret.spawnAreaID = readWord(mdata);
+
+  for(int i = 0; i < 8; i++){
+    ret.fieldMask[i] = readByte(mdata);
+  }
 
   printFieldRecord(&ret);
   seekTo(mdata, RECORD_SIZE);
@@ -44,30 +51,40 @@ void printAreaRecord(areaRecord *ret){
 
 areaRecord readAreaRecord(ifstream *mdata){
   areaRecord ret;
-
+  ret.spawnTypeMask = readDWord(mdata);
+  ret.lairID = readWord(mdata);
   printAreaRecord(&ret);
   seekTo(mdata, RECORD_SIZE);
   return ret;
 }
 
 void printTeleporterRecord(teleporterRecord *ret){
-  
+  cout << "X: " << ret->srcX << "\tY: " << ret->srcY << endl
+       << "X': " << ret->destX << "\tY': " << ret->destY << endl
+       << "Z: " << ret-> destZ << endl;
 }
 
 teleporterRecord readTeleporterRecord(ifstream *mdata){
   teleporterRecord ret;
-
+  ret.srcX = readWord(mdata);
+  ret.srcY = readWord(mdata);
+  ret.destX = readWord(mdata);
+  ret.destY = readWord(mdata);
+  ret.destZ = readWord(mdata);
   printTeleporterRecord(&ret);
   seekTo(mdata, RECORD_SIZE);
   return ret;
 }
 
 void printChuteRecord(chuteRecord *ret){
+  cout << "X: " << ret->x << "\tY: " << ret->y << "\tZ: " << ret->dropDepth << endl;
 }
 
 chuteRecord readChuteRecord(ifstream *mdata){
   chuteRecord ret;
-
+  ret.x = readWord(mdata);
+  ret.y = readWord(mdata);
+  ret.dropDepth = readWord(mdata);
   printChuteRecord(&ret);
   seekTo(mdata, RECORD_SIZE);
   return ret;

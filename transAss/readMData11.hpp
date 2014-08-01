@@ -13,7 +13,7 @@ struct levelHeader {
 
 struct fieldRecord {
   WORD spawnAreaID;
-  BYTE fieldMask[];    // 8 bytes
+  BYTE fieldMask[8];    // 8 bytes
 };
 
 struct countHeader { //area, teleport, chute header, level offset
