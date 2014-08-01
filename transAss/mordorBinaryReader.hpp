@@ -15,6 +15,7 @@ typedef float CURRENCY;
 void printLoc(ifstream *mdata, int offset, const char *prefix);
 BYTE readByte(ifstream *mdata_input);
 WORD readWord(ifstream *mdata_input);
+SWORD readSWord(ifstream *mdata_input);
 DWORD readDWord(ifstream *mdata_input);
 int readInt(ifstream *mdata_input);
 CURRENCY readCurrency(ifstream *mdata_input);

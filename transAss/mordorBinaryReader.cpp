@@ -12,7 +12,7 @@ using namespace std;
 int point = 0;
 
 BYTE readByte(ifstream *mdata_input){
-  static char *buff = new char[1];
+  char buff[1] = {0};
   mdata_input->read(buff,1);
   BYTE ret = (BYTE) *buff;
   point++;
@@ -21,7 +21,7 @@ BYTE readByte(ifstream *mdata_input){
 
 
 WORD readWord(ifstream *mdata_input){
-  static char *buff = new char[2];
+  char buff[2] = {0,0};
   mdata_input->read(buff, 2);  
   WORD ret = (WORD) *buff;
   point += 2;
@@ -29,7 +29,7 @@ WORD readWord(ifstream *mdata_input){
 }
 
 SWORD readSWord(ifstream *mdata_input){
-  static char *buff = new char[2];
+  char buff[2] = {0,0};
   mdata_input->read(buff, 2);  
   SWORD ret = (SWORD) *buff;
   point += 2;
@@ -37,7 +37,7 @@ SWORD readSWord(ifstream *mdata_input){
 }
 
 DWORD readDWord(ifstream *mdata_input){
-  static char *buff = new char[4];
+  char buff[4] = {0,0,0,0};
   mdata_input->read(buff, 4);
   DWORD ret = (DWORD) *buff;
   point += 4;
@@ -45,7 +45,7 @@ DWORD readDWord(ifstream *mdata_input){
 }
 
 CURRENCY readCurrency(ifstream *mdata_input){
-  static char *buff = new char[8];
+  char buff[8] = {0,0,0,0,0,0,0,0};
   mdata_input->read(buff,8);
   CURRENCY ret = (CURRENCY) *buff;
   point += 8;
@@ -53,7 +53,7 @@ CURRENCY readCurrency(ifstream *mdata_input){
 }
 
 int readInt(ifstream *mdata_input){
-  static char* buff = new char[4]; // 4 bytes, 32 bits
+  char buff[4] = {0,0,0,0};
   mdata_input->read(buff, 4);
   point += 4;
   int ret = (int) *buff;
