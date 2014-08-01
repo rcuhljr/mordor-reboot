@@ -14,7 +14,67 @@ using namespace std;
 static const int RECORD_SIZE = 20;
 
 
-static levelHeader readLevelHeader(ifstream *mdata_input){
+void printFieldRecord(fieldRecord *ret){
+}
+
+fieldRecord readFieldRecord(ifstream *mdata){
+  fieldRecord ret;
+
+  printFieldRecord(&ret);
+  seekTo(mdata, RECORD_SIZE);
+  return ret;
+}
+
+void printCountHeader(countHeader *ret){
+  cout << "Count: " << ret->count << endl;
+}
+
+countHeader readCountHeader(ifstream *mdata){
+  countHeader ret;
+  ret.count = readWord(mdata);
+  printCountHeader(&ret);
+  seekTo(mdata, RECORD_SIZE);
+  return ret;
+}
+
+void printAreaRecord(areaRecord *ret){
+  cout << "SpawnTypeMask: " << ret->spawnTypeMask << endl
+       << "Lair ID: " << ret->lairID << endl;
+}
+
+areaRecord readAreaRecord(ifstream *mdata){
+  areaRecord ret;
+
+  printAreaRecord(&ret);
+  seekTo(mdata, RECORD_SIZE);
+  return ret;
+}
+
+void printTeleporterRecord(teleporterRecord *ret){
+  
+}
+
+teleporterRecord readTeleporterRecord(ifstream *mdata){
+  teleporterRecord ret;
+
+  printTeleporterRecord(&ret);
+  seekTo(mdata, RECORD_SIZE);
+  return ret;
+}
+
+void printChuteRecord(chuteRecord *ret){
+}
+
+chuteRecord readChuteRecord(ifstream *mdata){
+  chuteRecord ret;
+
+  printChuteRecord(&ret);
+  seekTo(mdata, RECORD_SIZE);
+  return ret;
+}
+
+
+levelHeader readLevelHeader(ifstream *mdata_input){
   // width       -- word
   // height      -- word
   // level #     -- word
@@ -34,7 +94,7 @@ static levelHeader readLevelHeader(ifstream *mdata_input){
   return thisLevel;
 }
 
-static void printLevelHeader(levelHeader *lh){
+void printLevelHeader(levelHeader *lh){
   cout << dec << "Width:\t\t" << lh->width << endl;
   cout << "Height:\t\t" << lh->height << endl;
   cout << "Level:\t\t" << lh->levelNumber << endl;
