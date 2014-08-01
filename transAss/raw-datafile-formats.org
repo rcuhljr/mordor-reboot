@@ -55,6 +55,122 @@ Number Of Levels To Drop : Word
 
 Level Header Record 2
 
+Mdata11.mdr Data File Format
+Contents [hide]
+1 Description
+2 Format
+3 Explanation
+4 Field Bitmask Values
+5 Spawn Area Bitmask Values
+Description
+
+The MDATA11 file (full filename MDATA11.MDR) contains the definition for the Mordor dungeon layout, and is located in the DATA folder of the Mordor installation. It is one of the more well-documented files and can be edited using a variety of tools that have been created by the modding community.
+Format
+
+Map data is stored in a series of records, each of which are 20 bytes long. The file structure is as follows:
+ HEADER RECORD
+ ---------------------------
+ NumberOfLevels    : 2 bytes
+ 
+ LEVEL OFFSET RECORDS (repeated NumberOfLevels times)
+ ---------------------------
+ LevelOffset       : 2 bytes
+ 
+ LEVEL DATA (repeated NumberOfLevels times)
+ ---------------------------
+ LEVEL HEADER RECORD
+ SizeX             : 2 bytes
+ SizeY             : 2 bytes
+ LevelNumber       : 2 bytes
+ NumberOfAreas     : 2 bytes
+ NumberOfChutes    : 2 bytes
+ NumberOfTeleports : 2 bytes
+   
+ FIELD RECORDS (repeated 900 times)
+ SpawnAreaID       : 2 bytes
+ FieldBitmask      : 8 bytes
+ 
+ AREA HEADER RECORD
+ NumberOfAreas     : 2 bytes
+ 
+ AREA DATA RECORDS (repeated NumberOfAreas times, limited to 200)
+ SpawnTypesBitmask : 4 bytes
+ LairID            : 2 bytes
+ 
+ TELEPORTER HEADER RECORD
+ NumberOfTeleports : 2 bytes
+ 
+ TELEPORTER DATA RECORDS (repeated NumberOfTeleports times)
+ TeleporterX       : 2 bytes
+ TeleporterY       : 2 bytes
+ DestinationX      : 2 bytes
+ DestinationY      : 2 bytes
+ DestinationZ      : 2 bytes
+ 
+ CHUTE HEADER RECORD
+ NumberOfChutes    : 2 bytes
+ 
+ CHUTE DATA RECORDS (repeated NumberOfChutes times)
+ ChuteX            : 2 bytes
+ ChuteY            : 2 bytes
+ DropDepth         : 2 bytes
+Explanation
+
+Level offsets specify the record numbers where level data begins. For example, if offset 4 had a value of 3470, the start of level 4's data would be found at physical position 3470 * 20 (69400 bytes into the file).
+Fields are the building blocks of the dungeon. Each level is made up of a 30W x 30H square of fields, with each field comprising a bitmask that controls its features. See below for a list of bitmask values and their corresponding features.
+Spawn areas control the type of monsters that spawn in each spawn area ID. As with fields this is handled through a bitmask, though a spawn area may also be designated as a lair, greatly increasing the chance that the nominated monster will appear in that area. A list of spawn area bitmask values is given below.
+Field Bitmask Values
+
+ Decimal    Feature
+ ---------------------
+ 1          Wall (east)
+ 2          Wall (north)
+ 4          Door (east)
+ 8          Door (north)
+ 16         Secret door (east)
+ 32         Secret door (north)
+ 64         Face north
+ 128        Face east
+ 256        Face south
+ 512        Face west
+ 1024       Extinguisher
+ 2048       Pit
+ 4096       Stairs up
+ 8192       Stairs down
+ 16384      Teleporter
+ 32768      Water
+ 65536      Quicksand
+ 131072     Rotator
+ 262144     Antimagic
+ 524288     Rock
+ 1048576    Fog
+ 2097152    Chute
+ 4194304    Stud
+Example: a field bitmask of 263186 would give an antimagic field containing an extinguisher with a normal wall to the north and a secret wall to the east (2 + 16 + 1024 + 262144).
+Spawn Area Bitmask Values
+
+ Decimal    Spawn Type
+ ---------------------
+ 1          Humanoid
+ 2          Cleanup
+ 4          Demon
+ 8          Devil
+ 16         Elemental
+ 32         Reptile
+ 64         Dragon
+ 128        Animal
+ 256        Insect
+ 512        Undead
+ 1024       Water
+ 2048       Giant
+ 4096       Mythical
+ 8192       Lycanthrope
+ 16384      Thief
+ 32768      Mage
+ 65536      Warrior
+ 131072     Indigini
+Example: an area bitmask of 16513 could spawn Humanoids, Animals and Thieves (1 + 128 + 16384).
+
 * MDATA1
 vbstring means 2 bytes of the string length, followed by the string. - eg:
 04wave
@@ -301,7 +417,7 @@ After that:
 0 = No
 
 
-* MDATA 5 -- No docs
+* MDATA 5
 Header part1:
   prefixString : File version
 Header part2:
