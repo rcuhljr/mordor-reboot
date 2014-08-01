@@ -90,6 +90,15 @@ chuteRecord readChuteRecord(ifstream *mdata){
   return ret;
 }
 
+void printLevelHeader(levelHeader *lh){
+  cout << dec << "Width:\t\t" << lh->width << endl;
+  cout << "Height:\t\t" << lh->height << endl;
+  cout << "Level:\t\t" << lh->levelNumber << endl;
+  cout << "Areas:\t\t" << lh->numAreas << endl;
+  cout << "Chutes:\t\t" << lh->numChutes << endl;
+  cout << "Teleports:\t" << lh->numTeleports << endl;
+}
+
 
 levelHeader readLevelHeader(ifstream *mdata_input){
   // width       -- word
@@ -108,16 +117,9 @@ levelHeader readLevelHeader(ifstream *mdata_input){
   thisLevel.numChutes = readWord(mdata_input);
   thisLevel.numTeleports = readWord(mdata_input);
 
+  printLevelHeader(&thisLevel);
+  seekTo(mdata_input, RECORD_SIZE);
   return thisLevel;
-}
-
-void printLevelHeader(levelHeader *lh){
-  cout << dec << "Width:\t\t" << lh->width << endl;
-  cout << "Height:\t\t" << lh->height << endl;
-  cout << "Level:\t\t" << lh->levelNumber << endl;
-  cout << "Areas:\t\t" << lh->numAreas << endl;
-  cout << "Chutes:\t\t" << lh->numChutes << endl;
-  cout << "Teleports:\t" << lh->numTeleports << endl;
 }
 
 // testing main point -- this won't be compiled on it's own
@@ -137,26 +139,20 @@ int main(int argc, char** argv){
   }
 
   ifstream mdata_input(datAbsolutePath, ios::binary | ios::in);
-  cout << "Pointer at " << mdata_input.tellg() << endl;
-  WORD numLevels = 0; 
-  WORD recordNumber = 0;
-  WORD levelOffset = 0;
-  
-  // documentation might be wrong, I think this is really a byte.
-  numLevels = (WORD) readByte(&mdata_input);
-  cout << dec << numLevels << " levels to read" << endl;
+  countHeader numberOfLevels = readCountHeader(&mdata_input);
+  countHeader levelOffsets[numberOfLevels.count];
+  levelHeader levelHeaders[numberOfLevels.count];
 
-  for(int i = 0; i < numLevels; i++){
-    cout << "Pointer at " << dec << mdata_input.tellg() << endl;
-    recordNumber = (WORD) readWord(&mdata_input);
-    levelOffset = readWord(&mdata_input);
-    cout << dec << "Level " << i << " record " << recordNumber << 
-      " starts at " << hex << levelOffset << endl;
+  cout << "Num levels: " << numberOfLevels.count << endl;
+  for(int i = 0; i < numberOfLevels.count; i++){
+    cout << "Level " << i << "\tOffset: ";
+    levelOffsets[i] = readCountHeader(&mdata_input);
 
-    seekTo(&mdata_input, RECORD_SIZE);
-  
   }
-  levelHeader lh = readLevelHeader(&mdata_input);
-  printLevelHeader(&lh);
+
+  for(int i = 0; i < numberOfLevels.count; i++){
+    levelHeaders[i] = readLevelHeader(&mdata_input);
+  }
+
   return 0;
 }
