@@ -95,7 +95,7 @@ void printGuildMask(const guildMask *ret){
 }
 
 guildMask readGuildMask(ifstream *mdata){
-  WORD data = readWord(mdata);
+  WORD data = readWordByteOrder(mdata);
   guildMask ret;
 
   // I don't know if any of these are simultaneously set, so fill out the mask
@@ -214,9 +214,9 @@ void printResistanceMask(const resistanceMask *ret){
 }
 
 resistanceMask readResistances(ifstream *mdata){
-  BYTE b1 = readWord(mdata);
-  BYTE b2 = readWord(mdata);
-  BYTE b3 = readWord(mdata);
+  BYTE b1 = readWordByteOrder(mdata);
+  BYTE b2 = readWordByteOrder(mdata);
+  BYTE b3 = readWordByteOrder(mdata);
   resistanceMask ret;
 
   ret.fire = b1 & 0x01;
@@ -249,12 +249,12 @@ void printStatSet(const statSet *ret){
 statSet readStatSet(ifstream *mdata){
   statSet ret;
   // these may need to be signed words instead of unsigned words
-  ret.strength = readWord(mdata);
-  ret.intelligence = readWord(mdata);
-  ret.wisdom = readWord(mdata);
-  ret.constitution = readWord(mdata);
-  ret.charisma = readWord(mdata);
-  ret.dexterity = readWord(mdata);
+  ret.strength = readWordByteOrder(mdata);
+  ret.intelligence = readWordByteOrder(mdata);
+  ret.wisdom = readWordByteOrder(mdata);
+  ret.constitution = readWordByteOrder(mdata);
+  ret.charisma = readWordByteOrder(mdata);
+  ret.dexterity = readWordByteOrder(mdata);
 
   printStatSet(&ret);
   return ret;
@@ -294,7 +294,7 @@ specialItemMask readSpecialItemMask(ifstream *mdata){
   //ageReducingItem 0x0D to 0x0E        -- just a word
   //guild crest 0xC0 to 0xC9            -- 10 values -- guild mask?
   specialItemMask ret; 
-  WORD data = readWord(mdata);
+  WORD data = readWordByteOrder(mdata);
   
   cout << hex << "Special Item mask " << data << dec << endl;
   //fixme stub
@@ -354,7 +354,7 @@ int readItemClass(ifstream *mdata){
 0x400 = Acid res
 */
 
-    WORD classID = readWord(mdata);
+    WORD classID = readWordByteOrder(mdata);
     return -1;
 }
 
@@ -368,45 +368,45 @@ item readItem(ifstream *mdata){
   
   ret.name = readVBString(mdata);
   cout << "Reading: " << ret.name << endl;
-  ret.id = readWord(mdata);                   //0x00
-  ret.attackMod = readWord(mdata);
-  ret.defenceMod = readWord(mdata);
+  ret.id = readWordByteOrder(mdata);                   //0x00
+  ret.attackMod = readWordByteOrder(mdata);
+  ret.defenceMod = readWordByteOrder(mdata);
   ret.itemValue = readInt(mdata);
   
 
   cout << "Cost: " << ret.itemValue << endl;
-  ret.earliestFindLevel = readWord(mdata);
-  ret.chanceofFinding = readWord(mdata);
+  ret.earliestFindLevel = readWordByteOrder(mdata);
+  ret.chanceofFinding = readWordByteOrder(mdata);
   ret.abilityMask = readAbilityMask(mdata);
   
   assert(checkAlignment(mdata));
-  ret.swings = readWord(mdata);
+  ret.swings = readWordByteOrder(mdata);
   ret.sim = readSpecialItemMask(mdata);
-  ret.spellID = readWord(mdata);
-  ret.spellID2 = readWord(mdata);
-  ret.chargePerCast= readWord(mdata);
+  ret.spellID = readWordByteOrder(mdata);
+  ret.spellID2 = readWordByteOrder(mdata);
+  ret.chargePerCast= readWordByteOrder(mdata);
   assert(checkAlignment(mdata));              //0x1C
   
   ret.gm = readGuildMask(mdata);
   
   assert(checkAlignment(mdata));              //0x20
-  ret.levelScaleFactor = readWord(mdata);
+  ret.levelScaleFactor = readWordByteOrder(mdata);
   ret.damageModifier = readInt(mdata);
   ret.am = readAlignmentMask(mdata);
   assert(checkAlignment(mdata));              //0x2A
 
-  ret.numHands = readWord(mdata);
+  ret.numHands = readWordByteOrder(mdata);
   
   cout << "Number of hands: " << ret.numHands << endl;
 
   ret.itemClass = readItemClass(mdata);
-  assert(checkAlignment(mdata));              //0x32
+  //  checkAlignment(mdata);              //0x32
   ret.statReqs = readStatSet(mdata);
-  assert(checkAlignment(mdata));              //0x40
+  //  checkAlignment(mdata);              //0x40
   ret.statMods = readStatSet(mdata);
   ret.cm = readCurseMask(mdata);
-  ret.spellLevel = readWord(mdata);
-  ret.classRestricted = readWord(mdata) != 0;
+  ret.spellLevel = readWordByteOrder(mdata);
+  ret.classRestricted = readWordByteOrder(mdata) != 0;
   //end of record, read to end of alignment
   seekTo(mdata, RECORD_SIZE);
   return ret;
@@ -433,7 +433,7 @@ int main(int argc, char** argv){
   //read what I think is the header out
   char *version = readVBString(&mdata);
 
-  seekTo(&mdata, 0x177);
+  seekTo(&mdata, 0x177); // where things start to exist
  
   for(int i = 0; i <= NUM_RECORDS; i++){
     cout << "Reading item " << i << endl;
