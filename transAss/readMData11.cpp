@@ -168,8 +168,11 @@ int main(int argc, char** argv){
   }
 
   // try to read the first map
-  mdata_input.seekg(levelOffsets[0].count, ios_base::beg);
-  readLevelHeader(&mdata_input);
+  for(int i = 0; i < numberOfLevels.count; i++){
+    cout << endl;
+    mdata_input.seekg(levelOffsets[i].count, ios_base::beg);
+    readLevelHeader(&mdata_input);
+  }
 
 
   return 0;
