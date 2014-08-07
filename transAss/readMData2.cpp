@@ -11,6 +11,20 @@ using namespace std;
 
 const int RECORD_SIZE = 75;
 
+struct header{
+  char* version;
+  WORD numSpells;
+};
+
+struct header readHeader(ifstream *mdata){
+  header ret;
+  ret.version = readVBString(mdata);
+  seekTo(mdata,RECORD_SIZE);
+  ret.numSpells = readWord(mdata);
+  seekTo(mdata,RECORD_SIZE);
+  return ret;
+}
+
 struct Spell readSpell(ifstream *mdata){
   struct Spell thisSpell;
   thisSpell.name = readVBString(mdata);
@@ -65,25 +79,12 @@ int main(int argc, char** argv){
   ifstream mdata_input(datAbsolutePath, ios::binary | ios::in);
 
   // read file version, vb string
-  char* version = readVBString(&mdata_input);
-  cout << "Version " << version << endl;
+  header info = readHeader(&mdata_input);
 
+  cout << "Version " << info.version << endl;
 
-  // read number of spells as record 2
-  unsigned short numSpells = readWord(&mdata_input);
-  cout << "Num spells " << numSpells << endl;
-  seekTo(&mdata_input,RECORD_SIZE);
-
-  // read number of spells as record 3
-  unsigned short numSpells2 = readWord(&mdata_input);
-  seekTo(&mdata_input,RECORD_SIZE);
-  cout << "Num spells 2" << numSpells2 << endl;
-
-  // I don't know why there are two kinds of num spells specified
-  cout << "Num spells " << numSpells2 << endl;
-  cout << endl;
   // read spell list
-  for(int i = 0; i < numSpells2; i++){
+  for(int i = 0; i < info.numSpells; i++){
     cout << "Reading spell " << dec << i << endl;
     struct Spell first = readSpell(&mdata_input);
     printSpell(&first);
