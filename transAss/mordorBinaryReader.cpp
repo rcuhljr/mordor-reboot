@@ -13,7 +13,7 @@ int point = 0;
 
 BYTE readByte(ifstream *mdata_input){
   char buff[1] = {0};
-  mdata_input->read(buff,1);
+  mdata_input->read(buff,sizeof(buff));
   BYTE ret = (BYTE) *buff;
   point++;
   return ret;
@@ -21,24 +21,45 @@ BYTE readByte(ifstream *mdata_input){
 
 
 WORD readWord(ifstream *mdata_input){
-  char buff[2] = {0,0};
-  mdata_input->read(buff, 2);  
-  WORD ret = (WORD) *buff;
-  point += 2;
+  unsigned char buff[2] = {0,0};
+  mdata_input->read((char*) buff, sizeof(buff));  
+  WORD ret = (WORD) (buff[1] << 8 | buff[0]);
+  point += sizeof(buff);
+  /*
+  printf("readWord: 0x");
+  for (int i = 1; i >= 0; i--){
+    printf("%02x", buff[i] &0xff);
+  }
+  cout << "\t" << hex << ret << dec << endl;
+  */
+  return ret;
+}
+
+WORD readWordByteOrder(ifstream *mdata_input){
+  unsigned char buff[2] = {0,0};
+  mdata_input->read((char*) buff, sizeof(buff));  
+  WORD ret = (WORD) (buff[0] << 8 | buff[1]);
+  point += sizeof(buff);
+  /*  printf("readWord: 0x");
+  for (int i = 1; i >= 0; i--){
+    printf("%02x", buff[i] &0xff);
+  }
+  cout << "\t" << hex << ret << dec << endl;
+  */  
   return ret;
 }
 
 SWORD readSWord(ifstream *mdata_input){
   char buff[2] = {0,0};
-  mdata_input->read(buff, 2);  
-  SWORD ret = (SWORD) *buff;
-  point += 2;
+  mdata_input->read(buff, sizeof(buff));  
+  SWORD ret = (SWORD) (buff[0] << 8 | buff[1]);
+  point += sizeof(buff);
   return ret;
 }
 
 DWORD readDWord(ifstream *mdata_input){
   char buff[4] = {0,0,0,0};
-  mdata_input->read(buff, 4);
+  mdata_input->read(buff, sizeof(buff));
   DWORD ret = (DWORD) *buff;
   point += 4;
   return ret;
