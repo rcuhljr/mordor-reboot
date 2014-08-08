@@ -106,9 +106,27 @@ struct level{
   monsterLair *monsterLairs;
 };
 
+/*
+ * Field records are stored in a linear way instead of in a 2d array.
+ * These functions help convert the index into the field array of a level
+ * into easier to understand x,y coordinates.
+ */
 int cellX(int index, levelHeader *lh);
 int cellY(int index, levelHeader *lh);
+
+/*
+ * Returns the header of the map file from a file stream.
+ * Leaves the pointer at the end of the last offset record read.
+ */
 struct mapHeader readMapHeader(ifstream *mdata);
+
+/*
+ *  Reads in a level from a file stream, using a levelHeader to find
+ *  the level and validate it's contents.  It expects the mdata stream
+ *  to be pointing at the begining of the level.  That is, you need to
+ *  seek to the start of the level using the offsets in the mapHeader
+ *  structure.
+ */
 struct level readLevel(ifstream *mdata, levelHeader *lh);
 
 #endif
