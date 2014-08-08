@@ -100,6 +100,8 @@ teleporterRecord readTeleporterRecord(ifstream *mdata){
   ret.destZ = readWord(mdata);
 
   // make sure the teleporter is sane
+  assert(MAX_WIDTH >= ret.srcX >= 0);
+  assert(MAX_HEIGHT >= ret.srcY >= 0);
   assert(MAX_WIDTH >= ret.destX >= 0);
   assert(MAX_HEIGHT >= ret.destY >= 0);
   assert(numLevels >= ret.destZ >= 0);  
