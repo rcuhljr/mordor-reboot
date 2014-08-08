@@ -20,16 +20,14 @@ struct header{
   WORD numMonsterTypes;
 };
 
-
-
 void printFileHeader(header *ret){
-  cout << "Version:              " << ret->version << endl;
-  cout << "Num Races:            " << ret->numRaces << endl;
-  cout << "Num Guilds:           " << ret->numGuilds << endl;
-  cout << "Num Item Subtypes:    " << ret->numItemSubtypes << endl;
-  cout << "Num Item Types:       " << ret->numItemTypes << endl;
-  cout << "Num Monster Subtypes: " << ret->numMonsterSubtypes << endl;
-  cout << "Num Monster Types:    " << ret->numMonsterTypes << endl;
+  cout << "Version:              " << ret->version << endl
+       << "Num Races:            " << ret->numRaces << endl
+       << "Num Guilds:           " << ret->numGuilds << endl
+       << "Num Item Subtypes:    " << ret->numItemSubtypes << endl
+       << "Num Item Types:       " << ret->numItemTypes << endl
+       << "Num Monster Subtypes: " << ret->numMonsterSubtypes << endl
+       << "Num Monster Types:    " << ret->numMonsterTypes << endl;
 }
 
 header readFileHeader(ifstream *mdata){
@@ -166,7 +164,8 @@ int main(int argc, char** argv){
   char* datAbsolutePath;
 
   if(argc != 2){
-    cerr << "Expected exactly one argument -- the absolute path to the MDAT1.MDR" << endl;
+    cerr << "Expected exactly one argument -- the absolute path to the MDAT1.MDR"
+         << endl;
     return 1;
   }else{
     datAbsolutePath = argv[1];
