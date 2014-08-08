@@ -25,6 +25,22 @@ struct header readHeader(ifstream *mdata){
   return ret;
 }
 
+void printSpell(struct Spell *s){
+  cout << s->name << endl
+       << "ID:             " << s->id << endl
+       << "Class:          " << s->spellClass << endl
+       << "Level:          " << s->level << endl
+       << "U4:             " << s->u4 << endl
+       << "KillEffect:     " << s->killEffect << endl
+       << "Affect Monster: " << s->affectMonster << endl
+       << "Affect Group:   " << s->affectGroup << endl
+       << "damage1:        " << s->damage1 << endl
+       << "damage2:        " << s->damage2 << endl
+       << "SpecialEffect:  " << s->specialEffect << endl
+       << "Required:       " << s->required << endl
+       << "Resisted By:    " << s->resistedBy << endl;
+}
+
 struct Spell readSpell(ifstream *mdata){
   struct Spell thisSpell;
   thisSpell.name = readVBString(mdata);
@@ -41,30 +57,18 @@ struct Spell readSpell(ifstream *mdata){
   thisSpell.specialEffect = readWord(mdata);
   thisSpell.required = readWord(mdata);
   thisSpell.resistedBy = readWord(mdata);
+  
+  printSpell(&thisSpell);
+  seekTo(mdata,RECORD_SIZE);
   return thisSpell;
-}
-
-void printSpell(struct Spell *s){
-  cout << s->name << endl;
-  cout << "ID:\t\t\t" << s->id << endl;
-  cout << "Class:\t\t\t" << s->spellClass << endl;
-  cout << "Level:\t\t\t" << s->level << endl;
-  cout << "U4:\t\t\t" << s->u4 << endl;
-  cout << "KillEffect:\t\t" << s->killEffect << endl;
-  cout << "Affect Monster:\t\t" << s->affectMonster << endl;
-  cout << "Affect Group:\t\t" << s->affectGroup << endl;
-  cout << "damage1:\t\t" << s->damage1 << endl;
-  cout << "damage2:\t\t" << s->damage2 << endl;
-  cout << "SpecialEffect:\t\t" << s->specialEffect << endl;
-  cout << "Required:\t\t" << s->required << endl;
-  cout << "Resisted By:\t\t" << s->resistedBy << endl;
 }
 
 int main(int argc, char** argv){
   char* datAbsolutePath;
 
   if(argc != 2){
-    cerr << "Expected exactly one argument -- the absolute path to the MDAT12.MDR" << endl;
+    cerr << "Expected exactly one argument -- the absolute path to the MDAT12.MDR"
+         << endl;
     return 1;
   }else{
     datAbsolutePath = argv[1];
@@ -86,9 +90,7 @@ int main(int argc, char** argv){
   for(int i = 0; i < info.numSpells; i++){
     cout << "Reading spell " << dec << i << endl;
     struct Spell first = readSpell(&mdata_input);
-    printSpell(&first);
     cout << endl;
-    seekTo(&mdata_input,RECORD_SIZE);
   }
 
   /*
