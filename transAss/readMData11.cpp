@@ -13,7 +13,16 @@
 
 using namespace std;
 
-static const int RECORD_SIZE = 20;
+const int RECORD_SIZE = 20;
+
+struct mapHeader{
+  WORD numLevels;
+  int *levelOffsets;
+};
+
+struct countHeader { //area, teleport, chute header
+  int count;
+};
 
 void printFieldRecord(fieldRecord *ret){
   cout << "Spawn Area ID: " << ret->spawnAreaID << endl
@@ -54,15 +63,6 @@ void printCountHeader(countHeader *ret){
 countHeader readCountHeader(ifstream *mdata){
   countHeader ret;
   ret.count = readWord(mdata);
-  seekTo(mdata, RECORD_SIZE);
-  return ret;
-}
-
-countHeader readOffsetHeader(ifstream *mdata){
-  countHeader ret;
-  // I actually want the offset to reflect the physical location in the file.
-  WORD read = readWord(mdata);
-  ret.count = RECORD_SIZE * (read - 1); // -1 taken from wabbits editor
   seekTo(mdata, RECORD_SIZE);
   return ret;
 }
@@ -202,6 +202,19 @@ void readLevel(ifstream *mdata_input, levelHeader *lh){
   //and here is wher we would construct the level object
 }
 
+mapHeader readMapHeader(ifstream *mdata){
+  mapHeader ret;
+  ret.numLevels = readWord(mdata);
+  seekTo(mdata,RECORD_SIZE);
+  ret.levelOffsets = new int[ret.numLevels];
+  for(int i = 0; i < ret.numLevels; i++){
+    WORD read = readWord(mdata);
+    ret.levelOffsets[i] = RECORD_SIZE * (read - 1); // -1 taken from wabbits editor
+    seekTo(mdata, RECORD_SIZE);
+  }
+  return ret;
+}
+
 // testing main point -- this won't be compiled on it's own
 int main(int argc, char** argv){
   char* datAbsolutePath;
@@ -221,21 +234,14 @@ int main(int argc, char** argv){
   }
 
   ifstream mdata_input(datAbsolutePath, ios::binary | ios::in);
-  countHeader numberOfLevels = readCountHeader(&mdata_input);
-  countHeader levelOffsets[numberOfLevels.count];
-  levelHeader levelHeaders[numberOfLevels.count];
+  mapHeader mh = readMapHeader(&mdata_input);
 
-  cout << "Num levels: " << numberOfLevels.count << endl;
-
-  // read in the level offsets
-  for(int i = 0; i < numberOfLevels.count; i++){
-    levelOffsets[i] = readOffsetHeader(&mdata_input);
-  }
+  cout << "Num levels: " << mh.numLevels << endl;
 
   // try to read the first map
-  for(int i = 0; i < numberOfLevels.count; i++){
+  for(int i = 0; i < mh.numLevels; i++){
     cout << endl;
-    mdata_input.seekg(levelOffsets[i].count, ios_base::beg);
+    mdata_input.seekg(mh.levelOffsets[i], ios_base::beg);
     levelHeader lh = readLevelHeader(&mdata_input);
     readLevel(&mdata_input, &lh);
   }

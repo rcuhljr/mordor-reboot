@@ -20,10 +20,6 @@ struct fieldRecord {
   BYTE fieldMask[8];    // 8 bytes
 };
 
-struct countHeader { //area, teleport, chute header, level offset
-  int count;
-};
-
 struct areaRecord {
   DWORD spawnTypeMask; // 4 bytes
   WORD lairID;
