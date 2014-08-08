@@ -98,6 +98,26 @@ monsterLair readMonsterLair(ifstream *mdata){
   ret.monsterType = readDWord(mdata);
   ret.monsterID = readWord(mdata);
 
+  spawnMask sm; 
+  sm.humanoid = ret.monsterType & humanoid;
+  sm.cleanup = ret.monsterType & cleanup;
+  sm.demon = ret.monsterType & demon;
+  sm.devil = ret.monsterType & devil;
+  sm.elemental = ret.monsterType & elemental;
+  sm.reptile = ret.monsterType & reptile;
+  sm.dragon = ret.monsterType & dragon;
+  sm.animal = ret.monsterType & animal;
+  sm.insect = ret.monsterType & insect;
+  sm.undead = ret.monsterType & undead;
+  sm.water = ret.monsterType & waterMonster;
+  sm.giant = ret.monsterType & giant;
+  sm.mythical = ret.monsterType & mythical;
+  sm.lycanthrope = ret.monsterType & lycanthrope;
+  sm.thief = ret.monsterType & thief;
+  sm.mage = ret.monsterType & mage;
+  sm.warrior = ret.monsterType & warrior;
+  sm.indigini = ret.monsterType & indigini;
+
 #ifdef LOUD
   printMonsterLair(&ret);
 #endif
