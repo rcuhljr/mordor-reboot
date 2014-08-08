@@ -255,23 +255,26 @@ levelHeader readLevelHeader(ifstream *mdata_input){
   return thisLevel;
 }
 
-void readLevel(ifstream *mdata_input, levelHeader *lh){
+struct level readLevel(ifstream *mdata_input, levelHeader *lh){
 
   int num_fields = lh->width * lh->height;
-  fieldRecord fieldRecords[num_fields];
   int i;
+  level ret;
+  ret.lh = *lh;
+  ret.fields = new fieldRecord[num_fields];
+  
 
   // read the map cells
 #ifdef LOUD
   cout << "Number of Map Cells: " << num_fields << endl;
 #endif
   for(i = 0; i < num_fields; i++){
-    fieldRecords[i] = readFieldRecord(mdata_input);
+    ret.fields[i] = readFieldRecord(mdata_input);
   }
 
   // read monster lair records
   countHeader monsterLairHeader = readCountHeader(mdata_input);
-  monsterLair monsterLairs[monsterLairHeader.count];
+  ret.monsterLairs = new monsterLair[monsterLairHeader.count];
 #ifdef LOUD
   cout << "Num Lairs: " << monsterLairHeader.count << endl;
 #endif
@@ -279,7 +282,7 @@ void readLevel(ifstream *mdata_input, levelHeader *lh){
   assert(monsterLairHeader.count <= MAX_LAIRS_PER_LEVEL);
 
   for(i = 0; i < monsterLairHeader.count; i++){
-    monsterLairs[i] = readMonsterLair(mdata_input);
+    ret.monsterLairs[i] = readMonsterLair(mdata_input);
   }
 
   // now that I've read the meningful lairs, clear out the rest of the set.
@@ -297,9 +300,9 @@ void readLevel(ifstream *mdata_input, levelHeader *lh){
   cout << "Num Teleporters: " << teleportHeader.count << endl;
 #endif
   assert(teleportHeader.count == lh->numTeleports);
-  teleporterRecord teleportRecords[teleportHeader.count];
+  ret.teleporters = new teleporterRecord[teleportHeader.count];
   for(i = 0; i < teleportHeader.count; i++){
-    teleportRecords[i] = readTeleporterRecord(mdata_input);
+    ret.teleporters[i] = readTeleporterRecord(mdata_input);
   }
 
 
@@ -309,14 +312,18 @@ void readLevel(ifstream *mdata_input, levelHeader *lh){
   cout << "Num Chutes: " << chuteHeader.count << endl;
 #endif
   assert(chuteHeader.count == lh->numChutes);
-  chuteRecord chuteRecords[chuteHeader.count];
+  ret.chutes = new chuteRecord[chuteHeader.count];
   int maxDrop = numLevels - lh->levelNumber;
   for(i = 0; i < chuteHeader.count; i++){
-    chuteRecords[i] = readChuteRecord(mdata_input);
-    assert(maxDrop >= chuteRecords[i].dropDepth);
+    ret.chutes[i] = readChuteRecord(mdata_input);
+    assert(maxDrop >= ret.chutes[i].dropDepth);
   }
 
   //and here is wher we would construct the level object
+#ifdef LOUD
+  printLevel(&ret);
+#endif
+  return ret;
 }
 
 mapHeader readMapHeader(ifstream *mdata){

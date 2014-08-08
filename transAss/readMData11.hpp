@@ -93,4 +93,12 @@ struct monsterLair{
   WORD monsterID;
 };
 
+struct level{
+  levelHeader lh;
+  fieldRecord *fields;
+  teleporterRecord *teleporters;
+  chuteRecord *chutes;
+  monsterLair *monsterLairs;
+};
+
 #endif
