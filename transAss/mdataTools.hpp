@@ -17,10 +17,10 @@ extern const char* MDATA3_NAME;
 extern const char* MDATA5_NAME;
 extern const char* MDATA11_NAME;
 
-extern const int MDATA1_SIZE; // size of MDATA11.MDR in bytes
-extern const int MDATA2_SIZE; // size of MDATA11.MDR in bytes
-extern const int MDATA3_SIZE; // size of MDATA11.MDR in bytes
-extern const int MDATA5_SIZE; // size of MDATA11.MDR in bytes
+extern const int MDATA1_SIZE;  // size of MDATA1.MDR in bytes
+extern const int MDATA2_SIZE;  // size of MDATA2.MDR in bytes
+extern const int MDATA3_SIZE;  // size of MDATA3.MDR in bytes
+extern const int MDATA5_SIZE;  // size of MDATA5.MDR in bytes
 extern const int MDATA11_SIZE; // size of MDATA11.MDR in bytes
 
 bool validPath(char* path, const char* FNAME);
