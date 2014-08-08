@@ -134,12 +134,32 @@ levelHeader readLevelHeader(ifstream *mdata_input){
   return thisLevel;
 }
 
+void readLevel(ifstream *mdata_input, levelHeader *lh){
+
+  int num_fields = lh->width * lh->height;
+  fieldRecord fieldRecords[num_fields];
+
+  // read the map cells
+  for(int i = 0; i < num_fields; i++){
+    fieldRecords[i] = readFieldRecord(mdata_input);
+  }
+
+  // read monster lair records
+  countHeader monsterLairHeader = readCountHeader(mdata_input);
+  
+  for(int i = 0; i < monsterLairHeader.count; i++){
+  }
+  
+}
+
 // testing main point -- this won't be compiled on it's own
 int main(int argc, char** argv){
   char* datAbsolutePath;
 
   if(argc != 2){
-    cerr << "Expected exactly one argument -- the absolute path to the MDAT11.MDR" << endl;
+    cerr 
+      << "Expected exactly one argument -- the absolute path to the MDAT11.MDR" 
+      << endl;
     return 1;
   }else{
     datAbsolutePath = argv[1];
@@ -166,7 +186,8 @@ int main(int argc, char** argv){
   for(int i = 0; i < numberOfLevels.count; i++){
     cout << endl;
     mdata_input.seekg(levelOffsets[i].count, ios_base::beg);
-    readLevelHeader(&mdata_input);
+    levelHeader lh = readLevelHeader(&mdata_input);
+    readLevel(&mdata_input, &lh);
   }
 
 
