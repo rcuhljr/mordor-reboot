@@ -117,7 +117,7 @@ void printLevelHeader(levelHeader *lh){
   cout << dec << "Width:\t\t" << lh->width << endl;
   cout << "Height:\t\t" << lh->height << endl;
   cout << "Level:\t\t" << lh->levelNumber << endl;
-  cout << "Areas:\t\t" << lh->numAreas << endl;
+  cout << "Areas:\t\t" << lh->numLairs << endl;
   cout << "Chutes:\t\t" << lh->numChutes << endl;
   cout << "Teleports:\t" << lh->numTeleports << endl;
 }
@@ -136,7 +136,7 @@ levelHeader readLevelHeader(ifstream *mdata_input){
   thisLevel.width = readWord(mdata_input);
   thisLevel.height = readWord(mdata_input);
   thisLevel.levelNumber = readWord(mdata_input);
-  thisLevel.numAreas = readWord(mdata_input);
+  thisLevel.numLairs = readWord(mdata_input);
   thisLevel.numChutes = readWord(mdata_input);
   thisLevel.numTeleports = readWord(mdata_input);
 
@@ -164,7 +164,7 @@ void readLevel(ifstream *mdata_input, levelHeader *lh){
   countHeader monsterLairHeader = readCountHeader(mdata_input);
   monsterLair monsterLairs[monsterLairHeader.count];
   cout << "Num Lairs: " << monsterLairHeader.count << endl;
-  assert(monsterLairHeader.count == lh->numAreas);
+  assert(monsterLairHeader.count == lh->numLairs);
   assert(monsterLairHeader.count <= MAX_LAIRS_PER_LEVEL);
 
   for(i = 0; i < monsterLairHeader.count; i++){

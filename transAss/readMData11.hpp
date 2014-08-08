@@ -10,7 +10,7 @@ struct levelHeader {
   WORD width;
   WORD height;
   WORD levelNumber;
-  WORD numAreas;
+  WORD numLairs;
   WORD numChutes;
   WORD numTeleports;
 };
