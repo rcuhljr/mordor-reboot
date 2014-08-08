@@ -118,9 +118,22 @@ void printChuteRecord(chuteRecord *ret){
 
 chuteRecord readChuteRecord(ifstream *mdata){
   chuteRecord ret;
+  // read in the chute
   ret.x = readWord(mdata);
   ret.y = readWord(mdata);
   ret.dropDepth = readWord(mdata);
+  
+  /* 
+   * sanity check what you can while you read it you can't make sure
+   * that the depth doesn't run you off of the board here though, not
+   * completely, because you don't have the depth of the level that
+   * you're reading the chute on.
+   */
+  assert(MAX_WIDTH >= ret.x >= 0);
+  assert(MAX_HEIGHT >= ret.y >= 0);
+  assert(numLevels >= ret.dropDepth > 0);
+
+  //display and return
   printChuteRecord(&ret);
   seekTo(mdata, RECORD_SIZE);
   return ret;
