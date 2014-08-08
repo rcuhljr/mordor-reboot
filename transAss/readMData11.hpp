@@ -15,11 +15,6 @@ struct levelHeader {
   WORD numTeleports;
 };
 
-struct fieldRecord {
-  WORD spawnAreaID;
-  CURRENCY fieldMask;    // 8 bytes
-};
-
 struct fieldMask{
   bool eastWall;
   bool northWoll;
@@ -44,6 +39,12 @@ struct fieldMask{
   bool fog;
   bool chute;
   bool stud;
+};
+
+struct fieldRecord {
+  WORD spawnAreaID;
+  CURRENCY fieldMask;    // 8 bytes
+  struct fieldMask fieldContents;
 };
 
 struct areaRecord {
@@ -88,6 +89,7 @@ struct chuteRecord {
 
 struct monsterLair{
   DWORD monsterType;
+  spawnMask spawnMask;
   WORD monsterID;
 };
 

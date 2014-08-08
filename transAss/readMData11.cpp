@@ -80,6 +80,34 @@ fieldRecord readFieldRecord(ifstream *mdata){
 
   ret.fieldMask = readCurrency(mdata);
 
+  struct fieldMask fm;
+
+  /*
+  fm.eastWall = ret.fieldMask & wallEast;
+  fm.northWoll = ret.fieldMask & wallNorth;
+  fm.eastDoor = ret.fieldMask & doorEast;
+  fm.northDoor = ret.fieldMask & doorNorth;
+  fm.eastSecretDoor = ret.fieldMask & secretDoorEast;
+  fm.northSecterDoor = ret.fieldMask & secretDoorNorth;
+  fm.faceNorth = ret.fieldMask & faceNorth;
+  fm.faceEast = ret.fieldMask & faceEast;
+  fm.faceSouth = ret.fieldMask & faceSouth;
+  fm.faceWest = ret.fieldMask & faceWest;
+  fm.extingusher = ret.fieldMask & extinguisher;
+  fm.pit = ret.fieldMask & pit;
+  fm.stairsUp = ret.fieldMask & stairsUp;
+  fm.stairsDown = ret.fieldMask & stairsDown;
+  fm.teleporter = ret.fieldMask & teleporter;
+  fm.water = ret.fieldMask & waterField;
+  fm.quicksand = ret.fieldMask & quicksand;
+  fm.rotator = ret.fieldMask & rotator;
+  fm.antimagic = ret.fieldMask & antimagic;
+  fm.rock = ret.fieldMask &  rock;
+  fm.fog = ret.fieldMask & fog;
+  fm.chute = ret.fieldMask & chute;
+  fm.stud = ret.fieldMask & stud;
+  */
+  ret.fieldContents = fm;
 #ifdef LOUD
   printFieldRecord(&ret);
 #endif
@@ -117,6 +145,8 @@ monsterLair readMonsterLair(ifstream *mdata){
   sm.mage = ret.monsterType & mage;
   sm.warrior = ret.monsterType & warrior;
   sm.indigini = ret.monsterType & indigini;
+
+  ret.spawnMask = sm;
 
 #ifdef LOUD
   printMonsterLair(&ret);
