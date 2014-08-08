@@ -14,6 +14,8 @@
 using namespace std;
 
 const int RECORD_SIZE = 20;
+int numLevels = -1;
+
 
 struct mapHeader{
   WORD numLevels;
@@ -89,11 +91,20 @@ void printTeleporterRecord(teleporterRecord *ret){
 
 teleporterRecord readTeleporterRecord(ifstream *mdata){
   teleporterRecord ret;
+
+  //build the teleporter
   ret.srcX = readWord(mdata);
   ret.srcY = readWord(mdata);
   ret.destX = readWord(mdata);
   ret.destY = readWord(mdata);
   ret.destZ = readWord(mdata);
+
+  // make sure the teleporter is sane
+  assert(MAX_WIDTH >= ret.destX >= 0);
+  assert(MAX_HEIGHT >= ret.destY >= 0);
+  assert(numLevels >= ret.destZ >= 0);  
+
+  //display and return
   printTeleporterRecord(&ret);
   seekTo(mdata, RECORD_SIZE);
   return ret;
@@ -212,6 +223,8 @@ mapHeader readMapHeader(ifstream *mdata){
     ret.levelOffsets[i] = RECORD_SIZE * (read - 1); // -1 taken from wabbits editor
     seekTo(mdata, RECORD_SIZE);
   }
+  // set global num levels by side effect.
+  numLevels = ret.numLevels;
   return ret;
 }
 
