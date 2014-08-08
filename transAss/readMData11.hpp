@@ -6,6 +6,11 @@ const int MAX_LAIRS_PER_LEVEL = 200;
 const int MAX_WIDTH = 30;
 const int MAX_HEIGHT = 30;
 
+struct mapHeader{
+  WORD numLevels;
+  int *levelOffsets;
+};
+
 struct levelHeader {
   WORD width;
   WORD height;
@@ -103,5 +108,7 @@ struct level{
 
 int cellX(int index, levelHeader *lh);
 int cellY(int index, levelHeader *lh);
+struct mapHeader readMapHeader(ifstream *mdata);
+struct level readLevel(ifstream *mdata, levelHeader *lh);
 
 #endif

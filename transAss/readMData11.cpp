@@ -36,11 +36,6 @@ const unsigned int mage         = 32768;
 const unsigned int warrior      = 65536;
 const unsigned int indigini     = 131072;
 
-struct mapHeader{
-  WORD numLevels;
-  int *levelOffsets;
-};
-
 struct countHeader { //area, teleport, chute header
   int count;
 };
