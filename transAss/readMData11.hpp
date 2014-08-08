@@ -17,7 +17,7 @@ struct fieldRecord {
 };
 
 struct countHeader { //area, teleport, chute header, level offset
-  WORD count;
+  int count;
 };
 
 struct areaRecord {
