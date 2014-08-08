@@ -2,6 +2,10 @@
 #define READ_MDATA_11
 #include "mordorBinaryReader.hpp"
 
+const int MAX_LAIRS_PER_LEVEL = 200;
+const int MAX_WIDTH = 30;
+const int MAX_HEIGHT = 30;
+
 struct levelHeader {
   WORD width;
   WORD height;

@@ -140,8 +140,8 @@ levelHeader readLevelHeader(ifstream *mdata_input){
   thisLevel.numChutes = readWord(mdata_input);
   thisLevel.numTeleports = readWord(mdata_input);
 
-  assert(thisLevel.width == 30);
-  assert(thisLevel.height == 30);
+  assert(thisLevel.width == MAX_WIDTH);
+  assert(thisLevel.height == MAX_HEIGHT);
 
   printLevelHeader(&thisLevel);
   seekTo(mdata_input, RECORD_SIZE);
@@ -165,7 +165,7 @@ void readLevel(ifstream *mdata_input, levelHeader *lh){
   monsterLair monsterLairs[monsterLairHeader.count];
   cout << "Num Lairs: " << monsterLairHeader.count << endl;
   assert(monsterLairHeader.count == lh->numAreas);
-  assert(monsterLairHeader.count <= 200);
+  assert(monsterLairHeader.count <= MAX_LAIRS_PER_LEVEL);
 
   for(i = 0; i < monsterLairHeader.count; i++){
     monsterLairs[i] = readMonsterLair(mdata_input);
@@ -173,7 +173,7 @@ void readLevel(ifstream *mdata_input, levelHeader *lh){
 
   // now that I've read the meningful lairs, clear out the rest of the set.
   // the setis bounded from  above by 200.
-  for(; i < 200; i++){
+  for(; i < MAX_LAIRS_PER_LEVEL; i++){
     seekTo(mdata_input, RECORD_SIZE);
   }
 
@@ -198,6 +198,8 @@ void readLevel(ifstream *mdata_input, levelHeader *lh){
   for(i = 0; i < chuteHeader.count; i++){
     chuteRecords[i] = readChuteRecord(mdata_input);
   }
+
+  //and here is wher we would construct the level object
 }
 
 // testing main point -- this won't be compiled on it's own
