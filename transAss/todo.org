@@ -1,12 +1,6 @@
-* Improve make file
-** add clean target
-** better flags
-** better documentation
-
-* reduce size of readMData11.cpp
-** header file
-** put binary read tools in separate utility
-** put MORDOR structs somewhere else
-
 * fix reading of level
-** Somethings wrong with the data output.  Doesn't allign with what we see in the forums, dunno why
+** Need to start parsing the masks appropriately.
+* Put loud flag in
+* Factor out common structs
+* Check for overflows similar to what you found in maps everywhere
+* Documentation

@@ -19,3 +19,16 @@
 *.exe
 *.out
 *.app
+
+# The assets folder isn't to be committed
+assets
+
+# Things from other people I'm using as templates.
+wabbits_editor_source
+editer2
+
+# other development tools
+vms
+test-qt
+
+.DS_Store
