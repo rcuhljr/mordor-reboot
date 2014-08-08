@@ -20,9 +20,56 @@ struct fieldRecord {
   BYTE fieldMask[8];    // 8 bytes
 };
 
+struct fieldMask{
+  bool eastWall;
+  bool northWoll;
+  bool eastDoor;
+  bool northDoor;
+  bool eastSecretDoor;
+  bool northSecterDoor;
+  bool faceNorth;
+  bool faceEast;
+  bool faceSouth;
+  bool faceWest;
+  bool extingusher;
+  bool pit;
+  bool stairsUp;
+  bool stairsDown;
+  bool teleporter;
+  bool water;
+  bool quicksand;
+  bool rotator;
+  bool antimagic;
+  bool rock;
+  bool fog;
+  bool chute;
+  bool stud;
+};
+
 struct areaRecord {
   DWORD spawnTypeMask; // 4 bytes
   WORD lairID;
+};
+
+struct spawnMask{
+  bool humanoid;
+  bool cleanup;
+  bool demon;
+  bool devil;
+  bool elemental;
+  bool reptile;
+  bool dragon;
+  bool animal;
+  bool insect;
+  bool undead;
+  bool water;
+  bool giant;
+  bool mythical;
+  bool lycanthrope;
+  bool thief;
+  bool mage;
+  bool warrior;
+  bool indigini;
 };
 
 struct teleporterRecord{
