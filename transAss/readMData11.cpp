@@ -14,6 +14,7 @@
 using namespace std;
 
 const int RECORD_SIZE = 20;
+
 int numLevels = -1;
 
 
