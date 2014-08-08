@@ -17,6 +17,48 @@ const int RECORD_SIZE = 20;
 
 int numLevels = -1;
 
+const unsigned int humanoid = 1;
+const unsigned int cleanup = 2;
+const unsigned int demon = 4;
+const unsigned int devil = 8;
+const unsigned int elemental = 16;
+const unsigned int reptile = 32;
+const unsigned int dragon = 64;
+const unsigned int animal = 128;
+const unsigned int insect = 256;
+const unsigned int undead = 512;
+const unsigned int waterMonster = 1024;
+const unsigned int giant = 2048;
+const unsigned int mythical = 4096;
+const unsigned int lycanthrope = 8192;
+const unsigned int thief = 16384;
+const unsigned int mage = 32768;
+const unsigned int warrior = 65536;
+const unsigned int indigini = 131072;
+
+const unsigned int wallEast = 1;
+const unsigned int wallNorth = 2;
+const unsigned int doorEast = 4;
+const unsigned int doorNorth = 8;
+const unsigned int secertDoorEast = 16;
+const unsigned int secretDoorNorth = 32;
+const unsigned int faceNorth = 64;
+const unsigned int faceEast = 128;
+const unsigned int faceSouth = 256;
+const unsigned int faceWest = 512;
+const unsigned int extinguisher = 1024;
+const unsigned int pit = 2048;
+const unsigned int stairsUp = 4096;
+const unsigned int stairsDown = 8192;
+const unsigned int teleporter = 16384;
+const unsigned int waterField = 32768;
+const unsigned int quicksand = 65536;
+const unsigned int rotator = 131072;
+const unsigned int antimagic = 262144;
+const unsigned int rock = 524288;
+const unsigned int fog = 1048576;
+const unsigned int chute = 2097152;
+const unsigned int stud = 419304;
 
 struct mapHeader{
   WORD numLevels;
