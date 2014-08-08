@@ -59,29 +59,29 @@ fieldRecord readFieldRecord(ifstream *mdata){
   }
   struct fieldMask fm;
 
-  fm.eastWall = ret.fieldMask[0] >> 1;
-  fm.northWoll = ret.fieldMask[0] >> 1;
-  fm.eastDoor = ret.fieldMask[0] >> 1;
-  fm.northDoor = ret.fieldMask[0] >> 1;
-  fm.eastSecretDoor = ret.fieldMask[1] >> 1;
-  fm.northSecterDoor = ret.fieldMask[1] >> 1;
-  fm.faceNorth = ret.fieldMask[1] >> 1;
-  fm.faceEast = ret.fieldMask[1] >> 1;
-  fm.faceSouth = ret.fieldMask[2] >> 1;
-  fm.faceWest = ret.fieldMask[2] >> 1;
-  fm.extingusher = ret.fieldMask[2] >> 1;
-  fm.pit = ret.fieldMask[2] >> 1;
-  fm.stairsUp = ret.fieldMask[3] >> 1;
-  fm.stairsDown = ret.fieldMask[3] >> 1;
-  fm.teleporter = ret.fieldMask[3] >> 1;
-  fm.water = ret.fieldMask[3] >> 1;
-  fm.quicksand = ret.fieldMask[4] >> 1;
-  fm.rotator = ret.fieldMask[4] >> 1;
-  fm.antimagic = ret.fieldMask[4] >> 1;
-  fm.rock = ret.fieldMask[4] >> 1;
-  fm.fog = ret.fieldMask[5] >> 1;
-  fm.chute = ret.fieldMask[5] >> 1;
-  fm.stud = ret.fieldMask[5] >> 1;
+  fm.eastWall = ret.fieldMask[0] & 1;
+  fm.northWoll = ret.fieldMask[0] & 2;
+  fm.eastDoor = ret.fieldMask[0]  & 4;
+  fm.northDoor = ret.fieldMask[0] & 8;
+  fm.eastSecretDoor = ret.fieldMask[1] & 1;
+  fm.northSecterDoor = ret.fieldMask[1] & 2;
+  fm.faceNorth = ret.fieldMask[1] & 4;
+  fm.faceEast = ret.fieldMask[1] & 8;
+  fm.faceSouth = ret.fieldMask[2] & 1;
+  fm.faceWest = ret.fieldMask[2] & 2;
+  fm.extingusher = ret.fieldMask[2] & 4;
+  fm.pit = ret.fieldMask[2] & 8;
+  fm.stairsUp = ret.fieldMask[3] & 1;
+  fm.stairsDown = ret.fieldMask[3] & 2;
+  fm.teleporter = ret.fieldMask[3] & 4;
+  fm.water = ret.fieldMask[3] & 8;
+  fm.quicksand = ret.fieldMask[4] & 1;
+  fm.rotator = ret.fieldMask[4] & 2;
+  fm.antimagic = ret.fieldMask[4] & 4;
+  fm.rock = ret.fieldMask[4] & 8;
+  fm.fog = ret.fieldMask[5] & 1;
+  fm.chute = ret.fieldMask[5] & 2;
+  fm.stud = ret.fieldMask[5] & 4;
   
   ret.fieldContents = fm;
 #ifdef LOUD
