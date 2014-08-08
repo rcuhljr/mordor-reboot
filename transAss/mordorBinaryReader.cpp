@@ -2,7 +2,6 @@
  *  Tool for reading the binary data file formats of mordor
  */
 
-
 #include <fstream>
 #include "mordorBinaryReader.hpp"
 
@@ -15,7 +14,7 @@ BYTE readByte(ifstream *mdata_input){
   char buff[1] = {0};
   mdata_input->read(buff,sizeof(buff));
   BYTE ret = (BYTE) *buff;
-  point++;
+  point += sizeof(buff);
   return ret;
 }
 
@@ -25,13 +24,6 @@ WORD readWord(ifstream *mdata_input){
   mdata_input->read((char*) buff, sizeof(buff));  
   WORD ret = (WORD) (buff[1] << 8 | buff[0]);
   point += sizeof(buff);
-  /*
-  printf("readWord: 0x");
-  for (int i = 1; i >= 0; i--){
-    printf("%02x", buff[i] &0xff);
-  }
-  cout << "\t" << hex << ret << dec << endl;
-  */
   return ret;
 }
 
@@ -40,12 +32,6 @@ WORD readWordByteOrder(ifstream *mdata_input){
   mdata_input->read((char*) buff, sizeof(buff));  
   WORD ret = (WORD) (buff[0] << 8 | buff[1]);
   point += sizeof(buff);
-  /*  printf("readWord: 0x");
-  for (int i = 1; i >= 0; i--){
-    printf("%02x", buff[i] &0xff);
-  }
-  cout << "\t" << hex << ret << dec << endl;
-  */  
   return ret;
 }
 
@@ -61,22 +47,22 @@ DWORD readDWord(ifstream *mdata_input){
   char buff[4] = {0,0,0,0};
   mdata_input->read(buff, sizeof(buff));
   DWORD ret = (DWORD) *buff;
-  point += 4;
+  point += sizeof(buff);
   return ret;
 }
 
 CURRENCY readCurrency(ifstream *mdata_input){
   char buff[8] = {0,0,0,0,0,0,0,0};
-  mdata_input->read(buff,8);
+  mdata_input->read(buff, sizeof(buff));
   CURRENCY ret = (CURRENCY) *buff;
-  point += 8;
+  point += sizeof(buff);
   return ret;
 }
 
 int readInt(ifstream *mdata_input){
   char buff[4] = {0,0,0,0};
-  mdata_input->read(buff, 4);
-  point += 4;
+  mdata_input->read(buff, sizeof(buff));
+  point += sizeof(buff);
   int ret = (int) *buff;
   return ret;
 }
@@ -84,11 +70,9 @@ int readInt(ifstream *mdata_input){
 char* readVBString(ifstream *mdata_input){
   // allocates and returns a string.
   int length = readWord(mdata_input);
-  char *ret = new char[length+1];
+  char *ret = new char[length + 1]; //and one for \0
   mdata_input->read(ret,length);
-  // Note that I only suspect that the string isn't properly null
-  // terminated, I should check on that. - JTT
-  ret[length] = '\0';
+  ret[length] = '\0'; //make it a proper C-string
   point += length;
   return ret;
 }
@@ -116,7 +100,6 @@ void printLoc(ifstream *mdata_input, int offset, const char *prefix){
 
 
 bool checkAlignment(ifstream *mdata_input){
-  WORD isZero = 42;
-  isZero = readWord(mdata_input);
+  WORD isZero = readWord(mdata_input);
   return isZero == 0;
 }
