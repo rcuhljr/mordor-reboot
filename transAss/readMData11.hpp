@@ -17,7 +17,7 @@ struct levelHeader {
 
 struct fieldRecord {
   WORD spawnAreaID;
-  BYTE fieldMask[8];    // 8 bytes
+  CURRENCY fieldMask;    // 8 bytes
 };
 
 struct fieldMask{
