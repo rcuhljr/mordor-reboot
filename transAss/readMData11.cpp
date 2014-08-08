@@ -17,24 +17,24 @@ const int RECORD_SIZE = 20;
 
 int numLevels = -1;
 
-const unsigned int humanoid = 1;
-const unsigned int cleanup = 2;
-const unsigned int demon = 4;
-const unsigned int devil = 8;
-const unsigned int elemental = 16;
-const unsigned int reptile = 32;
-const unsigned int dragon = 64;
-const unsigned int animal = 128;
-const unsigned int insect = 256;
-const unsigned int undead = 512;
+const unsigned int humanoid     = 1;
+const unsigned int cleanup      = 2;
+const unsigned int demon        = 4;
+const unsigned int devil        = 8;
+const unsigned int elemental    = 16;
+const unsigned int reptile      = 32;
+const unsigned int dragon       = 64;
+const unsigned int animal       = 128;
+const unsigned int insect       = 256;
+const unsigned int undead       = 512;
 const unsigned int waterMonster = 1024;
-const unsigned int giant = 2048;
-const unsigned int mythical = 4096;
-const unsigned int lycanthrope = 8192;
-const unsigned int thief = 16384;
-const unsigned int mage = 32768;
-const unsigned int warrior = 65536;
-const unsigned int indigini = 131072;
+const unsigned int giant        = 2048;
+const unsigned int mythical     = 4096;
+const unsigned int lycanthrope  = 8192;
+const unsigned int thief        = 16384;
+const unsigned int mage         = 32768;
+const unsigned int warrior      = 65536;
+const unsigned int indigini     = 131072;
 
 struct mapHeader{
   WORD numLevels;
@@ -92,9 +92,9 @@ fieldRecord readFieldRecord(ifstream *mdata){
   fm.stud            = ret.fieldMask[5] & 4; // 4194304
   
   ret.fieldContents = fm;
-  //#ifdef LOUD
+#ifdef LOUD
   printFieldRecord(&ret);
-  //#endif
+#endif
 
   seekTo(mdata, RECORD_SIZE);
   return ret;
@@ -311,8 +311,6 @@ struct level readLevel(ifstream *mdata_input, levelHeader *lh){
   ret.teleporters = new teleporterRecord[teleportHeader.count];
   for(i = 0; i < teleportHeader.count; i++){
     ret.teleporters[i] = readTeleporterRecord(mdata_input);
-    assert (ret.fields[(ret.teleporters[i].srcX * ret.lh.height + 
-                        ret.teleporters[i].srcY)].fieldContents.teleporter);
   }
 
 
