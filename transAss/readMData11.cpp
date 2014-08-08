@@ -149,17 +149,10 @@ void printLevelHeader(levelHeader *lh){
        << "Teleports: " << lh->numTeleports << endl;
 }
 
-
 levelHeader readLevelHeader(ifstream *mdata_input){
-  // width       -- word
-  // height      -- word
-  // level #     -- word
-  // # areas     -- word
-  // # chutes    -- word
-  // # teleports -- word
-
   levelHeader thisLevel;
 
+  //read the level in
   thisLevel.width = readWord(mdata_input);
   thisLevel.height = readWord(mdata_input);
   thisLevel.levelNumber = readWord(mdata_input);
@@ -167,9 +160,12 @@ levelHeader readLevelHeader(ifstream *mdata_input){
   thisLevel.numChutes = readWord(mdata_input);
   thisLevel.numTeleports = readWord(mdata_input);
 
+  // quick validation checks
   assert(thisLevel.width == MAX_WIDTH);
   assert(thisLevel.height == MAX_HEIGHT);
+  assert(numLevels >= thisLevel.levelNumber >= 0);
 
+  // display and return
   printLevelHeader(&thisLevel);
   seekTo(mdata_input, RECORD_SIZE);
   return thisLevel;
@@ -222,8 +218,10 @@ void readLevel(ifstream *mdata_input, levelHeader *lh){
   cout << "Num Chutes: " << chuteHeader.count << endl;
   assert(chuteHeader.count == lh->numChutes);
   chuteRecord chuteRecords[chuteHeader.count];
+  int maxDrop = numLevels - lh->levelNumber;
   for(i = 0; i < chuteHeader.count; i++){
     chuteRecords[i] = readChuteRecord(mdata_input);
+    assert(maxDrop >= chuteRecords[i].dropDepth);
   }
 
   //and here is wher we would construct the level object
