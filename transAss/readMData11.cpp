@@ -140,12 +140,13 @@ chuteRecord readChuteRecord(ifstream *mdata){
 }
 
 void printLevelHeader(levelHeader *lh){
-  cout << dec << "Width:\t\t" << lh->width << endl;
-  cout << "Height:\t\t" << lh->height << endl;
-  cout << "Level:\t\t" << lh->levelNumber << endl;
-  cout << "Areas:\t\t" << lh->numLairs << endl;
-  cout << "Chutes:\t\t" << lh->numChutes << endl;
-  cout << "Teleports:\t" << lh->numTeleports << endl;
+  cout << dec 
+       << "Width:     " << lh->width << endl
+       << "Height:    " << lh->height << endl
+       << "Level:     " << lh->levelNumber << endl
+       << "Areas:     " << lh->numLairs << endl
+       << "Chutes:    " << lh->numChutes << endl
+       << "Teleports: " << lh->numTeleports << endl;
 }
 
 
