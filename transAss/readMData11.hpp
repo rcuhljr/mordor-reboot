@@ -39,4 +39,9 @@ struct chuteRecord {
   WORD dropDepth;
 };
 
+struct monsterLair{
+  DWORD monsterType;
+  WORD monsterID;
+};
+
 #endif

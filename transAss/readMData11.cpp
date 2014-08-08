@@ -28,7 +28,21 @@ fieldRecord readFieldRecord(ifstream *mdata){
     ret.fieldMask[i] = readByte(mdata);
   }
 
-  printFieldRecord(&ret);
+  //  printFieldRecord(&ret);
+  seekTo(mdata, RECORD_SIZE);
+  return ret;
+}
+
+void printMonsterLair(monsterLair *ret){
+  cout << "MonsterType: " << ret->monsterType << endl
+       << "MonsterID:   " << ret->monsterID << endl;
+}
+
+monsterLair readMonsterLair(ifstream *mdata){
+  monsterLair ret;
+  ret.monsterType = readDWord(mdata);
+  ret.monsterID = readWord(mdata);
+  //  printMonsterLair(&ret);
   seekTo(mdata, RECORD_SIZE);
   return ret;
 }
@@ -140,16 +154,36 @@ void readLevel(ifstream *mdata_input, levelHeader *lh){
   fieldRecord fieldRecords[num_fields];
 
   // read the map cells
+  cout << "Number of Map Cells: " << num_fields << endl;
   for(int i = 0; i < num_fields; i++){
     fieldRecords[i] = readFieldRecord(mdata_input);
   }
 
   // read monster lair records
   countHeader monsterLairHeader = readCountHeader(mdata_input);
-  
+  monsterLair monsterLairs[monsterLairHeader.count];
+  cout << "Num Lairs: " << monsterLairHeader.count << endl;
+  assert(monsterLairHeader.count == lh->numAreas);
   for(int i = 0; i < monsterLairHeader.count; i++){
+    monsterLairs[i] = readMonsterLair(mdata_input);
   }
-  
+
+  //teleport header
+  countHeader teleportHeader = readCountHeader(mdata_input);
+  assert(teleportHeader.count == lh->numTeleports);
+  teleporterRecord teleportRecords[teleportHeader.count];
+  for(int i = 0; i < teleportHeader.count; i++){
+    teleportRecords[i] = readTeleporterRecord(mdata_input);
+  }
+
+
+  //chute header
+  countHeader chuteHeader = readCountHeader(mdata_input);
+  assert(chuteHeader.count == lh->numChutes);
+  chuteRecord chuteRecords[chuteHeader.count];
+  for(int i = 0; i < chuteHeader.count; i++){
+    chuteRecords[i] = readChuteRecord(mdata_input);
+  }
 }
 
 // testing main point -- this won't be compiled on it's own
