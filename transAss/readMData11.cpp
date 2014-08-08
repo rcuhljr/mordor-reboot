@@ -42,7 +42,7 @@ monsterLair readMonsterLair(ifstream *mdata){
   monsterLair ret;
   ret.monsterType = readDWord(mdata);
   ret.monsterID = readWord(mdata);
-  //  printMonsterLair(&ret);
+  //printMonsterLair(&ret);
   seekTo(mdata, RECORD_SIZE);
   return ret;
 }
@@ -152,10 +152,11 @@ void readLevel(ifstream *mdata_input, levelHeader *lh){
 
   int num_fields = lh->width * lh->height;
   fieldRecord fieldRecords[num_fields];
+  int i;
 
   // read the map cells
   cout << "Number of Map Cells: " << num_fields << endl;
-  for(int i = 0; i < num_fields; i++){
+  for(i = 0; i < num_fields; i++){
     fieldRecords[i] = readFieldRecord(mdata_input);
   }
 
@@ -164,24 +165,35 @@ void readLevel(ifstream *mdata_input, levelHeader *lh){
   monsterLair monsterLairs[monsterLairHeader.count];
   cout << "Num Lairs: " << monsterLairHeader.count << endl;
   assert(monsterLairHeader.count == lh->numAreas);
-  for(int i = 0; i < monsterLairHeader.count; i++){
+  assert(monsterLairHeader.count <= 200);
+
+  for(i = 0; i < monsterLairHeader.count; i++){
     monsterLairs[i] = readMonsterLair(mdata_input);
   }
 
+  for(; i <= 200; i++){
+    seekTo(mdata_input, RECORD_SIZE);
+  }
+
   //teleport header
+  cout << "Pointer at: " << mdata_input->tellg() << endl;
   countHeader teleportHeader = readCountHeader(mdata_input);
+  cout << "Num Teleporters: " << teleportHeader.count << endl;
+  cout << "lh->numTeleporters: " << lh->numTeleports << endl;
   assert(teleportHeader.count == lh->numTeleports);
   teleporterRecord teleportRecords[teleportHeader.count];
-  for(int i = 0; i < teleportHeader.count; i++){
+  for(i = 0; i < teleportHeader.count; i++){
     teleportRecords[i] = readTeleporterRecord(mdata_input);
   }
 
 
   //chute header
   countHeader chuteHeader = readCountHeader(mdata_input);
+  cout << "Num Chutes: " << chuteHeader.count << endl;
+  cout << "lh->numChutes: " << lh->numChutes << endl;
   assert(chuteHeader.count == lh->numChutes);
   chuteRecord chuteRecords[chuteHeader.count];
-  for(int i = 0; i < chuteHeader.count; i++){
+  for(i = 0; i < chuteHeader.count; i++){
     chuteRecords[i] = readChuteRecord(mdata_input);
   }
 }
