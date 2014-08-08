@@ -10,7 +10,7 @@ typedef unsigned char BYTE;  // 1 byte
 typedef unsigned short WORD; // 2 bytes wide
 typedef signed short SWORD;
 typedef unsigned long DWORD; // 4 bytes, or long word
-typedef float CURRENCY;
+typedef double CURRENCY;
 
 void printLoc(ifstream *mdata, int offset, const char *prefix);
 BYTE readByte(ifstream *mdata_input);
