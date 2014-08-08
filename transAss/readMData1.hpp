@@ -3,6 +3,12 @@
 
 #include "mordorBinaryReader.hpp"
 
+/*
+ *  MDATA1.MDR contains guild, race, item, and monster information.
+ *  readMDATA1 reads the packed binary representation in this file and
+ *  produces structs representing these elements in memory.
+ */
+
 struct race{
   char* name;
   WORD minStats;
