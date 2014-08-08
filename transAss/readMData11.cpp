@@ -62,34 +62,34 @@ fieldRecord readFieldRecord(ifstream *mdata){
   }
   struct fieldMask fm;
 
-  fm.eastWall        = ret.fieldMask[0] & 1;
-  fm.northWoll       = ret.fieldMask[0] & 2;
-  fm.eastDoor        = ret.fieldMask[0] & 4;
-  fm.northDoor       = ret.fieldMask[0] & 8;
+  fm.eastWall        = ret.fieldMask[0] & 1; //       1
+  fm.northWoll       = ret.fieldMask[0] & 2; //       2
+  fm.eastDoor        = ret.fieldMask[0] & 4; //       4
+  fm.northDoor       = ret.fieldMask[0] & 8; //       8
 
-  fm.eastSecretDoor  = ret.fieldMask[1] & 1;
-  fm.northSecterDoor = ret.fieldMask[1] & 2;
-  fm.faceNorth       = ret.fieldMask[1] & 4;
-  fm.faceEast        = ret.fieldMask[1] & 8;
+  fm.eastSecretDoor  = ret.fieldMask[1] & 1; //      16
+  fm.northSecterDoor = ret.fieldMask[1] & 2; //      32
+  fm.faceNorth       = ret.fieldMask[1] & 4; //      64
+  fm.faceEast        = ret.fieldMask[1] & 8; //     128
 
-  fm.faceSouth       = ret.fieldMask[2] & 1;
-  fm.faceWest        = ret.fieldMask[2] & 2;
-  fm.extingusher     = ret.fieldMask[2] & 4;
-  fm.pit             = ret.fieldMask[2] & 8;
+  fm.faceSouth       = ret.fieldMask[2] & 1; //     256
+  fm.faceWest        = ret.fieldMask[2] & 2; //     512
+  fm.extingusher     = ret.fieldMask[2] & 4; //    1024
+  fm.pit             = ret.fieldMask[2] & 8; //    2048
 
-  fm.stairsUp        = ret.fieldMask[3] & 1;
-  fm.stairsDown      = ret.fieldMask[3] & 2;
-  fm.teleporter      = ret.fieldMask[3] & 4;
-  fm.water           = ret.fieldMask[3] & 8;
+  fm.stairsUp        = ret.fieldMask[3] & 1; //    4096
+  fm.stairsDown      = ret.fieldMask[3] & 2; //    8192
+  fm.teleporter      = ret.fieldMask[3] & 4; //   16384
+  fm.water           = ret.fieldMask[3] & 8; //   32768
 
-  fm.quicksand       = ret.fieldMask[4] & 1;
-  fm.rotator         = ret.fieldMask[4] & 2;
-  fm.antimagic       = ret.fieldMask[4] & 4;
-  fm.rock            = ret.fieldMask[4] & 8;
+  fm.quicksand       = ret.fieldMask[4] & 1; //   65536
+  fm.rotator         = ret.fieldMask[4] & 2; //  131072
+  fm.antimagic       = ret.fieldMask[4] & 4; //  262144
+  fm.rock            = ret.fieldMask[4] & 8; //  524288
 
-  fm.fog             = ret.fieldMask[5] & 1;
-  fm.chute           = ret.fieldMask[5] & 2;
-  fm.stud            = ret.fieldMask[5] & 4;
+  fm.fog             = ret.fieldMask[5] & 1; // 1048576
+  fm.chute           = ret.fieldMask[5] & 2; // 2097152
+  fm.stud            = ret.fieldMask[5] & 4; // 4194304
   
   ret.fieldContents = fm;
   //#ifdef LOUD
