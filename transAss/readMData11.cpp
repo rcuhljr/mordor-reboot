@@ -36,30 +36,6 @@ const unsigned int mage = 32768;
 const unsigned int warrior = 65536;
 const unsigned int indigini = 131072;
 
-const unsigned int wallEast = 1;
-const unsigned int wallNorth = 2;
-const unsigned int doorEast = 4;
-const unsigned int doorNorth = 8;
-const unsigned int secertDoorEast = 16;
-const unsigned int secretDoorNorth = 32;
-const unsigned int faceNorth = 64;
-const unsigned int faceEast = 128;
-const unsigned int faceSouth = 256;
-const unsigned int faceWest = 512;
-const unsigned int extinguisher = 1024;
-const unsigned int pit = 2048;
-const unsigned int stairsUp = 4096;
-const unsigned int stairsDown = 8192;
-const unsigned int teleporter = 16384;
-const unsigned int waterField = 32768;
-const unsigned int quicksand = 65536;
-const unsigned int rotator = 131072;
-const unsigned int antimagic = 262144;
-const unsigned int rock = 524288;
-const unsigned int fog = 1048576;
-const unsigned int chute = 2097152;
-const unsigned int stud = 419304;
-
 struct mapHeader{
   WORD numLevels;
   int *levelOffsets;
@@ -83,31 +59,30 @@ fieldRecord readFieldRecord(ifstream *mdata){
   }
   struct fieldMask fm;
 
-  /*
-  fm.eastWall = ret.fieldMask & wallEast;
-  fm.northWoll = ret.fieldMask & wallNorth;
-  fm.eastDoor = ret.fieldMask & doorEast;
-  fm.northDoor = ret.fieldMask & doorNorth;
-  fm.eastSecretDoor = ret.fieldMask & secretDoorEast;
-  fm.northSecterDoor = ret.fieldMask & secretDoorNorth;
-  fm.faceNorth = ret.fieldMask & faceNorth;
-  fm.faceEast = ret.fieldMask & faceEast;
-  fm.faceSouth = ret.fieldMask & faceSouth;
-  fm.faceWest = ret.fieldMask & faceWest;
-  fm.extingusher = ret.fieldMask & extinguisher;
-  fm.pit = ret.fieldMask & pit;
-  fm.stairsUp = ret.fieldMask & stairsUp;
-  fm.stairsDown = ret.fieldMask & stairsDown;
-  fm.teleporter = ret.fieldMask & teleporter;
-  fm.water = ret.fieldMask & waterField;
-  fm.quicksand = ret.fieldMask & quicksand;
-  fm.rotator = ret.fieldMask & rotator;
-  fm.antimagic = ret.fieldMask & antimagic;
-  fm.rock = ret.fieldMask &  rock;
-  fm.fog = ret.fieldMask & fog;
-  fm.chute = ret.fieldMask & chute;
-  fm.stud = ret.fieldMask & stud;
-  */
+  fm.eastWall = ret.fieldMask[0] >> 1;
+  fm.northWoll = ret.fieldMask[0] >> 1;
+  fm.eastDoor = ret.fieldMask[0] >> 1;
+  fm.northDoor = ret.fieldMask[0] >> 1;
+  fm.eastSecretDoor = ret.fieldMask[1] >> 1;
+  fm.northSecterDoor = ret.fieldMask[1] >> 1;
+  fm.faceNorth = ret.fieldMask[1] >> 1;
+  fm.faceEast = ret.fieldMask[1] >> 1;
+  fm.faceSouth = ret.fieldMask[2] >> 1;
+  fm.faceWest = ret.fieldMask[2] >> 1;
+  fm.extingusher = ret.fieldMask[2] >> 1;
+  fm.pit = ret.fieldMask[2] >> 1;
+  fm.stairsUp = ret.fieldMask[3] >> 1;
+  fm.stairsDown = ret.fieldMask[3] >> 1;
+  fm.teleporter = ret.fieldMask[3] >> 1;
+  fm.water = ret.fieldMask[3] >> 1;
+  fm.quicksand = ret.fieldMask[4] >> 1;
+  fm.rotator = ret.fieldMask[4] >> 1;
+  fm.antimagic = ret.fieldMask[4] >> 1;
+  fm.rock = ret.fieldMask[4] >> 1;
+  fm.fog = ret.fieldMask[5] >> 1;
+  fm.chute = ret.fieldMask[5] >> 1;
+  fm.stud = ret.fieldMask[5] >> 1;
+  
   ret.fieldContents = fm;
 #ifdef LOUD
   printFieldRecord(&ret);
