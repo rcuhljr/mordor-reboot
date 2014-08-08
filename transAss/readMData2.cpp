@@ -32,8 +32,7 @@ struct Spell readSpell(ifstream *mdata){
   thisSpell.spellClass = readWord(mdata);
   thisSpell.level = readWord(mdata);
   thisSpell.u4 = readWord(mdata);
-  BYTE b = readWord(mdata);
-  assert(b == 0);
+  assert(checkByteAlignment(mdata));
   thisSpell.killEffect = readWord(mdata);
   thisSpell.affectMonster = readWord(mdata);
   thisSpell.affectGroup = readWord(mdata);

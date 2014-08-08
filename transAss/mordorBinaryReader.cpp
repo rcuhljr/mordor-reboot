@@ -103,3 +103,8 @@ bool checkAlignment(ifstream *mdata_input){
   WORD isZero = readWord(mdata_input);
   return isZero == 0;
 }
+
+bool checkByteAlignment(ifstream *mdata_input){
+  BYTE isZero = readByte(mdata_input);
+  return isZero == 0;
+}

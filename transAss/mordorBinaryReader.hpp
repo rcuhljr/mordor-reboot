@@ -23,5 +23,6 @@ CURRENCY readCurrency(ifstream *mdata_input);
 char* readVBString(ifstream *mdata_input);
 char* seekTo(ifstream *mdata_input, int goal);
 bool checkAlignment(ifstream *mdata_input);
+bool checkByteAlignment(ifstream *mdata_input);
 
 #endif
