@@ -59,11 +59,13 @@ header readHeader(ifstream *mdata){
   header ret;
 
   ret.version = readVBString(mdata);
+  seekTo(mdata, RECORD_SIZE);
+  seekTo(mdata, RECORD_SIZE);
   ret.numMonsters = readWord(mdata);
  
   printHeader(&ret);
-  seekTo(mdata, RECORD_SIZE);
-  seekTo(mdata, RECORD_SIZE); // peel off cruft before first record.
+  //  seekTo(mdata, RECORD_SIZE);
+  //  seekTo(mdata, RECORD_SIZE); // peel off cruft before first record.
   seekTo(mdata, RECORD_SIZE);
   return ret;
 }
@@ -200,11 +202,13 @@ int main(int argc, char** argv){
 
   header h = readHeader(&mdata);
 
-  for(int i = 0; i < h.numMonsters; i++){
+  
+    for(int i = 0; i < h.numMonsters; i++){
     cout << "Reading " << i << "th monster" << endl; 
     readMonster(&mdata);
     cout << endl << endl;
   }
+  
 
 
   return 0;
