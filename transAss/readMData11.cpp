@@ -171,15 +171,18 @@ void readLevel(ifstream *mdata_input, levelHeader *lh){
     monsterLairs[i] = readMonsterLair(mdata_input);
   }
 
-  for(; i <= 200; i++){
+  // now that I've read the meningful lairs, clear out the rest of the set.
+  // the setis bounded from  above by 200.
+  for(; i < 200; i++){
     seekTo(mdata_input, RECORD_SIZE);
   }
 
+  // I have to strip off an additional record here, and I don't know why.
+  seekTo(mdata_input, RECORD_SIZE);
+
   //teleport header
-  cout << "Pointer at: " << mdata_input->tellg() << endl;
   countHeader teleportHeader = readCountHeader(mdata_input);
   cout << "Num Teleporters: " << teleportHeader.count << endl;
-  cout << "lh->numTeleporters: " << lh->numTeleports << endl;
   assert(teleportHeader.count == lh->numTeleports);
   teleporterRecord teleportRecords[teleportHeader.count];
   for(i = 0; i < teleportHeader.count; i++){
@@ -190,7 +193,6 @@ void readLevel(ifstream *mdata_input, levelHeader *lh){
   //chute header
   countHeader chuteHeader = readCountHeader(mdata_input);
   cout << "Num Chutes: " << chuteHeader.count << endl;
-  cout << "lh->numChutes: " << lh->numChutes << endl;
   assert(chuteHeader.count == lh->numChutes);
   chuteRecord chuteRecords[chuteHeader.count];
   for(i = 0; i < chuteHeader.count; i++){
