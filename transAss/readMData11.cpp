@@ -78,8 +78,9 @@ fieldRecord readFieldRecord(ifstream *mdata){
   fieldRecord ret;
   ret.spawnAreaID = readWord(mdata);
 
-  ret.fieldMask = readCurrency(mdata);
-
+  for(int i = 0; i < 8; i++){
+  ret.fieldMask[i] = readByte(mdata);
+  }
   struct fieldMask fm;
 
   /*

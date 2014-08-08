@@ -43,7 +43,7 @@ struct fieldMask{
 
 struct fieldRecord {
   WORD spawnAreaID;
-  CURRENCY fieldMask;    // 8 bytes
+  BYTE fieldMask[8];    // 8 bytes
   struct fieldMask fieldContents;
 };
 
