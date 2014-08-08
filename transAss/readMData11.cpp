@@ -349,6 +349,14 @@ mapHeader readMapHeader(ifstream *mdata){
   return ret;
 }
 
+int cellX(int index, levelHeader *lh){
+  return index % lh->width;
+}
+
+int cellY(int index, levelHeader *lh){
+  return index / lh->width;
+}
+
 // testing main point -- this won't be compiled on it's own
 int main(int argc, char** argv){
   char* datAbsolutePath;

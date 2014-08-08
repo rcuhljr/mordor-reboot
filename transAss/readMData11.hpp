@@ -101,4 +101,7 @@ struct level{
   monsterLair *monsterLairs;
 };
 
+int cellX(int index, levelHeader *lh);
+int cellY(int index, levelHeader *lh);
+
 #endif
