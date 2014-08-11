@@ -23,6 +23,10 @@
 # The assets folder isn't to be committed
 assets
 
+#QT creator items
+*.user
+*.user.*
+
 # Things from other people I'm using as templates.
 wabbits_editor_source
 editer2
