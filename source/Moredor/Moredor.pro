@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui designer
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,8 +13,14 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        gamewindow.cpp
+        gamewindow.cpp \
+    createcharacterwidget.cpp
 
-HEADERS  += gamewindow.h
+HEADERS  += gamewindow.h \
+    createcharacterwidget.h
 
-FORMS    += gamewindow.ui
+FORMS    += gamewindow.ui \
+    createcharacterwidget.ui
+
+RESOURCES += \
+    Resources.qrc

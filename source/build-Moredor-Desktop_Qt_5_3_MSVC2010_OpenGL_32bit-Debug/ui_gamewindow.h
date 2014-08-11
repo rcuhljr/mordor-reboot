@@ -28,12 +28,12 @@ QT_BEGIN_NAMESPACE
 class Ui_GameWindow
 {
 public:
-    QWidget *centralWidget;
+    QWidget *mainMenuWidget;
     QGridLayout *gridLayout_3;
     QGroupBox *groupBox;
     QGridLayout *gridLayout;
     QGridLayout *gridLayout_2;
-    QPushButton *pushButton;
+    QPushButton *createCharacterButton;
     QPushButton *pushButton_3;
     QPushButton *pushButton_4;
     QPushButton *pushButton_5;
@@ -47,17 +47,17 @@ public:
     {
         if (GameWindow->objectName().isEmpty())
             GameWindow->setObjectName(QStringLiteral("GameWindow"));
-        GameWindow->resize(400, 300);
-        centralWidget = new QWidget(GameWindow);
-        centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        centralWidget->setMinimumSize(QSize(400, 247));
-        centralWidget->setLayoutDirection(Qt::LeftToRight);
-        centralWidget->setAutoFillBackground(true);
-        gridLayout_3 = new QGridLayout(centralWidget);
+        GameWindow->resize(1066, 673);
+        mainMenuWidget = new QWidget(GameWindow);
+        mainMenuWidget->setObjectName(QStringLiteral("mainMenuWidget"));
+        mainMenuWidget->setMinimumSize(QSize(400, 247));
+        mainMenuWidget->setLayoutDirection(Qt::LeftToRight);
+        mainMenuWidget->setAutoFillBackground(true);
+        gridLayout_3 = new QGridLayout(mainMenuWidget);
         gridLayout_3->setSpacing(6);
         gridLayout_3->setContentsMargins(11, 11, 11, 11);
         gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
-        groupBox = new QGroupBox(centralWidget);
+        groupBox = new QGroupBox(mainMenuWidget);
         groupBox->setObjectName(QStringLiteral("groupBox"));
         groupBox->setMaximumSize(QSize(321, 231));
         groupBox->setFlat(false);
@@ -68,10 +68,10 @@ public:
         gridLayout_2 = new QGridLayout();
         gridLayout_2->setSpacing(6);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
-        pushButton = new QPushButton(groupBox);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
+        createCharacterButton = new QPushButton(groupBox);
+        createCharacterButton->setObjectName(QStringLiteral("createCharacterButton"));
 
-        gridLayout_2->addWidget(pushButton, 0, 0, 1, 1, Qt::AlignHCenter);
+        gridLayout_2->addWidget(createCharacterButton, 0, 0, 1, 1, Qt::AlignHCenter);
 
         pushButton_3 = new QPushButton(groupBox);
         pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
@@ -104,10 +104,10 @@ public:
 
         gridLayout_3->addWidget(groupBox, 0, 0, 1, 1);
 
-        GameWindow->setCentralWidget(centralWidget);
+        GameWindow->setCentralWidget(mainMenuWidget);
         menuBar = new QMenuBar(GameWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 400, 21));
+        menuBar->setGeometry(QRect(0, 0, 1066, 21));
         GameWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(GameWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -125,7 +125,7 @@ public:
     {
         GameWindow->setWindowTitle(QApplication::translate("GameWindow", "Moredor", 0));
         groupBox->setTitle(QString());
-        pushButton->setText(QApplication::translate("GameWindow", "Create Character", 0));
+        createCharacterButton->setText(QApplication::translate("GameWindow", "Create Character", 0));
         pushButton_3->setText(QApplication::translate("GameWindow", "PushButton", 0));
         pushButton_4->setText(QApplication::translate("GameWindow", "PushButton", 0));
         pushButton_5->setText(QApplication::translate("GameWindow", "PushButton", 0));

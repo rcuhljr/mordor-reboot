@@ -15,6 +15,10 @@
 *.a
 *.lib
 
+# Misc
+*.ilk
+*.pdb
+
 # Executables
 *.exe
 *.out
@@ -26,6 +30,9 @@ assets
 #QT creator items
 *.user
 *.user.*
+
+
+
 
 # Things from other people I'm using as templates.
 wabbits_editor_source

@@ -178,6 +178,7 @@ Makefile: ..\Moredor\Moredor.pro C:\Qt\5.3\msvc2010_opengl\mkspecs\win32-msvc201
 		C:\Qt\5.3\msvc2010_opengl\mkspecs\features\moc.prf \
 		C:\Qt\5.3\msvc2010_opengl\mkspecs\features\win32\opengl.prf \
 		C:\Qt\5.3\msvc2010_opengl\mkspecs\features\uic.prf \
+		C:\Qt\5.3\msvc2010_opengl\mkspecs\features\designer_defines.prf \
 		C:\Qt\5.3\msvc2010_opengl\mkspecs\features\win32\windows.prf \
 		C:\Qt\5.3\msvc2010_opengl\mkspecs\features\testcase_targets.prf \
 		C:\Qt\5.3\msvc2010_opengl\mkspecs\features\exceptions.prf \
@@ -186,7 +187,9 @@ Makefile: ..\Moredor\Moredor.pro C:\Qt\5.3\msvc2010_opengl\mkspecs\win32-msvc201
 		..\Moredor\Moredor.pro \
 		C:/Qt/5.3/msvc2010_opengl/lib/qtmaind.prl \
 		C:/Qt/5.3/msvc2010_opengl/lib/Qt5Cored.prl \
+		C:/Qt/5.3/msvc2010_opengl/lib/Qt5Designer.prl \
 		C:/Qt/5.3/msvc2010_opengl/lib/Qt5Widgets.prl \
+		C:/Qt/5.3/msvc2010_opengl/lib/Qt5Xml.prl \
 		C:/Qt/5.3/msvc2010_opengl/lib/Qt5Gui.prl \
 		C:/Qt/5.3/msvc2010_opengl/lib/Qt5Core.prl
 	$(QMAKE) -spec win32-msvc2010 CONFIG+=debug -o Makefile ..\Moredor\Moredor.pro
@@ -295,6 +298,7 @@ C:\Qt\5.3\msvc2010_opengl\mkspecs\features\resources.prf:
 C:\Qt\5.3\msvc2010_opengl\mkspecs\features\moc.prf:
 C:\Qt\5.3\msvc2010_opengl\mkspecs\features\win32\opengl.prf:
 C:\Qt\5.3\msvc2010_opengl\mkspecs\features\uic.prf:
+C:\Qt\5.3\msvc2010_opengl\mkspecs\features\designer_defines.prf:
 C:\Qt\5.3\msvc2010_opengl\mkspecs\features\win32\windows.prf:
 C:\Qt\5.3\msvc2010_opengl\mkspecs\features\testcase_targets.prf:
 C:\Qt\5.3\msvc2010_opengl\mkspecs\features\exceptions.prf:
@@ -303,7 +307,9 @@ C:\Qt\5.3\msvc2010_opengl\mkspecs\features\lex.prf:
 ..\Moredor\Moredor.pro:
 C:/Qt/5.3/msvc2010_opengl/lib/qtmaind.prl:
 C:/Qt/5.3/msvc2010_opengl/lib/Qt5Cored.prl:
+C:/Qt/5.3/msvc2010_opengl/lib/Qt5Designer.prl:
 C:/Qt/5.3/msvc2010_opengl/lib/Qt5Widgets.prl:
+C:/Qt/5.3/msvc2010_opengl/lib/Qt5Xml.prl:
 C:/Qt/5.3/msvc2010_opengl/lib/Qt5Gui.prl:
 C:/Qt/5.3/msvc2010_opengl/lib/Qt5Core.prl:
 qmake: FORCE

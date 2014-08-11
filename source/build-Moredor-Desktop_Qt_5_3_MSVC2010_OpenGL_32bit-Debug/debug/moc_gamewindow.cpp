@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_GameWindow_t {
     QByteArrayData data[3];
-    char stringdata[34];
+    char stringdata[45];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -30,10 +30,11 @@ struct qt_meta_stringdata_GameWindow_t {
 static const qt_meta_stringdata_GameWindow_t qt_meta_stringdata_GameWindow = {
     {
 QT_MOC_LITERAL(0, 0, 10),
-QT_MOC_LITERAL(1, 11, 21),
-QT_MOC_LITERAL(2, 33, 0)
+QT_MOC_LITERAL(1, 11, 32),
+QT_MOC_LITERAL(2, 44, 0)
     },
-    "GameWindow\0on_pushButton_clicked\0"
+    "GameWindow\0on_createCharacterButton_clicked\0"
+    ""
 };
 #undef QT_MOC_LITERAL
 
@@ -64,7 +65,7 @@ void GameWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     if (_c == QMetaObject::InvokeMetaMethod) {
         GameWindow *_t = static_cast<GameWindow *>(_o);
         switch (_id) {
-        case 0: _t->on_pushButton_clicked(); break;
+        case 0: _t->on_createCharacterButton_clicked(); break;
         default: ;
         }
     }
