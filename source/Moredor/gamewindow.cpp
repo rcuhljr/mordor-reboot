@@ -18,7 +18,7 @@ GameWindow::~GameWindow()
 void GameWindow::on_createCharacterButton_clicked()
 {
     QFormBuilder builder;
-    QFile file(":/forms/createCharacterWidget.ui");
+    QFile file(":/forms/createcharacterwidget.ui");
     file.open(QFile::ReadOnly);
     QWidget *createCharacterWidget = builder.load(&file, this);
     file.close();
