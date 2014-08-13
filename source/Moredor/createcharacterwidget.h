@@ -7,13 +7,16 @@ namespace Ui {
 class createCharacterWidget;
 }
 
-class createCharacterWidget : public QDockWidget
+class CreateCharacterWidget : public QDockWidget
 {
     Q_OBJECT
 
 public:
-    explicit createCharacterWidget(QWidget *parent = 0);
-    ~createCharacterWidget();
+    explicit CreateCharacterWidget(QWidget *parent = 0);
+    ~CreateCharacterWidget();
+
+private slots:
+    void on_pushButton_clicked();
 
 private:
     Ui::createCharacterWidget *ui;

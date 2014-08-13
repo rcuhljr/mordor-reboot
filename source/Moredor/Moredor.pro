@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui designer
+QT       += core gui uitools
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

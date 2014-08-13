@@ -1,5 +1,1 @@
-<RCC>
-    <qresource prefix="/forms">
-        <file>createcharacterwidget.ui</file>
-    </qresource>
-</RCC>
+<RCC/>

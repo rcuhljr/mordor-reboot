@@ -31,6 +31,8 @@ assets
 *.user
 *.user.*
 
+source/build*/
+
 
 
 
