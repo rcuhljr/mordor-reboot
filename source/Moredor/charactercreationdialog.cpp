@@ -12,3 +12,8 @@ CharacterCreationDialog::~CharacterCreationDialog()
 {
     delete ui;
 }
+
+void CharacterCreationDialog::on_exitButton_clicked()
+{
+    this->close();
+}

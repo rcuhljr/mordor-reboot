@@ -15,6 +15,9 @@ public:
     explicit CharacterCreationDialog(QWidget *parent = 0);
     ~CharacterCreationDialog();
 
+private slots:
+    void on_exitButton_clicked();
+
 private:
     Ui::CharacterCreationDialog *ui;
 };
