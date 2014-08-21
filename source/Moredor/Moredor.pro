@@ -14,13 +14,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         gamewindow.cpp \
-    createcharacterwidget.cpp
+    charactercreationdialog.cpp
 
 HEADERS  += gamewindow.h \
-    createcharacterwidget.h
+    charactercreationdialog.h
 
 FORMS    += gamewindow.ui \
-    createcharacterwidget.ui
+    charactercreationdialog.ui
 
 RESOURCES += \
     Resources.qrc
