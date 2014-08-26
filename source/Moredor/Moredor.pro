@@ -14,10 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         gamewindow.cpp \
-    charactercreationdialog.cpp
+    charactercreationdialog.cpp \
+    creationlogic.cpp
 
 HEADERS  += gamewindow.h \
-    charactercreationdialog.h
+    charactercreationdialog.h \
+    creationlogic.h
 
 FORMS    += gamewindow.ui \
     charactercreationdialog.ui

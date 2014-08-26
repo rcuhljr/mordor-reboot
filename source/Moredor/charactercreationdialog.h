@@ -20,6 +20,7 @@ private slots:
 
 private:
     Ui::CharacterCreationDialog *ui;
+    void CharacterCreationDialog::populateUI();
 };
 
 #endif // CHARACTERCREATIONDIALOG_H
