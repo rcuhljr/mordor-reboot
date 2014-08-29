@@ -25,4 +25,13 @@ void CharacterCreationDialog::on_exitButton_clicked()
 
 void CharacterCreationDialog::populateUI(){
     ui->raceComboBox->addItems(logic->availableRaces());
+
+    QLabel* guild1 = new QLabel(ui->verticalLayoutWidget);
+    guild1->setObjectName(QStringLiteral("label"));
+    guild1->setGeometry(QRect(20, 10, 131, 17));
+    QFont f = guild1->font();
+    f.setStrikeOut(true);
+    guild1->setFont(f);
+    guild1->setText("guild");
+    ui->GuildVLayout->addWidget(guild1);
 }
