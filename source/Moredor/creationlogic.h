@@ -15,7 +15,8 @@ public:
         std::vector<int> requirements;
         std::vector<bool> alignments;
 
-        GUILD(int *reqs, bool *align){
+        GUILD(QString name, int *reqs, bool *align){
+            this->name = name;
             requirements = std::vector<int>(reqs, reqs + sizeof(reqs)/sizeof(int) );
             alignments = std::vector<bool>(align, align + sizeof(align)/sizeof(bool) );
         }
@@ -28,20 +29,22 @@ public:
         std::vector<int> maxStats;
         QList<GUILD> guilds;
 
-        RACE(bool *align, int *start, int *max){
+        RACE(QString name, bool *align, int *start, int *max){
+            this->name = name;
             alignments = std::vector<bool>(align, align + sizeof(align)/sizeof(bool) );
             startingStats = std::vector<int>(start, start + sizeof(start)/sizeof(int) );
             maxStats = std::vector<int>(max, max + sizeof(max)/sizeof(int) );
 
         }
-
-        RACE(){}
     };
+
     CreationLogic();
+    virtual ~CreationLogic() {}
     QStringList availableRaces();
+    QStringList getGuilds(int raceIndex);
 
 private:
-    QMap<QString,RACE> races;
+    QList<RACE*> races;
 };
 
 #endif // CREATIONLOGIC_H

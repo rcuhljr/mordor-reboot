@@ -15,52 +15,50 @@ CreationLogic::CreationLogic()
     int thiefStats[6] = {8,12,8,6,5,17};
     bool thiefAlign[3] = {false,true,false};
 
-    GUILD* nomad = new GUILD(nomadStats, nomadAlign);
-    GUILD* warrior = new GUILD(warriorStats, warriorAlign);
-    GUILD* thief = new GUILD(thiefStats, thiefAlign);
-
-    nomad->name = QString("Nomad");
-    warrior->name = QString("Warrior");
-    thief->name = QString("Thief");
-
+    GUILD* nomad = new GUILD("Nomad", nomadStats, nomadAlign);
+    GUILD* warrior = new GUILD("Warrior", warriorStats, warriorAlign);
+    GUILD* thief = new GUILD("Thief", thiefStats, thiefAlign);
 
     int humanStart[6] = {4,4,4,6,5,6};
     int humanMax[6] = {17,18,18,17,18,18};
     bool humanAlign[3] = {true,true,true};
 
-
-    RACE* human = new RACE(humanAlign, humanStart, humanMax);
-    human->name = QString("Human");
+    RACE* human = new RACE("Human", humanAlign, humanStart, humanMax);
     QList<GUILD> humanGuilds;
-    humanGuilds.push_back(*nomad);
-    humanGuilds.push_back(*warrior);
-    humanGuilds.push_back(*thief);
+    humanGuilds << *nomad << *warrior << *thief;
     human->guilds = humanGuilds;
 
-    races[human->name] = *human;
+    races << human;
+
 
     int giantStart[6] = {12,4,3,9,2,3};
     int giantMax[6] =  {25,17,17,19,16,18};
     bool giantAlign[3] = {true,true,true};
 
-
-    RACE* giant = new RACE(giantAlign, giantStart, giantMax);
-    giant->name = QString("Giant");
+    RACE* giant = new RACE("Giant", giantAlign, giantStart, giantMax);
     QList<GUILD> giantGuilds;
-    giantGuilds.push_back(*nomad);
-    giantGuilds.push_back(*warrior);
+    giantGuilds << *nomad << *warrior;
     giant->guilds = giantGuilds;
 
-    races[giant->name] = *giant;
+    races << giant;
 }
 
-
-QStringList CreationLogic::availableRaces(){
+QStringList CreationLogic::availableRaces()
+{
     QStringList raceStrings;
-    QMap<QString,RACE>::const_iterator i = races.constBegin();
-    while(i != races.constEnd()){
-        raceStrings.push_back(i.key());
-        i++;
+    foreach(const RACE* race, races)
+    {
+        raceStrings << race->name;
     }
     return raceStrings;
+}
+
+QStringList CreationLogic::getGuilds(int raceIndex)
+{
+    QStringList guildStrings;
+    foreach(const GUILD guild, races[raceIndex]->guilds)
+    {
+        guildStrings << guild.name;
+    }
+    return guildStrings;
 }
