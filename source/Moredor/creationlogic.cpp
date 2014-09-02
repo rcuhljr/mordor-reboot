@@ -15,18 +15,18 @@ CreationLogic::CreationLogic()
     int thiefStats[6] = {8,12,8,6,5,17};
     bool thiefAlign[3] = {false,true,false};
 
-    GUILD* nomad = new GUILD("Nomad", nomadStats, nomadAlign);
-    GUILD* warrior = new GUILD("Warrior", warriorStats, warriorAlign);
-    GUILD* thief = new GUILD("Thief", thiefStats, thiefAlign);
+    GUILD nomad("Nomad", nomadStats, nomadAlign);
+    GUILD warrior("Warrior", warriorStats, warriorAlign);
+    GUILD thief("Thief", thiefStats, thiefAlign);
 
     int humanStart[6] = {4,4,4,6,5,6};
     int humanMax[6] = {17,18,18,17,18,18};
     bool humanAlign[3] = {true,true,true};
 
-    RACE* human = new RACE("Human", humanAlign, humanStart, humanMax);
+    RACE human("Human", humanAlign, humanStart, humanMax);
     QList<GUILD> humanGuilds;
-    humanGuilds << *nomad << *warrior << *thief;
-    human->guilds = humanGuilds;
+    humanGuilds << nomad << warrior << thief;
+    human.guilds = humanGuilds;
 
     races << human;
 
@@ -35,30 +35,15 @@ CreationLogic::CreationLogic()
     int giantMax[6] =  {25,17,17,19,16,18};
     bool giantAlign[3] = {true,true,true};
 
-    RACE* giant = new RACE("Giant", giantAlign, giantStart, giantMax);
+    RACE giant("Giant", giantAlign, giantStart, giantMax);
     QList<GUILD> giantGuilds;
-    giantGuilds << *nomad << *warrior;
-    giant->guilds = giantGuilds;
+    giantGuilds << nomad << warrior;
+    giant.guilds = giantGuilds;
 
     races << giant;
 }
 
-QStringList CreationLogic::availableRaces()
+const QList<RACE> CreationLogic::getRaces() const
 {
-    QStringList raceStrings;
-    foreach(const RACE* race, races)
-    {
-        raceStrings << race->name;
-    }
-    return raceStrings;
-}
-
-QStringList CreationLogic::getGuilds(int raceIndex)
-{
-    QStringList guildStrings;
-    foreach(const GUILD guild, races[raceIndex]->guilds)
-    {
-        guildStrings << guild.name;
-    }
-    return guildStrings;
+    return races;
 }

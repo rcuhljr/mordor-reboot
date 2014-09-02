@@ -1,7 +1,10 @@
 #ifndef CHARACTERCREATIONDIALOG_H
 #define CHARACTERCREATIONDIALOG_H
 
+#include "creationlogic.h"
+#include "race.h"
 #include <QDialog>
+#include <QSpinBox>
 
 namespace Ui {
 class CharacterCreationDialog;
@@ -24,7 +27,10 @@ private slots:
 private:
     Ui::CharacterCreationDialog *ui;
     CreationLogic *logic;
+    QList<RACE> races;
+
     void populateUI();
+    void SetSpinBoxRange(int raceIndex, QSpinBox* spinBox, CreationLogic::Stats statIndex);
 };
 
 #endif // CHARACTERCREATIONDIALOG_H
