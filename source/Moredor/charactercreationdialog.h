@@ -23,6 +23,7 @@ public:
 private slots:
     void on_exitButton_clicked();
     void HandleRaceSelected(int selectedIndex);
+    void HandleAlignmentSelected(int alignmentIndex);
 
 private:
     Ui::CharacterCreationDialog *ui;
@@ -30,7 +31,7 @@ private:
     QList<RACE> races;
 
     void populateUI();
-    void SetSpinBoxRange(int raceIndex, QSpinBox* spinBox, CreationLogic::Stats statIndex);
+    void SetSpinBoxRange(RACE current, QSpinBox* spinBox, CreationLogic::Stats statIndex);
 };
 
 #endif // CHARACTERCREATIONDIALOG_H

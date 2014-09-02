@@ -1,6 +1,9 @@
 #include "charactercreationdialog.h"
 #include "ui_charactercreationdialog.h"
 
+
+#include <QMessageBox>
+
 CharacterCreationDialog::CharacterCreationDialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::CharacterCreationDialog())
@@ -11,6 +14,7 @@ CharacterCreationDialog::CharacterCreationDialog(QWidget *parent)
     this->populateUI();
 
     connect(ui->raceComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(HandleRaceSelected(int)));
+    connect(ui->alignmentComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(HandleAlignmentSelected(int)));
 
     HandleRaceSelected(0);
 }
@@ -30,11 +34,49 @@ void CharacterCreationDialog::populateUI()
 {
     foreach(const RACE race, races)
     {
-        ui->raceComboBox->addItem(race.name);
+        ui->raceComboBox->addItem(race.name, QVariant::fromValue(race));
     }
 }
 
 void CharacterCreationDialog::HandleRaceSelected(int raceIndex)
+{
+    RACE current = races[raceIndex];
+
+    SetSpinBoxRange(current, ui->strSpinBox, CreationLogic::STR);
+    SetSpinBoxRange(current, ui->intSpinBox, CreationLogic::INT);
+    SetSpinBoxRange(current, ui->wisSpinBox, CreationLogic::WIS);
+    SetSpinBoxRange(current, ui->conSpinBox, CreationLogic::CON);
+    SetSpinBoxRange(current, ui->chaSpinBox, CreationLogic::CHA);
+    SetSpinBoxRange(current, ui->dexSpinBox, CreationLogic::DEX);
+
+    // TODO: Find a better way to do this
+    ui->alignmentComboBox->clear();
+    if(races[raceIndex].alignments[CreationLogic::Good])
+    {
+        ui->alignmentComboBox->addItem("Good", QVariant::fromValue(CreationLogic::Good));
+    }
+    if(races[raceIndex].alignments[CreationLogic::Neutral])
+    {
+        ui->alignmentComboBox->addItem("Neutral", QVariant::fromValue(CreationLogic::Neutral));
+    }
+    if(races[raceIndex].alignments[CreationLogic::Evil])
+    {
+        ui->alignmentComboBox->addItem("Evil", QVariant::fromValue(CreationLogic::Evil));
+    }
+    HandleAlignmentSelected(0);
+
+//    QMessageBox msgBox;
+//    msgBox.setText(QString("%1").arg());
+//    msgBox.exec();
+}
+
+void CharacterCreationDialog::SetSpinBoxRange(RACE current, QSpinBox* spinBox, CreationLogic::Stats statIndex)
+{
+    spinBox->setRange(current.startingStats[statIndex], current.maxStats[statIndex]);
+    spinBox->setValue(current.startingStats[statIndex]);
+}
+
+void CharacterCreationDialog::HandleAlignmentSelected(int /*alignmentIndex*/)
 {
     QLayoutItem* item;
     while ( ( item = ui->GuildVLayout->takeAt( 0 ) ) != NULL )
@@ -43,7 +85,7 @@ void CharacterCreationDialog::HandleRaceSelected(int raceIndex)
         delete item;
     }
 
-    foreach(const GUILD guild, races[raceIndex].guilds)
+    foreach(const GUILD guild, ui->raceComboBox->currentData().value<RACE>().guilds)
     {
         QLabel* guildLabel = new QLabel(ui->verticalLayoutWidget);
         guildLabel->setGeometry(QRect(20, 10, 131, 17));
@@ -53,23 +95,4 @@ void CharacterCreationDialog::HandleRaceSelected(int raceIndex)
         guildLabel->setText(guild.name);
         ui->GuildVLayout->addWidget(guildLabel);
     }
-
-//    ui->alignmentComboBox->clear();
-//    foreach(const bool alignAllowed, races[selectedIndex]->alignments)
-//    {
-//        ui->raceComboBox->addItem(race->name);
-//    }
-
-    SetSpinBoxRange(raceIndex, ui->strSpinBox, CreationLogic::STR);
-//    SetSpinBoxRange(raceIndex, ui->intSpinBox, CreationLogic::INT);
-//    SetSpinBoxRange(raceIndex, ui->wisSpinBox, CreationLogic::WIS);
-//    SetSpinBoxRange(raceIndex, ui->conSpinBox, CreationLogic::CON);
-//    SetSpinBoxRange(raceIndex, ui->chaSpinBox, CreationLogic::CHA);
-//    SetSpinBoxRange(raceIndex, ui->dexSpinBox, CreationLogic::DEX);
-}
-
-void CharacterCreationDialog::SetSpinBoxRange(int raceIndex, QSpinBox* spinBox, CreationLogic::Stats statIndex)
-{
-    spinBox->setRange(races[raceIndex].startingStats[statIndex], races[raceIndex].maxStats[statIndex]);
-    spinBox->setValue(races[raceIndex].startingStats[statIndex]);
 }

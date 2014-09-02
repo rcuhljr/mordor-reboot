@@ -4,21 +4,27 @@
 #include "guild.h"
 #include <vector>
 #include <QList>
+#include <QObject>
 #include <QString>
 
-struct RACE {
+struct RACE
+{
     QString name;
-    std::vector<bool> alignments;
-    std::vector<int> startingStats;
-    std::vector<int> maxStats;
+    QList<bool> alignments;
+    QList<int> startingStats;
+    QList<int> maxStats;
     QList<GUILD> guilds;
 
-    RACE(QString name, bool *align, int *start, int *max){
+    RACE() {}
+    RACE(QString name, QList<bool> align, QList<int> start, QList<int> max)
+    {
         this->name = name;
-        alignments = std::vector<bool>(align, align + sizeof(align)/sizeof(bool) );
-        startingStats = std::vector<int>(start, start + sizeof(start)/sizeof(int) );
-        maxStats = std::vector<int>(max, max + sizeof(max)/sizeof(int) );
+        alignments = align;
+        startingStats = start;
+        maxStats = max;
     }
 };
+
+Q_DECLARE_METATYPE(RACE)
 
 #endif // RACE_H

@@ -4,12 +4,14 @@
 #include <vector>
 #include <QString>
 
-struct GUILD {
+struct GUILD
+{
     QString name;
     std::vector<int> requirements;
     std::vector<bool> alignments;
 
-    GUILD(QString name, int *reqs, bool *align){
+    GUILD(QString name, int *reqs, bool *align)
+    {
         this->name = name;
         requirements = std::vector<int>(reqs, reqs + sizeof(reqs)/sizeof(int) );
         alignments = std::vector<bool>(align, align + sizeof(align)/sizeof(bool) );
