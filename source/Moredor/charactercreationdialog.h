@@ -22,8 +22,8 @@ public:
 
 private slots:
     void on_exitButton_clicked();
-    void HandleRaceSelected(int selectedIndex);
-    void HandleAlignmentSelected(int alignmentIndex);
+    void HandleRaceSelected();
+    void HandleAlignmentSelected();
 
 private:
     Ui::CharacterCreationDialog *ui;
