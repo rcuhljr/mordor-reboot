@@ -6,14 +6,14 @@
 CreationLogic::CreationLogic()
 {
     //#TODO Read data from Json
-    int nomadStats[6] = {1,1,1,1,1,1};
-    bool nomadAlign[3] = {true,true,true};
+    QList<int> nomadStats = QList<int>() << 1 << 1 << 1 << 1 << 1 << 1;
+    QList<bool> nomadAlign = QList<bool>() << true << true << true;
 
-    int warriorStats[6] = {14,7,5,10,3,8};
-    bool warriorAlign[3] = {true,true,true};
+    QList<int> warriorStats = QList<int>() << 14 << 7 << 5 << 10 << 3 << 8;
+    QList<bool> warriorAlign = QList<bool>() << true << true << true;
 
-    int thiefStats[6] = {8,12,8,6,5,17};
-    bool thiefAlign[3] = {false,true,false};
+    QList<int> thiefStats = QList<int>() << 8 << 12 << 8 << 6 << 5 << 17;
+    QList<bool> thiefAlign = QList<bool>() << false << true << false;
 
     GUILD nomad("Nomad", nomadStats, nomadAlign);
     GUILD warrior("Warrior", warriorStats, warriorAlign);

@@ -1,20 +1,20 @@
 #ifndef GUILD_H
 #define GUILD_H
 
-#include <vector>
+#include <QList>
 #include <QString>
 
 struct GUILD
 {
     QString name;
-    std::vector<int> requirements;
-    std::vector<bool> alignments;
+    QList<int> requirements;
+    QList<bool> alignments;
 
-    GUILD(QString name, int *reqs, bool *align)
+    GUILD(QString name, QList<int> reqs, QList<bool> align)
     {
         this->name = name;
-        requirements = std::vector<int>(reqs, reqs + sizeof(reqs)/sizeof(int) );
-        alignments = std::vector<bool>(align, align + sizeof(align)/sizeof(bool) );
+        requirements = reqs;
+        alignments = align;
     }
 };
 

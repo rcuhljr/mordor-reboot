@@ -2,7 +2,6 @@
 #define RACE_H
 
 #include "guild.h"
-#include <vector>
 #include <QList>
 #include <QObject>
 #include <QString>

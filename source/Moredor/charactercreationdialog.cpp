@@ -91,18 +91,19 @@ void CharacterCreationDialog::HandleAlignmentSelected()
 //        msgBox.exec();
 
         bool meetAlignment = guild.alignments[ui->alignmentComboBox->currentData().value<CreationLogic::Alignments>()];
-        bool meetStats = guild.requirements[CreationLogic::STR] == ui->strSpinBox->value()
-                && guild.requirements[CreationLogic::INT] == ui->intSpinBox->value()
-                && guild.requirements[CreationLogic::WIS] == ui->wisSpinBox->value()
-                && guild.requirements[CreationLogic::CON] == ui->conSpinBox->value()
-                && guild.requirements[CreationLogic::CHA] == ui->chaSpinBox->value()
-                && guild.requirements[CreationLogic::DEX] == ui->dexSpinBox->value();
+        bool meetStats = ui->strSpinBox->value() >= guild.requirements[CreationLogic::STR]
+                && ui->intSpinBox->value() >= guild.requirements[CreationLogic::INT]
+                && ui->wisSpinBox->value() >= guild.requirements[CreationLogic::WIS]
+                && ui->conSpinBox->value() >= guild.requirements[CreationLogic::CON]
+                && ui->chaSpinBox->value() >= guild.requirements[CreationLogic::CHA]
+                && ui->dexSpinBox->value() >= guild.requirements[CreationLogic::DEX];
 
         QLabel* guildLabel = new QLabel(ui->verticalLayoutWidget);
         guildLabel->setGeometry(QRect(20, 10, 131, 17));
         QFont f = guildLabel->font();
         //f.setStrikeOut(true);
         f.setItalic(!meetAlignment && !meetStats);
+        f.setBold(meetAlignment && meetStats);
         guildLabel->setFont(f);
         guildLabel->setText(guild.name);
         ui->GuildVLayout->addWidget(guildLabel);
