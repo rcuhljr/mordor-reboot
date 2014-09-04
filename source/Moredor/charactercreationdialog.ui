@@ -312,7 +312,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QTextBrowser" name="textBrowser">
+      <widget class="QTextBrowser" name="remainingStatPoints">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -345,10 +345,6 @@ p, li { white-space: pre-wrap; }
         <string>Stat Points Left</string>
        </property>
       </widget>
-      <zorder>gridLayoutWidget</zorder>
-      <zorder>textBrowser</zorder>
-      <zorder>label_16</zorder>
-      <zorder>frame</zorder>
      </widget>
     </item>
     <item>
@@ -414,6 +410,24 @@ p, li { white-space: pre-wrap; }
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>characterNameBox</tabstop>
+  <tabstop>raceComboBox</tabstop>
+  <tabstop>sexComboBox</tabstop>
+  <tabstop>alignmentComboBox</tabstop>
+  <tabstop>raceStatsButton</tabstop>
+  <tabstop>guildStatsButton</tabstop>
+  <tabstop>strSpinBox</tabstop>
+  <tabstop>intSpinBox</tabstop>
+  <tabstop>wisSpinBox</tabstop>
+  <tabstop>conSpinBox</tabstop>
+  <tabstop>chaSpinBox</tabstop>
+  <tabstop>dexSpinBox</tabstop>
+  <tabstop>remainingStatPoints</tabstop>
+  <tabstop>saveCharacter</tabstop>
+  <tabstop>tutorialButton</tabstop>
+  <tabstop>exitButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
