@@ -14,7 +14,13 @@ CharacterCreationDialog::CharacterCreationDialog(QWidget *parent)
     this->populateUI();
 
     connect(ui->raceComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(HandleRaceSelected()));
-    connect(ui->alignmentComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(HandleAlignmentSelected()));
+    connect(ui->alignmentComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(UpdateGuildList()));
+    connect(ui->strSpinBox, SIGNAL(valueChanged(int)), this, SLOT(UpdateGuildList()));
+    connect(ui->intSpinBox, SIGNAL(valueChanged(int)), this, SLOT(UpdateGuildList()));
+    connect(ui->wisSpinBox, SIGNAL(valueChanged(int)), this, SLOT(UpdateGuildList()));
+    connect(ui->conSpinBox, SIGNAL(valueChanged(int)), this, SLOT(UpdateGuildList()));
+    connect(ui->chaSpinBox, SIGNAL(valueChanged(int)), this, SLOT(UpdateGuildList()));
+    connect(ui->dexSpinBox, SIGNAL(valueChanged(int)), this, SLOT(UpdateGuildList()));
 
     // TODO: Is this necessary?
     HandleRaceSelected();
@@ -66,7 +72,7 @@ void CharacterCreationDialog::HandleRaceSelected()
     }
 
     // TODO: Is this necessary?
-    HandleAlignmentSelected();
+    UpdateGuildList();
 }
 
 void CharacterCreationDialog::SetSpinBoxRange(RACE current, QSpinBox* spinBox, CreationLogic::Stats statIndex)
@@ -75,7 +81,7 @@ void CharacterCreationDialog::SetSpinBoxRange(RACE current, QSpinBox* spinBox, C
     spinBox->setValue(current.startingStats[statIndex]);
 }
 
-void CharacterCreationDialog::HandleAlignmentSelected()
+void CharacterCreationDialog::UpdateGuildList()
 {
     QLayoutItem* item;
     while ( ( item = ui->GuildVLayout->takeAt( 0 ) ) != NULL )
@@ -92,16 +98,15 @@ void CharacterCreationDialog::HandleAlignmentSelected()
 
         bool meetAlignment = guild.alignments[ui->alignmentComboBox->currentData().value<CreationLogic::Alignments>()];
         bool meetStats = ui->strSpinBox->value() >= guild.requirements[CreationLogic::STR]
-                && ui->intSpinBox->value() >= guild.requirements[CreationLogic::INT]
-                && ui->wisSpinBox->value() >= guild.requirements[CreationLogic::WIS]
-                && ui->conSpinBox->value() >= guild.requirements[CreationLogic::CON]
-                && ui->chaSpinBox->value() >= guild.requirements[CreationLogic::CHA]
-                && ui->dexSpinBox->value() >= guild.requirements[CreationLogic::DEX];
+                      && ui->intSpinBox->value() >= guild.requirements[CreationLogic::INT]
+                      && ui->wisSpinBox->value() >= guild.requirements[CreationLogic::WIS]
+                      && ui->conSpinBox->value() >= guild.requirements[CreationLogic::CON]
+                      && ui->chaSpinBox->value() >= guild.requirements[CreationLogic::CHA]
+                      && ui->dexSpinBox->value() >= guild.requirements[CreationLogic::DEX];
 
         QLabel* guildLabel = new QLabel(ui->verticalLayoutWidget);
         guildLabel->setGeometry(QRect(20, 10, 131, 17));
         QFont f = guildLabel->font();
-        //f.setStrikeOut(true);
         f.setItalic(!meetAlignment && !meetStats);
         f.setBold(meetAlignment && meetStats);
         guildLabel->setFont(f);

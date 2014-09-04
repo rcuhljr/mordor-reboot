@@ -23,7 +23,7 @@ public:
 private slots:
     void on_exitButton_clicked();
     void HandleRaceSelected();
-    void HandleAlignmentSelected();
+    void UpdateGuildList();
 
 private:
     Ui::CharacterCreationDialog *ui;
