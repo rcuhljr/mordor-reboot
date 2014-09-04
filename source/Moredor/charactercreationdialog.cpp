@@ -18,7 +18,7 @@ CharacterCreationDialog::CharacterCreationDialog(QWidget* parent)
     connect(DialogUi->chaSpinBox, SIGNAL(valueChanged(int)), this, SLOT(UpdateGuildList()));
     connect(DialogUi->dexSpinBox, SIGNAL(valueChanged(int)), this, SLOT(UpdateGuildList()));
 
-    this->PopulateUi();
+    SetupUi();
 }
 
 CharacterCreationDialog::~CharacterCreationDialog()
@@ -32,18 +32,15 @@ CharacterCreationDialog::~CharacterCreationDialog()
 
 void CharacterCreationDialog::on_exitButton_clicked()
 {
-    this->close();
+    close();
 }
 
-void CharacterCreationDialog::PopulateUi()
+void CharacterCreationDialog::SetupUi()
 {
     foreach(const RACE race, Races)
     {
         DialogUi->raceComboBox->addItem(race.Name, QVariant::fromValue(race));
     }
-
-    // TODO: Is this necessary?
-    HandleRaceSelected();
 }
 
 void CharacterCreationDialog::HandleRaceSelected()
@@ -57,7 +54,6 @@ void CharacterCreationDialog::HandleRaceSelected()
     SetSpinBoxRange(currentRace, DialogUi->chaSpinBox, CreationLogic::CHA);
     SetSpinBoxRange(currentRace, DialogUi->dexSpinBox, CreationLogic::DEX);
 
-    // TODO: Find a better way to do this
     DialogUi->alignmentComboBox->clear();
     if(currentRace.Alignments[CreationLogic::Good])
     {
@@ -71,9 +67,6 @@ void CharacterCreationDialog::HandleRaceSelected()
     {
         DialogUi->alignmentComboBox->addItem("Evil", QVariant::fromValue(CreationLogic::Evil));
     }
-
-    // TODO: Is this necessary?
-    UpdateGuildList();
 }
 
 void CharacterCreationDialog::SetSpinBoxRange(RACE current, QSpinBox* spinBox, CreationLogic::Stats statIndex)

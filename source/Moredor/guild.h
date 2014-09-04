@@ -12,7 +12,7 @@ struct GUILD
 
     GUILD(QString name, QList<int> reqs, QList<bool> align)
     {
-        this->Name = name;
+        Name = name;
         RequiredStats = reqs;
         Alignments = align;
     }

@@ -27,7 +27,7 @@ private slots:
     void UpdateGuildList();
 
 private:
-    void PopulateUi();
+    void SetupUi();
     void SetSpinBoxRange(RACE current, QSpinBox* spinBox, CreationLogic::Stats statIndex);
 
     Ui::CharacterCreationDialog* DialogUi;
