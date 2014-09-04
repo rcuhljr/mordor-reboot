@@ -1,23 +1,23 @@
 #include "gamewindow.h"
 #include "ui_gamewindow.h"
 #include "charactercreationdialog.h"
-#include <QDebug>
 
-GameWindow::GameWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::GameWindow)
+GameWindow::GameWindow(QWidget *parent)
+    : QMainWindow(parent)
+    , GameUi(new Ui::GameWindow())
 {
-    ui->setupUi(this);
+    GameUi->setupUi(this);
 }
 
 GameWindow::~GameWindow()
 {
-    delete ui;
+    delete GameUi;
+    GameUi = NULL;
 }
 
 void GameWindow::on_createCharacterButton_clicked()
 {
-    QWidget *charCreate = new CharacterCreationDialog(this);
+    QWidget* characterCreation = new CharacterCreationDialog(this);
 
-    charCreate->show();
+    characterCreation->show();
 }

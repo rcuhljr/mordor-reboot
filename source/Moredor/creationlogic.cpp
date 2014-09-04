@@ -1,9 +1,7 @@
 #include "creationlogic.h"
-#include <QStringList>
-#include <Qmap>
-#include <QList>
 
 CreationLogic::CreationLogic()
+    : Races()
 {
     //#TODO Read data from Json
     QList<int> nomadStats = QList<int>() << 1 << 1 << 1 << 1 << 1 << 1;
@@ -26,9 +24,9 @@ CreationLogic::CreationLogic()
     RACE human("Human", humanAlign, humanStart, humanMax);
     QList<GUILD> humanGuilds;
     humanGuilds << nomad << warrior << thief;
-    human.guilds = humanGuilds;
+    human.Guilds = humanGuilds;
 
-    races << human;
+    Races << human;
 
 
     QList<bool> giantAlign = QList<bool>() << true << true << true;
@@ -38,20 +36,24 @@ CreationLogic::CreationLogic()
     RACE giant("Giant", giantAlign, giantStart, giantMax);
     QList<GUILD> giantGuilds;
     giantGuilds << nomad << warrior;
-    giant.guilds = giantGuilds;
+    giant.Guilds = giantGuilds;
 
-    races << giant;
+    Races << giant;
 
 
     // TODO: Remove this, it is only for alignment testing
     QList<bool> drowAlign = QList<bool>() << false << false << true;
     RACE drow("Drow", drowAlign, humanStart, humanMax);
-    drow.guilds = humanGuilds;
+    drow.Guilds = humanGuilds;
 
-    races << drow;
+    Races << drow;
 }
 
-const QList<RACE> CreationLogic::getRaces() const
+CreationLogic::~CreationLogic()
 {
-    return races;
+}
+
+const QList<RACE> CreationLogic::GetRaces() const
+{
+    return Races;
 }

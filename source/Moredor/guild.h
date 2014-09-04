@@ -6,15 +6,15 @@
 
 struct GUILD
 {
-    QString name;
-    QList<int> requirements;
-    QList<bool> alignments;
+    QString Name;
+    QList<int> RequiredStats;
+    QList<bool> Alignments;
 
     GUILD(QString name, QList<int> reqs, QList<bool> align)
     {
-        this->name = name;
-        requirements = reqs;
-        alignments = align;
+        this->Name = name;
+        RequiredStats = reqs;
+        Alignments = align;
     }
 };
 

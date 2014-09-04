@@ -1,27 +1,26 @@
-#ifndef CREATIONLOGIC_H
-#define CREATIONLOGIC_H
+#ifndef CREATION_LOGIC_H
+#define CREATION_LOGIC_H
 
 #include "guild.h"
 #include "race.h"
+#include <QList>
 #include <QObject>
-#include <QStringList>
-#include <QMap>
-#include <QString>
 
 class CreationLogic
 {
 public:
     enum Alignments {Good = 0, Neutral, Evil};
-    enum Stats {STR = 0,INT,WIS,CON,CHA,DEX};
+    enum Stats {STR = 0, INT, WIS, CON, CHA, DEX};
 
     CreationLogic();
-    virtual ~CreationLogic() {}
-    const QList<RACE> getRaces() const;
+    virtual ~CreationLogic();
+
+    const QList<RACE> GetRaces() const;
 
 private:
-    QList<RACE> races;
+    QList<RACE> Races;
 };
 
 Q_DECLARE_METATYPE(CreationLogic::Alignments)
 
-#endif // CREATIONLOGIC_H
+#endif // CREATION_LOGIC_H

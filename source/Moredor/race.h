@@ -8,19 +8,19 @@
 
 struct RACE
 {
-    QString name;
-    QList<bool> alignments;
-    QList<int> startingStats;
-    QList<int> maxStats;
-    QList<GUILD> guilds;
+    QString Name;
+    QList<bool> Alignments;
+    QList<int> StartingStats;
+    QList<int> MaxStats;
+    QList<GUILD> Guilds;
 
     RACE() {}
     RACE(QString name, QList<bool> align, QList<int> start, QList<int> max)
     {
-        this->name = name;
-        alignments = align;
-        startingStats = start;
-        maxStats = max;
+        Name = name;
+        Alignments = align;
+        StartingStats = start;
+        MaxStats = max;
     }
 };
 
