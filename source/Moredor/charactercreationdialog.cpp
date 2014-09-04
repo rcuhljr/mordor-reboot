@@ -11,12 +11,12 @@ CharacterCreationDialog::CharacterCreationDialog(QWidget* parent)
 
     connect(DialogUi->raceComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(HandleRaceSelected()));
     connect(DialogUi->alignmentComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(UpdateGuildList()));
-    connect(DialogUi->strSpinBox, SIGNAL(valueChanged(int)), this, SLOT(UpdateGuildList()));
-    connect(DialogUi->intSpinBox, SIGNAL(valueChanged(int)), this, SLOT(UpdateGuildList()));
-    connect(DialogUi->wisSpinBox, SIGNAL(valueChanged(int)), this, SLOT(UpdateGuildList()));
-    connect(DialogUi->conSpinBox, SIGNAL(valueChanged(int)), this, SLOT(UpdateGuildList()));
-    connect(DialogUi->chaSpinBox, SIGNAL(valueChanged(int)), this, SLOT(UpdateGuildList()));
-    connect(DialogUi->dexSpinBox, SIGNAL(valueChanged(int)), this, SLOT(UpdateGuildList()));
+    connect(DialogUi->strSpinBox, SIGNAL(valueChanged(int)), this, SLOT(HandleStatChanged()));
+    connect(DialogUi->intSpinBox, SIGNAL(valueChanged(int)), this, SLOT(HandleStatChanged()));
+    connect(DialogUi->wisSpinBox, SIGNAL(valueChanged(int)), this, SLOT(HandleStatChanged()));
+    connect(DialogUi->conSpinBox, SIGNAL(valueChanged(int)), this, SLOT(HandleStatChanged()));
+    connect(DialogUi->chaSpinBox, SIGNAL(valueChanged(int)), this, SLOT(HandleStatChanged()));
+    connect(DialogUi->dexSpinBox, SIGNAL(valueChanged(int)), this, SLOT(HandleStatChanged()));
 
     SetupUi();
 }
@@ -73,6 +73,31 @@ void CharacterCreationDialog::SetSpinBoxRange(RACE current, QSpinBox* spinBox, C
 {
     spinBox->setRange(current.StartingStats[statIndex], current.MaxStats[statIndex]);
     spinBox->setValue(current.StartingStats[statIndex]);
+}
+
+void CharacterCreationDialog::HandleStatChanged()
+{
+    RACE currentRace = DialogUi->raceComboBox->currentData().value<RACE>();
+    int difference = (DialogUi->strSpinBox->value() - currentRace.StartingStats[CreationLogic::STR])
+                   + (DialogUi->intSpinBox->value() - currentRace.StartingStats[CreationLogic::INT])
+                   + (DialogUi->wisSpinBox->value() - currentRace.StartingStats[CreationLogic::WIS])
+                   + (DialogUi->conSpinBox->value() - currentRace.StartingStats[CreationLogic::CON])
+                   + (DialogUi->chaSpinBox->value() - currentRace.StartingStats[CreationLogic::CHA])
+                   + (DialogUi->dexSpinBox->value() - currentRace.StartingStats[CreationLogic::DEX]);
+
+    bool negativeRemainder = difference > currentRace.StartingPoints;
+    DialogUi->saveCharacter->setDisabled(negativeRemainder);
+
+    QPalette palette = DialogUi->remainingStatPointsLabel->palette();
+    palette.setColor(DialogUi->remainingStatPointsLabel->foregroundRole(), negativeRemainder ? Qt::red : Qt::black);
+    DialogUi->remainingStatPointsLabel->setPalette(palette);
+    DialogUi->remainingStatPointsText->setTextColor(negativeRemainder ? Qt::red : Qt::black);
+
+    // Must be done after the text color is set
+    DialogUi->remainingStatPointsText->setText(QString("%1").arg(currentRace.StartingPoints - difference));
+
+
+    UpdateGuildList();
 }
 
 void CharacterCreationDialog::UpdateGuildList()

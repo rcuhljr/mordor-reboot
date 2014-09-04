@@ -12,15 +12,17 @@ struct RACE
     QList<bool> Alignments;
     QList<int> StartingStats;
     QList<int> MaxStats;
+    int StartingPoints;
     QList<GUILD> Guilds;
 
     RACE() {}
-    RACE(QString name, QList<bool> align, QList<int> start, QList<int> max)
+    RACE(QString name, QList<bool> align, QList<int> startStats, QList<int> max, int startPoints)
     {
         Name = name;
         Alignments = align;
-        StartingStats = start;
+        StartingStats = startStats;
         MaxStats = max;
+        StartingPoints = startPoints;
     }
 };
 

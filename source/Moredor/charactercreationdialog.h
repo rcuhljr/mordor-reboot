@@ -24,6 +24,7 @@ public:
 private slots:
     void on_exitButton_clicked();
     void HandleRaceSelected();
+    void HandleStatChanged();
     void UpdateGuildList();
 
 private:

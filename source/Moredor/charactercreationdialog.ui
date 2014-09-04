@@ -312,7 +312,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QTextBrowser" name="remainingStatPoints">
+      <widget class="QTextBrowser" name="remainingStatPointsText">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -332,7 +332,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:11pt;&quot;&gt;7&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_16">
+      <widget class="QLabel" name="remainingStatPointsLabel">
        <property name="geometry">
         <rect>
          <x>70</x>
@@ -423,7 +423,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>conSpinBox</tabstop>
   <tabstop>chaSpinBox</tabstop>
   <tabstop>dexSpinBox</tabstop>
-  <tabstop>remainingStatPoints</tabstop>
+  <tabstop>remainingStatPointsText</tabstop>
   <tabstop>saveCharacter</tabstop>
   <tabstop>tutorialButton</tabstop>
   <tabstop>exitButton</tabstop>
