@@ -17,12 +17,12 @@ class MdataReader
 
   def readWord()
     @pointer += 2
-    @filedata[@reference+@pointer-2,2].reverse.map{|x| x.to_s(2).rjust(8, "0")}.join.to_i(2)
+    @filedata[@reference+@pointer-2,2].reverse.pack("C*").unpack('B*').first.to_i(2)
   end
 
   def readFloat()
     @pointer += 4
-    [@filedata[@reference+@pointer-4,4].map{|x| x.to_s(16).rjust(2, "0")}.join].pack("H*").unpack('f').first
+    @filedata[@reference+@pointer-4,4].pack("C*").unpack('f').first
   end
 
   def seekTo(target)    
