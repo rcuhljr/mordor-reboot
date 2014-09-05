@@ -51,18 +51,33 @@ reader.seekTo(RECORD_LENGTH);
 puts "number of monstertypes #{reader.readWord}"
 
 race_count.times do |_|
+  ahash = {}
   reader.seekTo(RECORD_LENGTH);
-  puts "race: #{reader.readVbString}"
-  puts "min_stats: #{(0..5).map{|_| reader.readWord}}"
+  ahash["name"] = reader.readVbString   
+  ahash["min_stats"] = (0..5).map{|_| reader.readWord}
   padding = reader.readWord
-  puts "max_stats: #{(0..5).map{|_| reader.readWord}}"
+  ahash["max_stats"] = (0..5).map{|_| reader.readWord}
   padding = reader.readWord
-  puts "resistances: #{(0..10).map{|_| reader.readWord}}"
+  ahash["resistances"] = (0..10).map{|_| reader.readWord}
+  padding = reader.readWord  
+  ahash["alignment"] = reader.readWord.to_s(2).rjust(3,"0").chars.map{|x| x == "1"}
   padding = reader.readWord
-  puts "alignment: #{ reader.readWord }"
-  padding = reader.readWord
-  puts "size: #{ reader.readWord }"
-  puts "bonuspoints: #{ reader.readWord }"
-  puts "max_age: #{ reader.readWord }"
-  puts "expfactor: #{ reader.readFloat }"
+  ahash["size"] = reader.readWord
+  ahash["bonuspoints"] = reader.readWord
+  ahash["max_age"] = reader.readWord
+  ahash["exp_factor"] = reader.readFloat
+  puts ahash.to_json
+  #puts "race: #{reader.readVbString}"
+  #puts "min_stats: #{(0..5).map{|_| reader.readWord}}"
+  #padding = reader.readWord
+  #puts "max_stats: #{(0..5).map{|_| reader.readWord}}"
+  #padding = reader.readWord
+  #puts "resistances: #{(0..10).map{|_| reader.readWord}}"
+  #padding = reader.readWord
+  #puts "alignment: #{ reader.readWord }"
+  #padding = reader.readWord
+  #puts "size: #{ reader.readWord }"
+  #puts "bonuspoints: #{ reader.readWord }"
+  #puts "max_age: #{ reader.readWord }"
+  #puts "expfactor: #{ reader.readFloat }"
 end

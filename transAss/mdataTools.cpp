@@ -102,7 +102,7 @@ bool checkLength(ifstream *mdata_input, int SIZE){
   streampos end = mdata_input->tellg();
   int length = end - start;
   bool ret = length == SIZE;
-  if (not ret)
+  if (! ret)
     cerr << "Expected " << SIZE << " but saw " << length << endl;
   return ret;
 }
@@ -110,17 +110,17 @@ bool checkLength(ifstream *mdata_input, int SIZE){
 
 bool possiblyValidFile(char* path, int target){
   // is the given file valid -- just a quick test.  Exists, correct name, length
-  if(not validPath(path, mdataFileName(target))){
+  if(! validPath(path, mdataFileName(target))){
     return false;
   }
 
   // pathname is ok -- carry on.
   ifstream mdata_input(path, ios::binary | ios::in);
-  if (not mdata_input.good()){
+  if (! mdata_input.good()){
     // file doesn't exist, quit.
     cerr << path << " doesn't appear to exist." << endl;
     return false;
-  }else if (not checkLength(&mdata_input, mdataFileSize(target))){
+  }else if (! checkLength(&mdata_input, mdataFileSize(target))){
     cerr << "File at " << path << " isn't the expected size." << endl;
     return false;
   }

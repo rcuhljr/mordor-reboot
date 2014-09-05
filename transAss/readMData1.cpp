@@ -170,7 +170,7 @@ int main(int argc, char** argv){
     datAbsolutePath = argv[1];
   }
 
-  if (not possiblyValidFile(datAbsolutePath, MDATA1)){
+  if (! possiblyValidFile(datAbsolutePath, MDATA1)){
     cerr << datAbsolutePath << " doesn't appear to be a valid MDATA1.MDR" << endl;
     return 1;
   }
