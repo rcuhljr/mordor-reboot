@@ -51,6 +51,17 @@ DWORD readDWord(ifstream *mdata_input){
   return ret;
 }
 
+float readFloat(ifstream *mdata_input){
+    char buff[4] = {0,0,0,0};
+    mdata_input->read(buff, sizeof(buff));
+    float ret;
+    copy(reinterpret_cast<const char*>(&buff[0]),
+            reinterpret_cast<const char*>(&buff[4]),
+            reinterpret_cast<char*>(&ret));
+    point += sizeof(buff);
+    return ret;
+  }
+
 CURRENCY readCurrency(ifstream *mdata_input){
   char buff[8] = {0,0,0,0,0,0,0,0};
   mdata_input->read(buff, sizeof(buff));

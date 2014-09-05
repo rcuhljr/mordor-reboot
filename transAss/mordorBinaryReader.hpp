@@ -18,6 +18,7 @@ WORD readWord(ifstream *mdata_input);
 WORD readWordByteOrder(ifstream *mdata_input);
 SWORD readSWord(ifstream *mdata_input);
 DWORD readDWord(ifstream *mdata_input);
+float readFloat(ifstream *mdata_input);
 int readInt(ifstream *mdata_input);
 CURRENCY readCurrency(ifstream *mdata_input);
 char* readVBString(ifstream *mdata_input);
