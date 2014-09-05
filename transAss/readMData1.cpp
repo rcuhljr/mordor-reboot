@@ -107,20 +107,37 @@ void printGuild(guild *ret){
        << "Max Level: " << ret->maxLevel << endl
        << "MH: " << ret->MH << endl
        << "EXP Factor: " << ret->expFactor << endl
-       << "reqStats: " << ret->reqStats << endl
+       << "reqStats: ";
+  for(int i = 0; i < 6; i++){
+    cout << ret->reqStats[i] << " ";
+  }
+  cout << endl
        << "alignment: " << ret->alignment << endl
-       << "ability rates: " << ret->abilityRates << endl
+       << "ability rates: ";
+  for(int i = 0; i < 6; i++){
+    cout << ret->abilityRates[i] << " ";
+  }
+  cout << endl
        << "questPercentage: " << ret->questPercentage << endl
-       << "spellStuff: " << ret->spellStuff << endl
+       << "baseMagics: ";
+  for(int i = 0; i < 18; i++){
+    cout << ret->baseMagics[i] << " ";
+  }
+  cout << endl
+       << "capMagics: ";
+  for(int i = 0; i < 18; i++){
+    cout << ret->capMagics[i] << " ";
+  }
+  cout << endl
        << "raceMask: " << ret->raceMask << endl
        << "levelMod: " << ret->levelMod << endl
+       << "Attack Increment: " << ret->attackIncrement << endl
+       << "Defense Increment: " << ret->defIncrement << endl
+       << "AD Cap: " << ret->aDCap << endl
+       << "AD Gain: " << ret->aDGain << endl
        << "u3: " << ret->u3 << endl
        << "u7: " << ret->u7 << endl
        << "u8: " << ret->u8 << endl
-       << "u12: " << ret->u12 << endl
-       << "u13: " << ret->u13 << endl
-       << "u14: " << ret->u14 << endl
-       << "u15: " << ret->u15 << endl
        << "u16: " << ret->u16 << endl
        << "u17: " << ret->u17 << endl;
 }
@@ -132,21 +149,35 @@ guild readGuild(ifstream *mdata){
   ret.averageHits = readWord(mdata);
   ret.maxLevel = readWord(mdata);
   ret.MH = readWord(mdata);
-  ret.expFactor = readDWord(mdata);
+  ret.expFactor = readFloat(mdata);
   ret.u3 = readWord(mdata);
-  ret.reqStats = readWord(mdata);
-  ret.alignment = readDWord(mdata);
-  ret.abilityRates = readDWord(mdata);
+  for(int i = 0; i < 6; i++){
+    ret.reqStats[i] = readWord(mdata);
+  }
+  readWord(mdata); // dead data?
+  ret.alignment = readWord(mdata);
+  readWord(mdata); // dead data?
+  for(int i = 0; i < 6; i++){
+    ret.abilityRates[i] = readFloat(mdata);
+  }
   ret.u7 = readWord(mdata);
-  ret.u8 = readDWord(mdata);
+  ret.u8 = readFloat(mdata);
+  readFloat(mdata); //dead data?
   ret.questPercentage = readWord(mdata);
-  ret.spellStuff = readDWord(mdata);
-  ret.raceMask = readWord(mdata);
-  ret.u12 = readWord(mdata);
-  ret.levelMod = readDWord(mdata);
-  ret.u13 = readDWord(mdata);
-  ret.u14 = readDWord(mdata);
-  ret.u15 = readDWord(mdata);
+  for(int i = 0; i < 18; i++){
+    ret.baseMagics[i] = readFloat(mdata);
+  }
+  readFloat(mdata); // dead data?
+  for(int i = 0; i < 18; i++){
+    ret.capMagics[i] = readFloat(mdata);
+  }
+  ret.raceMask = readDWord(mdata);
+  ret.goldRatio = readWord(mdata);
+  ret.levelMod = readFloat(mdata);
+  ret.attackIncrement = readFloat(mdata);
+  ret.defIncrement = readFloat(mdata);
+  ret.aDCap = readWord(mdata);
+  ret.aDGain = readWord(mdata);
   ret.u16 = readWord(mdata);
   ret.u17 = readWord(mdata);
 

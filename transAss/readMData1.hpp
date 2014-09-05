@@ -26,19 +26,23 @@ struct guild{
   WORD averageHits;
   WORD maxLevel;
   WORD MH;               // ??
-  DWORD expFactor;
+  float expFactor;
   WORD u3;               // ??
-  WORD reqStats;
+  WORD reqStats[6];
   DWORD alignment;
-  DWORD abilityRates;
+  float abilityRates[6];
   WORD u7;               // ??
-  DWORD u8;              // ??
+  float u8;              // ??
   WORD questPercentage;
-  DWORD spellStuff;
+  float baseMagics[18];
+  float capMagics[18];
   DWORD raceMask;
-  WORD u12;               //??
-  DWORD levelMod;         //??
-  DWORD u13, u14, u15;   // ??
+  WORD goldRatio;               //??
+  float levelMod;         //??
+  float attackIncrement;
+  float defIncrement;
+  WORD aDCap;
+  WORD aDGain;
   WORD u16, u17;         // ??
 };
 
