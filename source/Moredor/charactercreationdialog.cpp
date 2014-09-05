@@ -47,12 +47,12 @@ void CharacterCreationDialog::HandleRaceSelected()
 {
     RACE currentRace = DialogUi->raceComboBox->currentData().value<RACE>();
 
-    SetSpinBoxRange(currentRace, DialogUi->strSpinBox, CreationLogic::STR);
-    SetSpinBoxRange(currentRace, DialogUi->intSpinBox, CreationLogic::INT);
-    SetSpinBoxRange(currentRace, DialogUi->wisSpinBox, CreationLogic::WIS);
-    SetSpinBoxRange(currentRace, DialogUi->conSpinBox, CreationLogic::CON);
-    SetSpinBoxRange(currentRace, DialogUi->chaSpinBox, CreationLogic::CHA);
-    SetSpinBoxRange(currentRace, DialogUi->dexSpinBox, CreationLogic::DEX);
+    SetStatRange(currentRace, DialogUi->strSpinBox, DialogUi->strRangeLabel, CreationLogic::STR);
+    SetStatRange(currentRace, DialogUi->intSpinBox, DialogUi->intRangeLabel, CreationLogic::INT);
+    SetStatRange(currentRace, DialogUi->wisSpinBox, DialogUi->wisRangeLabel, CreationLogic::WIS);
+    SetStatRange(currentRace, DialogUi->conSpinBox, DialogUi->conRangeLabel, CreationLogic::CON);
+    SetStatRange(currentRace, DialogUi->chaSpinBox, DialogUi->chaRangeLabel, CreationLogic::CHA);
+    SetStatRange(currentRace, DialogUi->dexSpinBox, DialogUi->dexRangeLabel, CreationLogic::DEX);
 
     DialogUi->alignmentComboBox->clear();
     if(currentRace.Alignments[CreationLogic::Good])
@@ -69,10 +69,13 @@ void CharacterCreationDialog::HandleRaceSelected()
     }
 }
 
-void CharacterCreationDialog::SetSpinBoxRange(RACE current, QSpinBox* spinBox, CreationLogic::Stats statIndex)
+void CharacterCreationDialog::SetStatRange(RACE current, QSpinBox* spinBox, QLabel* rangeLabel, CreationLogic::Stats statIndex)
 {
-    spinBox->setRange(current.StartingStats[statIndex], current.MaxStats[statIndex]);
-    spinBox->setValue(current.StartingStats[statIndex]);
+    int minStat = current.StartingStats[statIndex];
+    int maxStat = current.MaxStats[statIndex];
+    spinBox->setRange(minStat, maxStat);
+    spinBox->setValue(minStat);
+    rangeLabel->setText(QString("(%1 - %2)").arg(minStat).arg(maxStat));
 }
 
 void CharacterCreationDialog::HandleStatChanged()

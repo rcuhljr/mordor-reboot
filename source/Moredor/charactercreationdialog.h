@@ -4,6 +4,7 @@
 #include "creationlogic.h"
 #include "race.h"
 #include <QDialog>
+#include <QLabel>
 #include <QSpinBox>
 
 namespace Ui
@@ -29,7 +30,7 @@ private slots:
 
 private:
     void SetupUi();
-    void SetSpinBoxRange(RACE current, QSpinBox* spinBox, CreationLogic::Stats statIndex);
+    void SetStatRange(RACE current, QSpinBox* spinBox, QLabel* rangeLabel, CreationLogic::Stats statIndex);
 
     Ui::CharacterCreationDialog* DialogUi;
     CreationLogic* Logic;
