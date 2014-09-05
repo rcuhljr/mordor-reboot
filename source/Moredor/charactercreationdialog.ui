@@ -370,7 +370,7 @@ p, li { white-space: pre-wrap; }
     </item>
    </layout>
   </widget>
-  <widget class="QPushButton" name="saveCharacter">
+  <widget class="QPushButton" name="saveButton">
    <property name="geometry">
     <rect>
      <x>18</x>
@@ -424,7 +424,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>chaSpinBox</tabstop>
   <tabstop>dexSpinBox</tabstop>
   <tabstop>remainingStatPointsText</tabstop>
-  <tabstop>saveCharacter</tabstop>
+  <tabstop>saveButton</tabstop>
   <tabstop>tutorialButton</tabstop>
   <tabstop>exitButton</tabstop>
  </tabstops>

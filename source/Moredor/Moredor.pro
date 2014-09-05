@@ -15,15 +15,15 @@ TEMPLATE = app
 SOURCES += main.cpp\
         gamewindow.cpp \
     charactercreationdialog.cpp \
-    creationlogic.cpp \
-    guild.cpp \
-    race.cpp
+    creationlogic.cpp
 
 HEADERS  += gamewindow.h \
     charactercreationdialog.h \
     creationlogic.h \
     guild.h \
-    race.h
+    race.h \
+    charactermodel.h \
+    definitions.h
 
 FORMS    += gamewindow.ui \
     charactercreationdialog.ui

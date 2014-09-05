@@ -1,5 +1,6 @@
 #include "charactercreationdialog.h"
 #include "ui_charactercreationdialog.h"
+#include <QMessageBox>
 
 CharacterCreationDialog::CharacterCreationDialog(QWidget* parent)
     : QDialog(parent)
@@ -35,6 +36,36 @@ void CharacterCreationDialog::on_exitButton_clicked()
     close();
 }
 
+void CharacterCreationDialog::on_saveButton_clicked()
+{
+    int remainingStatPoints = GetRemainingStatPoints();
+    if(remainingStatPoints > 0)
+    {
+        QMessageBox::StandardButton reply =
+            QMessageBox::question(this,
+                "Unallocated stat points",
+                QString("You have %1 stat points remaining.\nNot spending them will make the game harder.\nAre you sure you wish to continue?").arg(remainingStatPoints),
+                QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::No)
+        {
+            return;
+        }
+    }
+
+    QList<int> currentStats = QList<int>() << DialogUi->strSpinBox->value()
+                                           << DialogUi->intSpinBox->value()
+                                           << DialogUi->wisSpinBox->value()
+                                           << DialogUi->conSpinBox->value()
+                                           << DialogUi->chaSpinBox->value()
+                                           << DialogUi->dexSpinBox->value();
+    emit CharacterSaved(CharacterModel(
+                            DialogUi->characterNameBox->toPlainText(),
+                            DialogUi->raceComboBox->currentData().value<RACE>(),
+                            DialogUi->alignmentComboBox->currentData().value<Definitions::Alignment>(),
+                            currentStats));
+    close();
+}
+
 void CharacterCreationDialog::SetupUi()
 {
     foreach(const RACE race, Races)
@@ -47,49 +78,54 @@ void CharacterCreationDialog::HandleRaceSelected()
 {
     RACE currentRace = DialogUi->raceComboBox->currentData().value<RACE>();
 
-    SetStatRange(currentRace, DialogUi->strSpinBox, DialogUi->strRangeLabel, CreationLogic::STR);
-    SetStatRange(currentRace, DialogUi->intSpinBox, DialogUi->intRangeLabel, CreationLogic::INT);
-    SetStatRange(currentRace, DialogUi->wisSpinBox, DialogUi->wisRangeLabel, CreationLogic::WIS);
-    SetStatRange(currentRace, DialogUi->conSpinBox, DialogUi->conRangeLabel, CreationLogic::CON);
-    SetStatRange(currentRace, DialogUi->chaSpinBox, DialogUi->chaRangeLabel, CreationLogic::CHA);
-    SetStatRange(currentRace, DialogUi->dexSpinBox, DialogUi->dexRangeLabel, CreationLogic::DEX);
+    SetStatRange(currentRace, DialogUi->strSpinBox, DialogUi->strRangeLabel, Definitions::STR);
+    SetStatRange(currentRace, DialogUi->intSpinBox, DialogUi->intRangeLabel, Definitions::INT);
+    SetStatRange(currentRace, DialogUi->wisSpinBox, DialogUi->wisRangeLabel, Definitions::WIS);
+    SetStatRange(currentRace, DialogUi->conSpinBox, DialogUi->conRangeLabel, Definitions::CON);
+    SetStatRange(currentRace, DialogUi->chaSpinBox, DialogUi->chaRangeLabel, Definitions::CHA);
+    SetStatRange(currentRace, DialogUi->dexSpinBox, DialogUi->dexRangeLabel, Definitions::DEX);
 
     DialogUi->alignmentComboBox->clear();
-    if(currentRace.Alignments[CreationLogic::Good])
+    if(currentRace.Alignments[Definitions::Good])
     {
-        DialogUi->alignmentComboBox->addItem("Good", QVariant::fromValue(CreationLogic::Good));
+        DialogUi->alignmentComboBox->addItem("Good", QVariant::fromValue(Definitions::Good));
     }
-    if(currentRace.Alignments[CreationLogic::Neutral])
+    if(currentRace.Alignments[Definitions::Neutral])
     {
-        DialogUi->alignmentComboBox->addItem("Neutral", QVariant::fromValue(CreationLogic::Neutral));
+        DialogUi->alignmentComboBox->addItem("Neutral", QVariant::fromValue(Definitions::Neutral));
     }
-    if(currentRace.Alignments[CreationLogic::Evil])
+    if(currentRace.Alignments[Definitions::Evil])
     {
-        DialogUi->alignmentComboBox->addItem("Evil", QVariant::fromValue(CreationLogic::Evil));
+        DialogUi->alignmentComboBox->addItem("Evil", QVariant::fromValue(Definitions::Evil));
     }
 }
 
-void CharacterCreationDialog::SetStatRange(RACE current, QSpinBox* spinBox, QLabel* rangeLabel, CreationLogic::Stats statIndex)
+void CharacterCreationDialog::SetStatRange(RACE current, QSpinBox* spinBox, QLabel* rangeLabel, Definitions::Stat stat)
 {
-    int minStat = current.StartingStats[statIndex];
-    int maxStat = current.MaxStats[statIndex];
+    int minStat = current.StartingStats[stat];
+    int maxStat = current.MaxStats[stat];
     spinBox->setRange(minStat, maxStat);
     spinBox->setValue(minStat);
     rangeLabel->setText(QString("(%1 - %2)").arg(minStat).arg(maxStat));
 }
 
-void CharacterCreationDialog::HandleStatChanged()
+int CharacterCreationDialog::GetRemainingStatPoints()
 {
     RACE currentRace = DialogUi->raceComboBox->currentData().value<RACE>();
-    int difference = (DialogUi->strSpinBox->value() - currentRace.StartingStats[CreationLogic::STR])
-                   + (DialogUi->intSpinBox->value() - currentRace.StartingStats[CreationLogic::INT])
-                   + (DialogUi->wisSpinBox->value() - currentRace.StartingStats[CreationLogic::WIS])
-                   + (DialogUi->conSpinBox->value() - currentRace.StartingStats[CreationLogic::CON])
-                   + (DialogUi->chaSpinBox->value() - currentRace.StartingStats[CreationLogic::CHA])
-                   + (DialogUi->dexSpinBox->value() - currentRace.StartingStats[CreationLogic::DEX]);
+    int spentPoints = (DialogUi->strSpinBox->value() - currentRace.StartingStats[Definitions::STR])
+                    + (DialogUi->intSpinBox->value() - currentRace.StartingStats[Definitions::INT])
+                    + (DialogUi->wisSpinBox->value() - currentRace.StartingStats[Definitions::WIS])
+                    + (DialogUi->conSpinBox->value() - currentRace.StartingStats[Definitions::CON])
+                    + (DialogUi->chaSpinBox->value() - currentRace.StartingStats[Definitions::CHA])
+                    + (DialogUi->dexSpinBox->value() - currentRace.StartingStats[Definitions::DEX]);
+    return currentRace.StartingPoints - spentPoints;
+}
 
-    bool negativeRemainder = difference > currentRace.StartingPoints;
-    DialogUi->saveCharacter->setDisabled(negativeRemainder);
+void CharacterCreationDialog::HandleStatChanged()
+{
+    int remainingStatPoints = GetRemainingStatPoints();
+    bool negativeRemainder = remainingStatPoints < 0;
+    DialogUi->saveButton->setDisabled(negativeRemainder);
 
     QPalette palette = DialogUi->remainingStatPointsLabel->palette();
     palette.setColor(DialogUi->remainingStatPointsLabel->foregroundRole(), negativeRemainder ? Qt::red : Qt::black);
@@ -97,8 +133,7 @@ void CharacterCreationDialog::HandleStatChanged()
     DialogUi->remainingStatPointsText->setTextColor(negativeRemainder ? Qt::red : Qt::black);
 
     // Must be done after the text color is set
-    DialogUi->remainingStatPointsText->setText(QString("%1").arg(currentRace.StartingPoints - difference));
-
+    DialogUi->remainingStatPointsText->setText(QString("%1").arg(remainingStatPoints));
 
     UpdateGuildList();
 }
@@ -114,13 +149,13 @@ void CharacterCreationDialog::UpdateGuildList()
 
     foreach(const GUILD guild, DialogUi->raceComboBox->currentData().value<RACE>().Guilds)
     {
-        bool meetAlignment = guild.Alignments[DialogUi->alignmentComboBox->currentData().value<CreationLogic::Alignments>()];
-        bool meetStats = DialogUi->strSpinBox->value() >= guild.RequiredStats[CreationLogic::STR]
-                      && DialogUi->intSpinBox->value() >= guild.RequiredStats[CreationLogic::INT]
-                      && DialogUi->wisSpinBox->value() >= guild.RequiredStats[CreationLogic::WIS]
-                      && DialogUi->conSpinBox->value() >= guild.RequiredStats[CreationLogic::CON]
-                      && DialogUi->chaSpinBox->value() >= guild.RequiredStats[CreationLogic::CHA]
-                      && DialogUi->dexSpinBox->value() >= guild.RequiredStats[CreationLogic::DEX];
+        bool meetAlignment = guild.Alignments[DialogUi->alignmentComboBox->currentData().value<Definitions::Alignment>()];
+        bool meetStats = DialogUi->strSpinBox->value() >= guild.RequiredStats[Definitions::STR]
+                      && DialogUi->intSpinBox->value() >= guild.RequiredStats[Definitions::INT]
+                      && DialogUi->wisSpinBox->value() >= guild.RequiredStats[Definitions::WIS]
+                      && DialogUi->conSpinBox->value() >= guild.RequiredStats[Definitions::CON]
+                      && DialogUi->chaSpinBox->value() >= guild.RequiredStats[Definitions::CHA]
+                      && DialogUi->dexSpinBox->value() >= guild.RequiredStats[Definitions::DEX];
 
         QLabel* guildLabel = new QLabel(DialogUi->verticalLayoutWidget);
         guildLabel->setGeometry(QRect(20, 10, 131, 17));
