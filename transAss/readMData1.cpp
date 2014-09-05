@@ -52,9 +52,21 @@ header readFileHeader(ifstream *mdata){
 
 void printRace(race *ret){
   cout << ret->name << endl
-       << "Min Stats: " << ret->minStats << endl
-       << "Max Stats: " << ret->maxStats << endl
-       << "Resistances: " << ret->resistances << endl
+       << "Min Stats: ";
+
+  for(int i = 0; i < 6; i++){
+    cout << ret->minStats[i] << " ";
+  }
+  cout << endl
+       << "Max Stats: ";
+  for(int i = 0; i < 6; i++){
+    cout << ret->maxStats[i] << " ";
+  }
+  cout << endl << "Resistances: ";
+  for(int i = 0; i < 11; i++){
+    cout << ret->resistances[i] << " ";
+  }
+  cout << endl
        << "Alignment: " << ret->alignment << endl
        << "Size: " << ret->size << endl
        << "Bonus Points: " << ret->bonusPoints << endl
@@ -65,14 +77,24 @@ void printRace(race *ret){
 race readRace(ifstream *mdata){
   race ret;
   ret.name = readVBString(mdata);
-  ret.minStats = readWord(mdata);
-  ret.maxStats = readWord(mdata);
-  ret.resistances = readWord(mdata);
-  ret.alignment = readDWord(mdata);
+  for(int i = 0; i < 6; i++){
+    ret.minStats[i] = readWord(mdata);
+  }
+  readWord(mdata);
+  for(int i = 0; i < 6; i++){
+    ret.maxStats[i] = readWord(mdata);
+  }
+  readWord(mdata);
+  for(int i = 0; i < 11; i++){
+    ret.resistances[i] = readWord(mdata);
+  }
+  readWord(mdata);
+  ret.alignment = readWord(mdata);
+  readWord(mdata);
   ret.size = readWord(mdata);
   ret.bonusPoints = readWord(mdata);
   ret.maxAge = readWord(mdata);
-  ret.expFactor = readDWord(mdata);
+  ret.expFactor = readFloat(mdata);
 
   printRace(&ret);
   seekTo(mdata, RECORD_LENGTH);

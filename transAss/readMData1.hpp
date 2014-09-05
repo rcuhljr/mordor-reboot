@@ -11,14 +11,14 @@
 
 struct race{
   char* name;
-  WORD minStats;
-  WORD maxStats;
-  WORD resistances;
+  WORD minStats[6];
+  WORD maxStats[6];
+  WORD resistances[11];
   DWORD alignment;
   WORD size;
   WORD bonusPoints;
   WORD maxAge;
-  DWORD expFactor;
+  float expFactor;
 };
 
 struct guild{
