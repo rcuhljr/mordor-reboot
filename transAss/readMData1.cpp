@@ -4,6 +4,10 @@
 #include "mordorBinaryReader.hpp"
 #include "readMData1.hpp"
 #include "assert.h"
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QFile>
 
 using namespace std;
 
@@ -74,6 +78,33 @@ void printRace(race *ret){
        << "expFactor: " << ret->expFactor << endl;
 }
 
+QJsonObject raceToJson(race *r){
+    QJsonObject ret;
+    ret["name"] = QJsonValue(r->name);
+    QJsonArray minstats;
+    QJsonArray maxstats;
+    for(int i = 0; i < 6; i++){
+      minstats.append(QJsonValue(r->minStats[i]));
+      maxstats.append(QJsonValue(r->maxStats[i]));
+    }
+    ret["min_stats"] = minstats;
+    ret["max_stats"] = maxstats;
+
+    QJsonArray resistances;
+    for(int i = 0; i < 11; i++){
+      resistances.append(QJsonValue(r->resistances[i]));
+    }
+    ret["resistances"] = resistances;
+
+    ret["alignment"] = QJsonValue(r->alignment);
+    ret["size"] = QJsonValue(r->size);
+    ret["bonus_points"] = QJsonValue(r->bonusPoints);
+    ret["max_age"] = QJsonValue(r->maxAge);
+    ret["exp_factor"] = QJsonValue(r->expFactor);
+
+    return ret;
+}
+
 race readRace(ifstream *mdata){
   race ret;
   ret.name = readVBString(mdata);
@@ -130,6 +161,7 @@ void printGuild(guild *ret){
   }
   cout << endl
        << "raceMask: " << ret->raceMask << endl
+       << "GoldRatio: " << ret->goldRatio<< endl
        << "levelMod: " << ret->levelMod << endl
        << "Attack Increment: " << ret->attackIncrement << endl
        << "Defense Increment: " << ret->defIncrement << endl
@@ -140,6 +172,44 @@ void printGuild(guild *ret){
        << "u8: " << ret->u8 << endl
        << "u16: " << ret->u16 << endl
        << "u17: " << ret->u17 << endl;
+}
+
+QJsonObject guildToJson(guild *g){
+    QJsonObject ret;
+    ret["name"] = QJsonValue(g->name);
+    ret["average_hits"] = QJsonValue(g->averageHits);
+    ret["max_level"] = QJsonValue(g->maxLevel);
+    ret["max_hitpoints"] = QJsonValue(g->MH);
+    ret["exp_factor"] = QJsonValue(g->expFactor);
+    ret["alignment"] = QJsonValue(g->alignment);
+    ret["quest_percentage"] = QJsonValue(g->questPercentage);
+    ret["race_mask"] = QJsonValue(g->raceMask);
+    ret["gold_ratio"] = QJsonValue(g->goldRatio);
+    ret["level_mod"] = QJsonValue(g->levelMod);
+    ret["attack_inc"] = QJsonValue(g->attackIncrement);
+    ret["defense_inc"] = QJsonValue(g->defIncrement);
+    ret["ad_cap"] = QJsonValue(g->aDCap);
+    ret["ad_gain"] = QJsonValue(g->aDGain);
+
+    QJsonArray reqStats;
+    QJsonArray abilityRates;
+    for(int i = 0; i < 6; i++){
+      reqStats.append(QJsonValue(g->reqStats[i]));
+      abilityRates.append(QJsonValue(g->abilityRates[i]));
+    }
+    ret["required_stats"] = reqStats;
+    ret["ability_rates"] = abilityRates;
+
+    QJsonArray baseMagic;
+    QJsonArray capMagic;
+    for(int i = 0; i < 18; i++){
+      baseMagic.append(QJsonValue(g->baseMagics[i]));
+      capMagic.append(QJsonValue(g->capMagics[i]));
+    }
+    ret["base_magic"] = baseMagic;
+    ret["cap_magic"] = capMagic;
+
+    return ret;
 }
 
 guild readGuild(ifstream *mdata){
@@ -171,13 +241,16 @@ guild readGuild(ifstream *mdata){
   for(int i = 0; i < 18; i++){
     ret.capMagics[i] = readFloat(mdata);
   }
-  ret.raceMask = readDWord(mdata);
+  readWord(mdata); // dead data?
+  readWord(mdata); // dead data?
+  ret.raceMask = readWord(mdata);
+  readWord(mdata); // dead data?
   ret.goldRatio = readWord(mdata);
   ret.levelMod = readFloat(mdata);
   ret.attackIncrement = readFloat(mdata);
   ret.defIncrement = readFloat(mdata);
   ret.aDCap = readWord(mdata);
-  ret.aDGain = readWord(mdata);
+  ret.aDGain = readFloat(mdata);
   ret.u16 = readWord(mdata);
   ret.u17 = readWord(mdata);
 
@@ -235,40 +308,53 @@ int main(int argc, char** argv){
 
   cout << endl;
   // races are first
+  QJsonObject races;
   for(i = 0; i < h.numRaces; i++){
-    readRace(&mdata);
+    race r = readRace(&mdata);
+    races[r.name] = raceToJson(&r);
     cout << endl;
   }
+  QJsonDocument saveDoc(races);
+  QFile saveFile(QStringLiteral("races.json"));
+  saveFile.open(QIODevice::WriteOnly);
+  saveFile.write(saveDoc.toJson());
 
   // then guilds
+  QJsonObject guilds;
   for(i = 0; i < h.numGuilds; i++){
-    readGuild(&mdata);
+    guild g = readGuild(&mdata);
+    guilds[g.name] = guildToJson(&g);
     cout << endl;
   }
 
-  // then item subtypes
-  for(i = 0; i < h.numItemSubtypes; i++){
-    readNamedType(&mdata);
-    cout << endl;
-  }
+  QJsonDocument saveGuildDoc(guilds);
+  QFile saveGuildFile(QStringLiteral("guilds.json"));
+  saveGuildFile.open(QIODevice::WriteOnly);
+  saveGuildFile.write(saveGuildDoc.toJson());
 
-  // then items
-  for(i = 0; i < h.numItemTypes; i++){
-    readNamedType(&mdata);
-    cout << endl;
-  }
+//  // then item subtypes
+//  for(i = 0; i < h.numItemSubtypes; i++){
+//    readNamedType(&mdata);
+//    cout << endl;
+//  }
 
-  // then monster subtypes
-  for(i = 0; i < h.numMonsterSubtypes; i++){
-    readNamedType(&mdata);
-    cout << endl;
-  }
+//  // then items
+//  for(i = 0; i < h.numItemTypes; i++){
+//    readNamedType(&mdata);
+//    cout << endl;
+//  }
 
-  // then monsters
-  for(i = 0; i < h.numMonsterTypes; i++){
-    readNamedType(&mdata);
-    cout << endl;
-  }
+//  // then monster subtypes
+//  for(i = 0; i < h.numMonsterSubtypes; i++){
+//    readNamedType(&mdata);
+//    cout << endl;
+//  }
+
+//  // then monsters
+//  for(i = 0; i < h.numMonsterTypes; i++){
+//    readNamedType(&mdata);
+//    cout << endl;
+//  }
 
   return 0;
 }

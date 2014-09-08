@@ -14,7 +14,7 @@ struct race{
   WORD minStats[6];
   WORD maxStats[6];
   WORD resistances[11];
-  DWORD alignment;
+  WORD alignment;
   WORD size;
   WORD bonusPoints;
   WORD maxAge;
@@ -29,20 +29,20 @@ struct guild{
   float expFactor;
   WORD u3;               // ??
   WORD reqStats[6];
-  DWORD alignment;
+  WORD alignment;
   float abilityRates[6];
   WORD u7;               // ??
   float u8;              // ??
   WORD questPercentage;
   float baseMagics[18];
   float capMagics[18];
-  DWORD raceMask;
+  WORD raceMask;
   WORD goldRatio;               //??
   float levelMod;         //??
   float attackIncrement;
   float defIncrement;
   WORD aDCap;
-  WORD aDGain;
+  float aDGain;
   WORD u16, u17;         // ??
 };
 
