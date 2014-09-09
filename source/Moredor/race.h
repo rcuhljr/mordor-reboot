@@ -11,16 +11,15 @@ class Race
 {
 public:
     Race();
-    Race(QString name, QList<bool> align, QList<int> startStats, QList<int> max, int startPoints);
     virtual ~Race();
 
     void Read(const QJsonObject& json);
 
-    QString Name;
     QList<bool> Alignments;
-    QList<int> StartingStats;
-    QList<int> MaxStats;
     int StartingPoints;
+    QList<int> MaxStats;
+    QList<int> MinStats;
+    QString Name;
     QList<Guild> Guilds;
 };
 

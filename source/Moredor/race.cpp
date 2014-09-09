@@ -1,17 +1,15 @@
 #include "race.h"
 #include "guild.h"
+#include <QJsonArray>
 
 Race::Race()
+    : Alignments()
+    , StartingPoints()
+    , MaxStats()
+    , MinStats()
+    , Name()
+    , Guilds()
 {
-}
-
-Race::Race(QString name, QList<bool> align, QList<int> startStats, QList<int> max, int startPoints)
-{
-    Name = name;
-    Alignments = align;
-    StartingStats = startStats;
-    MaxStats = max;
-    StartingPoints = startPoints;
 }
 
 Race::~Race()
@@ -20,37 +18,32 @@ Race::~Race()
 
 void Race::Read(const QJsonObject& json)
 {
-    Name = json["name"].toString();
-    //qWarning(Name.toLatin1());
-    StartingPoints = json["bonus_points"].toInt();
-    //qWarning(QString("%1").arg(StartingPoints).toLatin1());
+    QJsonArray alignmentArray = json["alignment"].toArray();
+    foreach (const QJsonValue& v, alignmentArray)
+    {
+        Alignments << v.toBool();
+    }
 
-    // Example:
-//    "alignment": [
-//        false,
-//        true,
-//        false
-//    ],
-//    "bonus_points": 10,
+    StartingPoints = json["bonus_points"].toInt();
+
 //    "exp_factor": 5,
+
 //    "max_age": 275,
-//    "max_stats": [
-//        18,
-//        18,
-//        19,
-//        19,
-//        17,
-//        18
-//    ],
-//    "min_stats": [
-//        3,
-//        3,
-//        7,
-//        3,
-//        3,
-//        5
-//    ],
-//    "name": "Dwarf",
+
+    QJsonArray maxStatsArray = json["max_stats"].toArray();
+    foreach (const QJsonValue& v, maxStatsArray)
+    {
+        MaxStats << v.toInt();
+    }
+
+    QJsonArray minStatsArray = json["min_stats"].toArray();
+    foreach (const QJsonValue& v, minStatsArray)
+    {
+        MinStats << v.toInt();
+    }
+
+    Name = json["name"].toString();
+
 //    "resistances": [
 //        45,
 //        80,
@@ -64,5 +57,6 @@ void Race::Read(const QJsonObject& json)
 //        90,
 //        0
 //    ],
+
 //    "size": 1
 }

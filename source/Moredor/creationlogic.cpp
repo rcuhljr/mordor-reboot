@@ -19,18 +19,11 @@ CreationLogic::CreationLogic()
     QJsonObject rootObject = loadDoc.object();
 
     QJsonArray raceNameArray = rootObject["race_names"].toArray();
-    for (int raceIndex = 0; raceIndex < raceNameArray.size(); ++raceIndex)
+    foreach(const QJsonValue& v, raceNameArray)
     {
-        QString raceName = raceNameArray[raceIndex].toString();
-        QJsonObject raceObject = rootObject[raceName].toObject();
+        QJsonObject raceObject = rootObject[v.toString()].toObject();
         Race race;
         race.Read(raceObject);
-        QList<bool> humanAlign = QList<bool>() << true << true << true;
-        race.Alignments = humanAlign;
-        QList<int> humanStart = QList<int>() << 4 << 4 << 4 << 6 << 5 << 6;
-        race.StartingStats = humanStart;
-        QList<int> humanMax = QList<int>() << 17 << 18 << 18 << 17 << 18 << 18;
-        race.MaxStats = humanMax;
         Races << race;
     }
 

@@ -103,7 +103,7 @@ void CharacterCreationDialog::HandleRaceSelected()
 
 void CharacterCreationDialog::SetStatRange(Race current, QSpinBox* spinBox, QLabel* rangeLabel, Definitions::Stat stat)
 {
-    int minStat = current.StartingStats[stat];
+    int minStat = current.MinStats[stat];
     int maxStat = current.MaxStats[stat];
     spinBox->setRange(minStat, maxStat);
     spinBox->setValue(minStat);
@@ -113,12 +113,12 @@ void CharacterCreationDialog::SetStatRange(Race current, QSpinBox* spinBox, QLab
 int CharacterCreationDialog::GetRemainingStatPoints()
 {
     Race currentRace = DialogUi->raceComboBox->currentData().value<Race>();
-    int spentPoints = (DialogUi->strSpinBox->value() - currentRace.StartingStats[Definitions::STR])
-                    + (DialogUi->intSpinBox->value() - currentRace.StartingStats[Definitions::INT])
-                    + (DialogUi->wisSpinBox->value() - currentRace.StartingStats[Definitions::WIS])
-                    + (DialogUi->conSpinBox->value() - currentRace.StartingStats[Definitions::CON])
-                    + (DialogUi->chaSpinBox->value() - currentRace.StartingStats[Definitions::CHA])
-                    + (DialogUi->dexSpinBox->value() - currentRace.StartingStats[Definitions::DEX]);
+    int spentPoints = (DialogUi->strSpinBox->value() - currentRace.MinStats[Definitions::STR])
+                    + (DialogUi->intSpinBox->value() - currentRace.MinStats[Definitions::INT])
+                    + (DialogUi->wisSpinBox->value() - currentRace.MinStats[Definitions::WIS])
+                    + (DialogUi->conSpinBox->value() - currentRace.MinStats[Definitions::CON])
+                    + (DialogUi->chaSpinBox->value() - currentRace.MinStats[Definitions::CHA])
+                    + (DialogUi->dexSpinBox->value() - currentRace.MinStats[Definitions::DEX]);
     return currentRace.StartingPoints - spentPoints;
 }
 
