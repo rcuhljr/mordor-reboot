@@ -37,11 +37,11 @@ private slots:
 
 private:
     void SetupUi();
-    void SetStatRange(RACE current, QSpinBox* spinBox, QLabel* rangeLabel, Definitions::Stat statIndex);
+    void SetStatRange(Race current, QSpinBox* spinBox, QLabel* rangeLabel, Definitions::Stat statIndex);
 
     Ui::CharacterCreationDialog* DialogUi;
     CreationLogic* Logic;
-    QList<RACE> Races;
+    QList<Race> Races;
 };
 
 #endif // CHARACTER_CREATION_DIALOG_H

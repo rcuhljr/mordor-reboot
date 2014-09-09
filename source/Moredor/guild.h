@@ -1,21 +1,19 @@
 #ifndef GUILD_H
 #define GUILD_H
 
+#include <QJsonObject>
 #include <QList>
 #include <QString>
 
-struct GUILD
+class Guild
 {
+public:
+    Guild(QString name, QList<int> reqs, QList<bool> align);
+    virtual ~Guild();
+
     QString Name;
     QList<int> RequiredStats;
     QList<bool> Alignments;
-
-    GUILD(QString name, QList<int> reqs, QList<bool> align)
-    {
-        Name = name;
-        RequiredStats = reqs;
-        Alignments = align;
-    }
 };
 
 #endif // GUILD_H

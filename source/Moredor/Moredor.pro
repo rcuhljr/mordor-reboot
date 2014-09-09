@@ -15,7 +15,9 @@ TEMPLATE = app
 SOURCES += main.cpp\
         gamewindow.cpp \
     charactercreationdialog.cpp \
-    creationlogic.cpp
+    creationlogic.cpp \
+    guild.cpp \
+    race.cpp
 
 HEADERS  += gamewindow.h \
     charactercreationdialog.h \

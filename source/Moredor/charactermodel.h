@@ -8,14 +8,14 @@
 struct CharacterModel
 {
     QString Name;
-    RACE Race;
+    Race CharacterRace;
     Definitions::Alignment Alignment;
     QList<int> CurrentStats;
 
-    CharacterModel(QString name, RACE race, Definitions::Alignment align, QList<int> current)
+    CharacterModel(QString name, Race Race, Definitions::Alignment align, QList<int> current)
     {
         Name = name;
-        Race = race;
+        CharacterRace = Race;
         Alignment = align;
         CurrentStats = current;
     }

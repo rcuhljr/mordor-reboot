@@ -11,10 +11,10 @@ public:
     CreationLogic();
     virtual ~CreationLogic();
 
-    const QList<RACE> GetRaces() const;
+    const QList<Race> GetRaces() const;
 
 private:
-    QList<RACE> Races;
+    QList<Race> Races;
 };
 
 #endif // CREATION_LOGIC_H

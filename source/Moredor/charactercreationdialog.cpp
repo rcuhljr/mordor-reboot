@@ -60,7 +60,7 @@ void CharacterCreationDialog::on_saveButton_clicked()
                                            << DialogUi->dexSpinBox->value();
     emit CharacterSaved(CharacterModel(
                             DialogUi->characterNameBox->toPlainText(),
-                            DialogUi->raceComboBox->currentData().value<RACE>(),
+                            DialogUi->raceComboBox->currentData().value<Race>(),
                             DialogUi->alignmentComboBox->currentData().value<Definitions::Alignment>(),
                             currentStats));
     close();
@@ -68,15 +68,15 @@ void CharacterCreationDialog::on_saveButton_clicked()
 
 void CharacterCreationDialog::SetupUi()
 {
-    foreach(const RACE race, Races)
+    foreach(const Race Race, Races)
     {
-        DialogUi->raceComboBox->addItem(race.Name, QVariant::fromValue(race));
+        DialogUi->raceComboBox->addItem(Race.Name, QVariant::fromValue(Race));
     }
 }
 
 void CharacterCreationDialog::HandleRaceSelected()
 {
-    RACE currentRace = DialogUi->raceComboBox->currentData().value<RACE>();
+    Race currentRace = DialogUi->raceComboBox->currentData().value<Race>();
 
     SetStatRange(currentRace, DialogUi->strSpinBox, DialogUi->strRangeLabel, Definitions::STR);
     SetStatRange(currentRace, DialogUi->intSpinBox, DialogUi->intRangeLabel, Definitions::INT);
@@ -100,7 +100,7 @@ void CharacterCreationDialog::HandleRaceSelected()
     }
 }
 
-void CharacterCreationDialog::SetStatRange(RACE current, QSpinBox* spinBox, QLabel* rangeLabel, Definitions::Stat stat)
+void CharacterCreationDialog::SetStatRange(Race current, QSpinBox* spinBox, QLabel* rangeLabel, Definitions::Stat stat)
 {
     int minStat = current.StartingStats[stat];
     int maxStat = current.MaxStats[stat];
@@ -111,7 +111,7 @@ void CharacterCreationDialog::SetStatRange(RACE current, QSpinBox* spinBox, QLab
 
 int CharacterCreationDialog::GetRemainingStatPoints()
 {
-    RACE currentRace = DialogUi->raceComboBox->currentData().value<RACE>();
+    Race currentRace = DialogUi->raceComboBox->currentData().value<Race>();
     int spentPoints = (DialogUi->strSpinBox->value() - currentRace.StartingStats[Definitions::STR])
                     + (DialogUi->intSpinBox->value() - currentRace.StartingStats[Definitions::INT])
                     + (DialogUi->wisSpinBox->value() - currentRace.StartingStats[Definitions::WIS])
@@ -147,7 +147,7 @@ void CharacterCreationDialog::UpdateGuildList()
         delete item;
     }
 
-    foreach(const GUILD guild, DialogUi->raceComboBox->currentData().value<RACE>().Guilds)
+    foreach(const Guild guild, DialogUi->raceComboBox->currentData().value<Race>().Guilds)
     {
         bool meetAlignment = guild.Alignments[DialogUi->alignmentComboBox->currentData().value<Definitions::Alignment>()];
         bool meetStats = DialogUi->strSpinBox->value() >= guild.RequiredStats[Definitions::STR]
