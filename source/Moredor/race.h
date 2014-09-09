@@ -16,10 +16,14 @@ public:
     void Read(const QJsonObject& json);
 
     QList<bool> Alignments;
-    int StartingPoints;
+    int BonusPoints;
+    int ExpFactor;
+    int MaxAge;
     QList<int> MaxStats;
     QList<int> MinStats;
     QString Name;
+    QList<int> Resistances;
+    int Size;
     QList<Guild> Guilds;
 };
 

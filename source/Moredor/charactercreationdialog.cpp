@@ -119,7 +119,7 @@ int CharacterCreationDialog::GetRemainingStatPoints()
                     + (DialogUi->conSpinBox->value() - currentRace.MinStats[Definitions::CON])
                     + (DialogUi->chaSpinBox->value() - currentRace.MinStats[Definitions::CHA])
                     + (DialogUi->dexSpinBox->value() - currentRace.MinStats[Definitions::DEX]);
-    return currentRace.StartingPoints - spentPoints;
+    return currentRace.BonusPoints - spentPoints;
 }
 
 void CharacterCreationDialog::HandleStatChanged()

@@ -4,10 +4,14 @@
 
 Race::Race()
     : Alignments()
-    , StartingPoints()
+    , BonusPoints()
+    , ExpFactor()
+    , MaxAge()
     , MaxStats()
     , MinStats()
     , Name()
+    , Resistances()
+    , Size()
     , Guilds()
 {
 }
@@ -24,11 +28,11 @@ void Race::Read(const QJsonObject& json)
         Alignments << v.toBool();
     }
 
-    StartingPoints = json["bonus_points"].toInt();
+    BonusPoints = json["bonus_points"].toInt();
 
-//    "exp_factor": 5,
+    ExpFactor = json["exp_factor"].toInt();
 
-//    "max_age": 275,
+    MaxAge = json["max_age"].toInt();
 
     QJsonArray maxStatsArray = json["max_stats"].toArray();
     foreach (const QJsonValue& v, maxStatsArray)
@@ -44,19 +48,11 @@ void Race::Read(const QJsonObject& json)
 
     Name = json["name"].toString();
 
-//    "resistances": [
-//        45,
-//        80,
-//        0,
-//        0,
-//        50,
-//        50,
-//        0,
-//        40,
-//        50,
-//        90,
-//        0
-//    ],
+    QJsonArray resistancesArray = json["resistances"].toArray();
+    foreach (const QJsonValue& v, resistancesArray)
+    {
+        Resistances << v.toInt();
+    }
 
-//    "size": 1
+    Size = json["size"].toInt();
 }
