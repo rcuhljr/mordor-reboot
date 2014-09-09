@@ -32,3 +32,7 @@ FORMS    += gamewindow.ui \
 
 RESOURCES += \
     Resources.qrc
+
+assets.path = $$OUT_PWD/assets
+assets.files = ../../assets/*
+INSTALLS += assets
