@@ -84,6 +84,7 @@ void CharacterCreationDialog::HandleRaceSelected()
     SetStatRange(currentRace, DialogUi->conSpinBox, DialogUi->conRangeLabel, Definitions::CON);
     SetStatRange(currentRace, DialogUi->chaSpinBox, DialogUi->chaRangeLabel, Definitions::CHA);
     SetStatRange(currentRace, DialogUi->dexSpinBox, DialogUi->dexRangeLabel, Definitions::DEX);
+    HandleStatChanged();
 
     DialogUi->alignmentComboBox->clear();
     if(currentRace.Alignments[Definitions::Good])

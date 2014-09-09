@@ -14,6 +14,8 @@ public:
     Race(QString name, QList<bool> align, QList<int> startStats, QList<int> max, int startPoints);
     virtual ~Race();
 
+    void Read(const QJsonObject& json);
+
     QString Name;
     QList<bool> Alignments;
     QList<int> StartingStats;
