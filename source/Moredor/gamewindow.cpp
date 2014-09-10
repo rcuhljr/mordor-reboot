@@ -21,3 +21,8 @@ void GameWindow::on_createCharacterButton_clicked()
 
     characterCreation->show();
 }
+
+void GameWindow::on_startGameButton_clicked()
+{
+
+}

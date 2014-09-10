@@ -52,9 +52,9 @@
           </widget>
          </item>
          <item row="0" column="1" alignment="Qt::AlignHCenter">
-          <widget class="QPushButton" name="pushButton_3">
+          <widget class="QPushButton" name="startGameButton">
            <property name="text">
-            <string>PushButton</string>
+            <string>Start Game</string>
            </property>
           </widget>
          </item>

@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     charactercreationdialog.cpp \
     guild.cpp \
     race.cpp \
-    gamedata.cpp
+    gamedata.cpp \
+    townframe.cpp
 
 HEADERS  += gamewindow.h \
     charactercreationdialog.h \
@@ -25,10 +26,12 @@ HEADERS  += gamewindow.h \
     race.h \
     charactermodel.h \
     definitions.h \
+    townframe.h \
     gamedata.h
 
 FORMS    += gamewindow.ui \
-    charactercreationdialog.ui
+    charactercreationdialog.ui \
+    townframe.ui
 
 RESOURCES += \
     Resources.qrc

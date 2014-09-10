@@ -23,6 +23,10 @@ struct header{
   WORD numMonsterTypes;
 };
 
+bool flagCheck(WORD data, short flag){
+    return (data & flag) == flag;
+}
+
 void printFileHeader(header *ret){
   cout << "Version:              " << ret->version << endl
        << "Num Races:            " << ret->numRaces << endl
@@ -71,7 +75,11 @@ void printRace(race *ret){
     cout << ret->resistances[i] << " ";
   }
   cout << endl
-       << "Alignment: " << ret->alignment << endl
+       << "Alignment: ";
+  for(int i = 0; i < 3; i++){
+    cout << ret->alignment[i] << " ";
+  }
+  cout << endl
        << "Size: " << ret->size << endl
        << "Bonus Points: " << ret->bonusPoints << endl
        << "Max Age: " << ret->maxAge << endl
@@ -95,8 +103,11 @@ QJsonObject raceToJson(race *r){
       resistances.append(QJsonValue(r->resistances[i]));
     }
     ret["resistances"] = resistances;
-
-    ret["alignment"] = QJsonValue(r->alignment);
+    QJsonArray alignments;
+    for(int i = 0; i < 3; i++){
+      alignments.append(QJsonValue(r->alignment[i]));
+    }
+    ret["alignment"] = alignments;
     ret["size"] = QJsonValue(r->size);
     ret["bonus_points"] = QJsonValue(r->bonusPoints);
     ret["max_age"] = QJsonValue(r->maxAge);
@@ -120,7 +131,10 @@ race readRace(ifstream *mdata){
     ret.resistances[i] = readWord(mdata);
   }
   readWord(mdata);
-  ret.alignment = readWord(mdata);
+  WORD alignData = readWord(mdata);
+  ret.alignment[0] = flagCheck(alignData, GOOD);
+  ret.alignment[1] = flagCheck(alignData, NEUTRAL);
+  ret.alignment[2] = flagCheck(alignData, EVIL);
   readWord(mdata);
   ret.size = readWord(mdata);
   ret.bonusPoints = readWord(mdata);
@@ -143,7 +157,11 @@ void printGuild(guild *ret){
     cout << ret->reqStats[i] << " ";
   }
   cout << endl
-       << "alignment: " << ret->alignment << endl
+       << "alignment: ";
+  for(int i = 0; i < 3; i++){
+    cout << ret->alignment[i] << " ";
+  }
+  cout << endl
        << "ability rates: ";
   for(int i = 0; i < 6; i++){
     cout << ret->abilityRates[i] << " ";
@@ -160,7 +178,11 @@ void printGuild(guild *ret){
     cout << ret->capMagics[i] << " ";
   }
   cout << endl
-       << "raceMask: " << ret->raceMask << endl
+       << "races: " ;
+  for(int i = 0; i < 9; i++){
+    cout << ret->races[i] << " ";
+  }
+  cout << endl
        << "GoldRatio: " << ret->goldRatio<< endl
        << "levelMod: " << ret->levelMod << endl
        << "Attack Increment: " << ret->attackIncrement << endl
@@ -181,9 +203,7 @@ QJsonObject guildToJson(guild *g){
     ret["max_level"] = QJsonValue(g->maxLevel);
     ret["max_hitpoints"] = QJsonValue(g->MH);
     ret["exp_factor"] = QJsonValue(g->expFactor);
-    ret["alignment"] = QJsonValue(g->alignment);
     ret["quest_percentage"] = QJsonValue(g->questPercentage);
-    ret["race_mask"] = QJsonValue(g->raceMask);
     ret["gold_ratio"] = QJsonValue(g->goldRatio);
     ret["level_mod"] = QJsonValue(g->levelMod);
     ret["attack_inc"] = QJsonValue(g->attackIncrement);
@@ -209,6 +229,18 @@ QJsonObject guildToJson(guild *g){
     ret["base_magic"] = baseMagic;
     ret["cap_magic"] = capMagic;
 
+    QJsonArray alignments;
+    for(int i = 0; i < 3; i++){
+      alignments.append(QJsonValue(g->alignment[i]));
+    }
+    ret["alignment"] = alignments;
+
+    QJsonArray races;
+    for(int i = 0; i < 9; i++){
+      races.append(QJsonValue(g->races[i]));
+    }
+    ret["races"] = races;
+
     return ret;
 }
 
@@ -225,7 +257,10 @@ guild readGuild(ifstream *mdata){
     ret.reqStats[i] = readWord(mdata);
   }
   readWord(mdata); // dead data?
-  ret.alignment = readWord(mdata);
+  WORD alignData = readWord(mdata);
+  ret.alignment[0] = flagCheck(alignData, GOOD);
+  ret.alignment[1] = flagCheck(alignData, NEUTRAL);
+  ret.alignment[2] = flagCheck(alignData, EVIL);
   readWord(mdata); // dead data?
   for(int i = 0; i < 6; i++){
     ret.abilityRates[i] = readFloat(mdata);
@@ -243,7 +278,16 @@ guild readGuild(ifstream *mdata){
   }
   readWord(mdata); // dead data?
   readWord(mdata); // dead data?
-  ret.raceMask = readWord(mdata);
+  WORD raceData = readWord(mdata);
+  ret.races[0] = flagCheck(raceData, HUMAN);
+  ret.races[1] = flagCheck(raceData, ELF);
+  ret.races[2] = flagCheck(raceData, GIANT);
+  ret.races[3] = flagCheck(raceData, GNOME);
+  ret.races[4] = flagCheck(raceData, DWARF);
+  ret.races[5] = flagCheck(raceData, OGRE);
+  ret.races[6] = flagCheck(raceData, MORLOCH);
+  ret.races[7] = flagCheck(raceData, OSIRI);
+  ret.races[8] = flagCheck(raceData, TROLL);
   readWord(mdata); // dead data?
   ret.goldRatio = readWord(mdata);
   ret.levelMod = readFloat(mdata);
@@ -309,11 +353,14 @@ int main(int argc, char** argv){
   cout << endl;
   // races are first
   QJsonObject races;
+  QJsonArray raceNames;
   for(i = 0; i < h.numRaces; i++){
     race r = readRace(&mdata);
     races[r.name] = raceToJson(&r);
+    raceNames.append(QJsonValue(r.name));
     cout << endl;
   }
+  races["race_names"] = raceNames;
   QJsonDocument saveDoc(races);
   QFile saveFile(QStringLiteral("races.json"));
   saveFile.open(QIODevice::WriteOnly);

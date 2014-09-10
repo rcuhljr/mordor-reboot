@@ -19,6 +19,8 @@ public:
 private slots:
     void on_createCharacterButton_clicked();
 
+    void on_startGameButton_clicked();
+
 private:
     Ui::GameWindow* GameUi;
 };
