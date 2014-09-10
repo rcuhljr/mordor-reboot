@@ -1,6 +1,3 @@
 <RCC>
-    <qresource prefix="/">
-        <file alias="guilds">../../assets/guilds.json</file>
-        <file alias="races">../../assets/races.json</file>
-    </qresource>
+    <qresource prefix="/"/>
 </RCC>

@@ -41,7 +41,7 @@ GameData::GameData()
     }
 
     // The root directory for this check is the directory of the executable
-    QFile guildsFile(QApplication::applicationDirPath() + "assets/guilds.json");
+    QFile guildsFile(QApplication::applicationDirPath() + "/assets/guilds.json");
     if (!guildsFile.open(QIODevice::ReadOnly))
     {
         qWarning("Couldn't open guilds file.");
