@@ -167,4 +167,6 @@ void CharacterCreationDialog::UpdateGuildList()
         guildLabel->setText(guild.Name);
         DialogUi->GuildVLayout->addWidget(guildLabel);
     }
+
+    DialogUi->GuildVLayout->addStretch();
 }
