@@ -1,17 +1,26 @@
-#include "creationlogic.h"
+#include "gamedata.h"
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QStringList>
+#include <QtDebug>
 
-CreationLogic::CreationLogic()
+GameData::GameData()
     : Races()
 {
     // The root directory for this check is the directory of the executable
-    QFile racesFile(":/races");
+
+    if (!QFile::exists("assets/races.json"))
+    {
+        qWarning("Couldn't find races file.");
+        return;
+    }
+
+    QFile racesFile("assets/races.json");
     if (!racesFile.open(QIODevice::ReadOnly))
     {
         qWarning("Couldn't open races file.");
+        qWarning() << static_cast<int>(racesFile.error());
         return;
     }
     QByteArray racesData = racesFile.readAll();
@@ -30,7 +39,7 @@ CreationLogic::CreationLogic()
     }
 
     // The root directory for this check is the directory of the executable
-    QFile guildsFile(":/guilds");
+    QFile guildsFile("assets/guilds.json");
     if (!guildsFile.open(QIODevice::ReadOnly))
     {
         qWarning("Couldn't open guilds file.");
@@ -55,11 +64,11 @@ CreationLogic::CreationLogic()
     }
 }
 
-CreationLogic::~CreationLogic()
+GameData::~GameData()
 {
 }
 
-const QList<Race> CreationLogic::GetRaces() const
+const QList<Race> GameData::GetRaces() const
 {
     return Races;
 }
