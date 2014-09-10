@@ -5,11 +5,11 @@
 #include "race.h"
 #include <QList>
 
-class CreationLogic
+class GameData
 {
 public:
-    CreationLogic();
-    virtual ~CreationLogic();
+    GameData();
+    virtual ~GameData();
 
     const QList<Race> GetRaces() const;
 

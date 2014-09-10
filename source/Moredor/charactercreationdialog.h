@@ -2,7 +2,7 @@
 #define CHARACTER_CREATION_DIALOG_H
 
 #include "charactermodel.h"
-#include "creationlogic.h"
+#include "gamedata.h"
 #include "definitions.h"
 #include "race.h"
 #include <QDialog>
@@ -14,7 +14,7 @@ namespace Ui
     class CharacterCreationDialog;
 }
 
-class CreationLogic;
+class GameData;
 
 class CharacterCreationDialog : public QDialog
 {
@@ -40,7 +40,7 @@ private:
     void SetStatRange(Race current, QSpinBox* spinBox, QLabel* rangeLabel, Definitions::Stat statIndex);
 
     Ui::CharacterCreationDialog* DialogUi;
-    CreationLogic* Logic;
+    GameData* Data;
     QList<Race> Races;
 };
 

@@ -15,17 +15,17 @@ TEMPLATE = app
 SOURCES += main.cpp\
         gamewindow.cpp \
     charactercreationdialog.cpp \
-    creationlogic.cpp \
     guild.cpp \
-    race.cpp
+    race.cpp \
+    gamedata.cpp
 
 HEADERS  += gamewindow.h \
     charactercreationdialog.h \
-    creationlogic.h \
     guild.h \
     race.h \
     charactermodel.h \
-    definitions.h
+    definitions.h \
+    gamedata.h
 
 FORMS    += gamewindow.ui \
     charactercreationdialog.ui
@@ -43,7 +43,7 @@ CONFIG(release, debug|release) {
 win32 {
     #in Windows, you can use & to separate commands
     copyfiles.commands += @echo NOW COPYING ADDITIONAL FILE(S) &
-    copyfiles.commands += @call xcopy ..\\..\\assets $${DESTDIR}\\assets /i
+    copyfiles.commands += @call xcopy ..\\..\\assets $${DESTDIR}\\assets /i /Y
 }
 
 #for Mac

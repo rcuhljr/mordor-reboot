@@ -5,8 +5,8 @@
 CharacterCreationDialog::CharacterCreationDialog(QWidget* parent)
     : QDialog(parent)
     , DialogUi(new Ui::CharacterCreationDialog())
-    , Logic(new CreationLogic())
-    , Races(Logic->GetRaces())
+    , Data(new GameData())
+    , Races(Data->GetRaces())
 {
     DialogUi->setupUi(this);
 
@@ -24,8 +24,8 @@ CharacterCreationDialog::CharacterCreationDialog(QWidget* parent)
 
 CharacterCreationDialog::~CharacterCreationDialog()
 {
-    delete Logic;
-    Logic = NULL;
+    delete Data;
+    Data = NULL;
 
     delete DialogUi;
     DialogUi = NULL;
