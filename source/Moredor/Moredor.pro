@@ -32,3 +32,24 @@ FORMS    += gamewindow.ui \
 
 RESOURCES += \
     Resources.qrc
+
+CONFIG(release, debug|release) {
+    DESTDIR = release
+} else {
+    DESTDIR = debug
+}
+
+#for Windows
+win32 {
+    #in Windows, you can use & to separate commands
+    copyfiles.commands += @echo NOW COPYING ADDITIONAL FILE(S) &
+    copyfiles.commands += @call xcopy ..\\..\\assets $${DESTDIR}\\assets /i
+}
+
+#for Mac
+macx {
+
+}
+
+QMAKE_EXTRA_TARGETS += copyfiles
+POST_TARGETDEPS += copyfiles
