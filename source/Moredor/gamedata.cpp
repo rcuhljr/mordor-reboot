@@ -4,19 +4,21 @@
 #include <QJsonArray>
 #include <QStringList>
 #include <QtDebug>
+#include <QApplication>
 
 GameData::GameData()
     : Races()
 {
     // The root directory for this check is the directory of the executable
 
-    if (!QFile::exists("assets/races.json"))
+    if (!QFile::exists(QApplication::applicationDirPath() + "/assets/races.json"))
     {
         qWarning("Couldn't find races file.");
+        qWarning() << QApplication::applicationDirPath() << "/assets/races.json";
         return;
     }
 
-    QFile racesFile("assets/races.json");
+    QFile racesFile(QApplication::applicationDirPath() + "/assets/races.json");
     if (!racesFile.open(QIODevice::ReadOnly))
     {
         qWarning("Couldn't open races file.");
@@ -39,7 +41,7 @@ GameData::GameData()
     }
 
     // The root directory for this check is the directory of the executable
-    QFile guildsFile("assets/guilds.json");
+    QFile guildsFile(QApplication::applicationDirPath() + "assets/guilds.json");
     if (!guildsFile.open(QIODevice::ReadOnly))
     {
         qWarning("Couldn't open guilds file.");
