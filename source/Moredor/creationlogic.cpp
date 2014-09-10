@@ -8,7 +8,7 @@ CreationLogic::CreationLogic()
     : Races()
 {
     // The root directory for this check is the directory of the executable
-    QFile racesFile("assets/races.json");
+    QFile racesFile(":/races");
     if (!racesFile.open(QIODevice::ReadOnly))
     {
         qWarning("Couldn't open races file.");
@@ -30,7 +30,7 @@ CreationLogic::CreationLogic()
     }
 
     // The root directory for this check is the directory of the executable
-    QFile guildsFile("assets/guilds.json");
+    QFile guildsFile(":/guilds");
     if (!guildsFile.open(QIODevice::ReadOnly))
     {
         qWarning("Couldn't open guilds file.");

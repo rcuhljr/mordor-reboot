@@ -32,8 +32,3 @@ FORMS    += gamewindow.ui \
 
 RESOURCES += \
     Resources.qrc
-
-# Adding debug to the path is a hack until we can dynamically load resources
-assets.path = $$OUT_PWD/debug/assets
-assets.files = ../../assets/*
-INSTALLS += assets
