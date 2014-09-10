@@ -15,6 +15,7 @@ public:
 
 private:
     QList<Race> Races;
+    QList<Guild> Guilds;
 };
 
 #endif // CREATION_LOGIC_H
