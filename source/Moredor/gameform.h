@@ -17,6 +17,8 @@ public:
 
 private:
     Ui::GameForm *ui;
+    QWidget* townWidget;
+    void BuildTownWindow();
 };
 
 #endif // GAMEFORM_H

@@ -160,6 +160,16 @@
     </property>
    </widget>
   </widget>
+  <widget class="QMdiArea" name="gameArea">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>40</y>
+     <width>1051</width>
+     <height>621</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
