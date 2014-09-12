@@ -25,7 +25,8 @@ void GameWindow::on_createCharacterButton_clicked()
 
 void GameWindow::on_startGameButton_clicked()
 {
-    GameUi->mainMenuWidget->hide();
+    GameUi->menuWidget->hide();
     QWidget* gameForm = new GameForm(this);
+    GameUi->mainWindowWidget->layout()->addWidget(gameForm);
     gameForm->show();
 }
