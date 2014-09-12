@@ -1,6 +1,7 @@
 #include "gamewindow.h"
 #include "ui_gamewindow.h"
 #include "charactercreationdialog.h"
+#include "gameform.h"
 
 GameWindow::GameWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -24,5 +25,7 @@ void GameWindow::on_createCharacterButton_clicked()
 
 void GameWindow::on_startGameButton_clicked()
 {
-
+    GameUi->mainMenuWidget->hide();
+    QWidget* gameForm = new GameForm(this);
+    gameForm->show();
 }
